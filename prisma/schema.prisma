@@ -10,29 +10,75 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model Pet {
-  id        Int       @id @default(autoincrement())
-  ownerId   Int
-  name      String    @db.VarChar
-  species   String    @db.VarChar
-  age       Int       @db.Integer
-  color     String    @db.VarChar
-  missingAt DateTime? @db.Timestamp()
-  img       String    @db.VarChar
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  owner     User      @relation(fields: [ownerId], references: [id])
+model Pet {-
+  id         Int       @id @default(autoincrement())
+  ownerId    Int
+  name       String    @db.VarChar
+  speciesId  Int
+  age        Int       @db.Integer
+  color      String    @db.VarChar
+  missingAt  DateTime? @db.Timestamp()
+  img        String    @db.VarChar
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  locationId Int
+  owner      User      @relation(fields: [ownerId], references: [id])
+  species    Species   @relation(fields: [speciesId], references: [id])
+  location   Location  @relation(fields: [locationId], references: [id])
+  comments   Comment[]
+  rewards    Reward[]
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  name           String   @db.VarChar
-  phoneNumber    String   @unique @db.VarChar
-  email          String   @unique @db.VarChar
-  emailValidated Boolean  @db.Boolean @default(false)
-  password       String   @db.VarChar
-  img            String   @db.VarChar
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id             Int          @id @default(autoincrement())
+  firstName      String       @db.VarChar
+  lastName       String       @db.VarChar
+  phoneNumber    String       @unique @db.VarChar
+  email          String       @unique @db.VarChar
+  emailValidated Boolean      @default(false) @db.Boolean
+  password       String       @db.VarChar
+  dateOfBirth    DateTime 
+  img            String       @db.VarChar
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  pets           Pet[]
+  comments       Comment[]
+  permissions    Permission[] @relation("UserPermissions")
+}
+
+model Reward {
+  id          Int    @id @default(autoincrement())
+  amount      Float
+  description String
+  petId       Int
+  pet         Pet    @relation(fields: [petId], references: [id])
+}
+
+model Permission {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[] @relation("UserPermissions")
+}
+
+model Species {
+  id   Int    @id @default(autoincrement())
+  name String
   pets Pet[]
+}
+
+model Location {
+  id      Int    @id @default(autoincrement())
+  address String
+  city    String
+  country String
+  pets    Pet[]
+}
+
+model Comment {
+  id     Int    @id @default(autoincrement())
+  text   String
+  userId Int
+  petId  Int
+  user   User   @relation(fields: [userId], references: [id])
+  pet    Pet    @relation(fields: [petId], references: [id])
 }
