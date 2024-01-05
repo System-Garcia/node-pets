@@ -10,14 +10,14 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model Pet {-
+model Pet {
   id         Int       @id @default(autoincrement())
   ownerId    Int
   name       String    @db.VarChar
   speciesId  Int
   age        Int       @db.Integer
   color      String    @db.VarChar
-  missingAt  DateTime? @db.Timestamp()
+  missingAt  DateTime @db.Timestamp()
   img        String    @db.VarChar
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
