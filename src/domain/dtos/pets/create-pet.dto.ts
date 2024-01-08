@@ -1,5 +1,7 @@
+import { ILocation } from "../../interfaces/location.interface";
 
-interface IcreatePetDt {
+// Interface defining the structure of the pet data required to create a new pet.
+interface IcreatePetDto {
   ownerId: number;
   name: string;
   speciesId: number;
@@ -7,9 +9,13 @@ interface IcreatePetDt {
   color: string;
   img: string;
   missingAt: Date;
-  locationId: number;
+  location: ILocation;
 }
 
+/**
+ * Class representing the data transfer object for creating a new pet.
+ * This class includes all necessary fields to create a pet and utilizes a static factory method for instantiation.
+ */
 export class CreatePetDto {
   public ownerId: number;
   public name: string;
@@ -18,10 +24,14 @@ export class CreatePetDto {
   public color: string;
   public img: string;
   public missingAt: Date;
-  public locationId: number;
+  public location: ILocation;
 
-  private constructor(petData: IcreatePetDt) {
-    const { ownerId, name, speciesId, age, color, img, missingAt, locationId } = petData;
+  /**
+     * Private constructor to initialize the CreatePetDto instance.
+     * @param petData Object containing all the necessary data to create a pet.
+     */
+  private constructor(petData: IcreatePetDto) {
+    const { ownerId, name, speciesId, age, color, img, missingAt, location } = petData;
 
     this.ownerId = ownerId;
     this.name = name;
@@ -29,21 +39,44 @@ export class CreatePetDto {
     this.speciesId = speciesId;
     this.color = color;
     this.img = img;
-    this.locationId = locationId;
+    this.location = location;
     this.missingAt = missingAt;
   }
 
+  /**
+     * Static factory method to create a new CreatePetDto instance with validation.
+     * Validates the input data and returns an error message if validation fails,
+     * or a new instance of CreatePetDto if validation is successful.
+     * @param object Object containing data to create a new pet.
+     * @returns A tuple containing an error message (if any) and an instance of CreatePetDto.
+     */
   static create(object: { [key: string]: any }): [string?, CreatePetDto?] {
-    const { ownerId, name, speciesId, age, color, img, missingAt, locationId } = object;
+    const {
+      ownerId,
+      name,
+      speciesId,
+      age,
+      color,
+      img,
+      missingAt,
+      location,
+    } = object;
 
-    if (!ownerId) return ["Missing ownerId"];
-    if (!name) return ["Missing name"];
-    if (!speciesId) return ["Missing species"];
-    if (!age) return ["Missing age"];
-    if (!color) return ["Missing color"];
-    if (!img) return ["Missing img"];
-    if (!missingAt) return ["Missing missingAt"];
-    if (!locationId) return ["Missing locationId"]; // Todo: mejorar la logica de location
+    if ( !ownerId ) return ["Missing ownerId"];
+    if ( !name ) return ["Missing name"];
+    if ( !speciesId ) return ["Missing species"];
+    if ( !age ) return ["Missing age"];
+    if ( !color ) return ["Missing color"];
+    if ( !img) return ["Missing img"];
+    if ( !missingAt ) return ["Missing missingAt"];
+    if ( !location ) return ["Missing location data"];
+    if( typeof location !== 'object') return ['Location must be a valid location']
+    
+    const { address, city, country } = location;
+
+    if ( !address ) return ['Missing address'];
+    if ( !city) return ['Missing city'];
+    if ( !country) return ['Missing country'];
 
     return [
       undefined,
@@ -55,7 +88,11 @@ export class CreatePetDto {
         color,
         img,
         missingAt,
-        locationId,
+        location: {
+          address,
+          city,
+          country
+        },
       }),
     ];
   }
