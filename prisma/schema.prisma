@@ -10,23 +10,21 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model Pet {-
-  id         Int       @id @default(autoincrement())
-  ownerId    Int
-  name       String    @db.VarChar
-  speciesId  Int
-  age        Int       @db.Integer
-  color      String    @db.VarChar
-  missingAt  DateTime? @db.Timestamp()
-  img        String    @db.VarChar
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  locationId Int
-  owner      User      @relation(fields: [ownerId], references: [id])
-  species    Species   @relation(fields: [speciesId], references: [id])
-  location   Location  @relation(fields: [locationId], references: [id])
-  comments   Comment[]
-  rewards    Reward[]
+model Pet {
+  id        Int       @id @default(autoincrement())
+  ownerId   Int
+  name      String    @db.VarChar
+  speciesId Int
+  age       Int       @db.Integer
+  color     String    @db.VarChar
+  missingAt DateTime? @db.Timestamp()
+  img       String    @db.VarChar
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  owner     User      @relation(fields: [ownerId], references: [id])
+  species   Species   @relation(fields: [speciesId], references: [id])
+  comments  Comment[]
+  rewards   Reward[]
 }
 
 model User {
@@ -37,27 +35,29 @@ model User {
   email          String       @unique @db.VarChar
   emailValidated Boolean      @default(false) @db.Boolean
   password       String       @db.VarChar
-  dateOfBirth    DateTime 
+  dateOfBirth    DateTime
   img            String       @db.VarChar
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   pets           Pet[]
   comments       Comment[]
-  permissions    Permission[] @relation("UserPermissions")
+  permissions    Permission[]
 }
 
 model Reward {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   amount      Float
   description String
   petId       Int
-  pet         Pet    @relation(fields: [petId], references: [id])
+  locationId  Int
+  pet         Pet      @relation(fields: [petId], references: [id])
+  location    Location @relation(fields: [locationId], references: [id])
 }
 
 model Permission {
   id    Int    @id @default(autoincrement())
   name  String
-  users User[] @relation("UserPermissions")
+  users User[]
 }
 
 model Species {
@@ -71,7 +71,7 @@ model Location {
   address String
   city    String
   country String
-  pets    Pet[]
+  Reward Reward[]
 }
 
 model Comment {
