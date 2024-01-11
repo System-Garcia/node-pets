@@ -36,7 +36,7 @@ model User {
   emailValidated Boolean      @default(false) @db.Boolean
   password       String       @db.VarChar
   dateOfBirth    DateTime
-  img            String       @db.VarChar
+  img            String       @db.VarChar @default("placeholder.png")
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   pets           Pet[]
