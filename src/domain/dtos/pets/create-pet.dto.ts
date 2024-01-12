@@ -5,11 +5,9 @@ interface IcreatePetDto {
   ownerId: number;
   name: string;
   speciesId: number;
-  age: number;
   color: string;
   img: string;
   missingAt: Date;
-  location: ILocation;
 }
 
 /**
@@ -20,26 +18,23 @@ export class CreatePetDto {
   public ownerId: number;
   public name: string;
   public speciesId: number;
-  public age: number;
   public color: string;
   public img: string;
   public missingAt: Date;
-  public location: ILocation;
+
 
   /**
      * Private constructor to initialize the CreatePetDto instance.
      * @param petData Object containing all the necessary data to create a pet.
      */
   private constructor(petData: IcreatePetDto) {
-    const { ownerId, name, speciesId, age, color, img, missingAt, location } = petData;
+    const { ownerId, name, speciesId, color, img, missingAt } = petData;
 
     this.ownerId = ownerId;
     this.name = name;
-    this.age = age;
     this.speciesId = speciesId;
     this.color = color;
     this.img = img;
-    this.location = location;
     this.missingAt = missingAt;
   }
 
@@ -55,44 +50,28 @@ export class CreatePetDto {
       ownerId,
       name,
       speciesId,
-      age,
       color,
       img,
       missingAt,
-      location,
     } = object;
 
     if ( !ownerId ) return ["Missing ownerId"];
     if ( !name ) return ["Missing name"];
     if ( !speciesId ) return ["Missing species"];
-    if ( !age ) return ["Missing age"];
     if ( !color ) return ["Missing color"];
     if ( !img) return ["Missing img"];
     if ( !missingAt ) return ["Missing missingAt"];
-    if ( !location ) return ["Missing location data"];
-    if( typeof location !== 'object') return ['Location must be a valid location']
+  
     
-    const { address, city, country } = location;
-
-    if ( !address ) return ['Missing address'];
-    if ( !city) return ['Missing city'];
-    if ( !country) return ['Missing country'];
-
     return [
       undefined,
       new CreatePetDto({
         ownerId,
         name,
         speciesId,
-        age,
         color,
         img,
         missingAt,
-        location: {
-          address,
-          city,
-          country
-        },
       }),
     ];
   }
