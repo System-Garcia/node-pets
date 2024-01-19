@@ -4,7 +4,7 @@ interface IUserEntity {
   lastName: string;
   phoneNumber: string;
   email: string;
-  emailValidated: string;
+  emailValidated: boolean;
   password: string;
   dateOfBirth: Date;
   img: string;
@@ -35,7 +35,12 @@ export class UserEntity {
     if(!lastName) throw 'lasName is required';
     if(!phoneNumber) throw 'phoneNumber is required';
     if(!email) throw 'email is required';
-    if(!emailValidated) throw 'emailValidated is required';
+    
+    let emailValidatedBooelan = emailValidated;
+    if(typeof emailValidated !== 'boolean') {
+      emailValidatedBooelan = (emailValidated === 'true')
+    }
+
     if(!password) throw 'password is required';
     if(!dateOfBirth) throw 'dateOfBirth is required';
     if(!img) throw 'createdAt is required';
@@ -59,11 +64,12 @@ export class UserEntity {
         lastName,
         phoneNumber,
         email,
-        emailValidated,
+        emailValidated: emailValidatedBooelan,
         password,
         dateOfBirth,
         img,
         createdAt,
-        updatedAt,})
+        updatedAt,
+      });
   }
 }
