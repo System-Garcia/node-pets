@@ -1,4 +1,7 @@
 import { Router } from "express";
+import { PostgresUserDatasourceImpl } from "../../infrastructure/datasources/users/postgres-user.datasource";
+import { UserRepositoryImp } from "../../infrastructure/repositories/user.repository";
+import { UsersController } from "./controller";
 
 
 export class UserRoutes {
@@ -7,11 +10,12 @@ export class UserRoutes {
 
         const router = Router();
 
-        router.get('/', (req, res) => {
+        const postgresDatasource = new PostgresUserDatasourceImpl();
+        const userRepository = new UserRepositoryImp(postgresDatasource);
+        const userController = new UsersController(userRepository);
 
-            res.json({message: 'ok'})
-
-        })
+        router.get('/', userController.getUsers);
+        router.post('/', userController.createUser);
 
 
         return router;
