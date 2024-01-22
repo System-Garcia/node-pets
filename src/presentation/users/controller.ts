@@ -1,8 +1,15 @@
 import { Request, Response } from "express";
-import { UserRepository } from "../../domain/repositories/user.repository";
-import { CreateUser, CreateUserDto, PaginationDto } from "../../domain";
-import { handleError } from "../../domain/errors/handle-error";
-import { GetUsers } from "../../domain/use-cases/user/get-users";
+import {
+  CreateUser,
+  CreateUserDto,
+  GetUsers,
+  LoginUser,
+  LoginUserDto,
+  PaginationDto,
+  UserRepository,
+  handleError,
+} from "../../domain";
+
 
 export class UsersController {
 
@@ -29,5 +36,25 @@ export class UsersController {
             .execute(createUserDto!)
             .then( user => res.json(user))
             .catch( error => handleError(error, res));
-    }   
+    };
+
+
+    /* 
+    
+    todo: Devolver usuarios con el token en el login
+    todo: Proteger rutas con un middleware
+    todo: Terminar todas las rutas de permissions
+    
+    */
+    public loginUser = (req: Request, res: Response) => {
+        
+        const [error, loginUserDto] = LoginUserDto.create(req.body);
+        if ( error ) return res.status(400).json({ error });
+
+        new LoginUser(this.userRepository)
+            .execute(loginUserDto!)
+            .then( user => res.json(user))
+            .catch( error => handleError(error, res))
+
+    }
 }

@@ -1,3 +1,4 @@
+import { regularExps } from "../../../config/regular-exp";
 
 interface ICreateUserDto {
     firstName: string;
@@ -45,10 +46,11 @@ export class CreateUserDto {
         if ( !lastName ) return ['Missing lastName'];
         if ( !phoneNumber ) return ['Missing phone number'];
         if ( !email ) return ['Missing email'];
+        if ( !regularExps.email.test(email)) return ['Email is not valid'];
         if ( !password ) return ['Missing password'];
+        if ( password.length < 6) return ['Password too short, the minimum length is 6']
         if ( !dateOfBirth ) return ['Missing dateOfBirth'];
-
-       
+        
         let newDateOfBirth = new Date(dateOfBirth);
 
         if( isNaN(newDateOfBirth.getTime())) {
@@ -57,6 +59,7 @@ export class CreateUserDto {
         
 
         if ( !img ) return ['Missing img URL'];
+      
 
         return [undefined, new CreateUserDto({
             firstName,
