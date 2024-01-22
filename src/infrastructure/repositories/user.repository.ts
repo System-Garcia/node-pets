@@ -1,8 +1,9 @@
 import { PaginationDto, UserEntity, CreateUserDto, UserDatasource, PaginatedUsersResponse } from "../../domain";
+import { LoginUserDto } from "../../domain/dtos/users/login-user.dto";
 import { UserRepository } from "../../domain/repositories/user.repository";
 
 
-export class UserRepositoryImp implements UserRepository {
+export class UserRepositoryImpl implements UserRepository {
 
     constructor(private userDatasource: UserDatasource) {
         
@@ -19,6 +20,10 @@ export class UserRepositoryImp implements UserRepository {
     }
     deleteById(id: number): Promise<UserEntity> {
         return this.userDatasource.deleteById(id);
+    }
+
+    findByEmailAndPassword(loginUserDto: LoginUserDto): Promise<UserEntity> {
+        return this.userDatasource.findByEmailAndPassword(loginUserDto);
     }
     
 }
