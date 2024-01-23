@@ -3,15 +3,21 @@ import { prisma } from "../../../data/postgres";
 import {
   CreateUserDto,
   CustomError,
+  LoginUserDto,
   PaginatedUsersResponse,
   PaginationDto,
+  PermissionRepository,
+  UpdateUserDto,
   UserDatasource,
   UserEntity,
 } from "../../../domain";
-import { LoginUserDto } from "../../../domain/dtos/users/login-user.dto";
+
 
 export class PostgresUserDatasourceImpl implements UserDatasource {
   
+
+  constructor(private readonly permissionRepository: PermissionRepository) {}
+
   async getAll(pagination: PaginationDto): Promise<PaginatedUsersResponse> {
     const { page, limit } = pagination;
 
@@ -106,6 +112,9 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
     try {
       const user = await prisma.user.findUnique({
         where: { id },
+        include: {
+          permissions: true,
+        }
       });
 
       if (!user) throw CustomError.notFound(`User wiht id ${id} not found`);
@@ -123,8 +132,11 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
 
       const deleted = prisma.user.delete({
         where: { id },
+        include: {
+          permissions: true,
+        }
       });
-
+     
       return UserEntity.fromObject(deleted);
     } catch (error) {
   
@@ -154,5 +166,62 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       throw error;
     }
   
+  }
+
+
+  /**
+ * Asynchronously updates a user in the database.
+ * 
+ * @param updateUserDto - Object containing user update information.
+ *   Includes the user's ID and new values for user fields.
+ *   Can also include an array of permission IDs if permissions need to be updated.
+ * @returns A promise that resolves to the updated UserEntity.
+ * @throws Throws an error if the update operation fails.
+ */
+  async updateUserById(updateUserDto: UpdateUserDto): Promise<UserEntity> {
+    
+      try {
+        // Ensure the user exists
+        await this.findById(updateUserDto.id);
+        
+        let userData = updateUserDto.values;
+
+        // Update permissions if provided
+        if( updateUserDto.permissions ) {
+          
+           // Verify each permission exists
+          const permissions = await Promise.all(
+
+            updateUserDto.permissions.map( async (permissionId) => {
+
+              const permissionExist = await this.permissionRepository.verifyPermissionExist(permissionId);
+              if( !permissionExist ) throw CustomError.badRequest(`Permission with id ${permissionId} not found`);
+              return permissionId
+
+          }));
+
+          // Set the new permissions in userData
+          userData.permissions = {
+            set: permissions.map( permissionId => ({ id: permissionId }))
+          }
+
+        }
+
+         // Perform the user update operation
+        const user = await prisma.user.update( {
+          where: { id: updateUserDto.id },
+          data: userData,
+          include: {
+            permissions: true,
+          }
+        });
+
+        // Convert and return the updated user
+        return UserEntity.fromObject(user);
+
+      } catch (error) {
+        // Propagate any caught errors
+        throw error;
+      }
   }
 }

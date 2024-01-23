@@ -1,4 +1,4 @@
-import { PaginationDto, UserEntity, CreateUserDto, UserDatasource, PaginatedUsersResponse } from "../../domain";
+import { PaginationDto, UserEntity, CreateUserDto, UserDatasource, PaginatedUsersResponse, UpdateUserDto } from "../../domain";
 import { LoginUserDto } from "../../domain/dtos/users/login-user.dto";
 import { UserRepository } from "../../domain/repositories/user.repository";
 
@@ -24,6 +24,10 @@ export class UserRepositoryImpl implements UserRepository {
 
     findByEmailAndPassword(loginUserDto: LoginUserDto): Promise<UserEntity> {
         return this.userDatasource.findByEmailAndPassword(loginUserDto);
+    }
+
+    updateUserById(updateUserDto: UpdateUserDto): Promise<UserEntity> {
+        return this.userDatasource.updateUserById(updateUserDto);
     }
     
 }

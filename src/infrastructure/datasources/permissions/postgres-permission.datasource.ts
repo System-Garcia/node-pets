@@ -51,6 +51,24 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
     }
 
 
-  
+    async verifyPermissionExist(permissionId: number): Promise<boolean> {
+
+        try {
+            
+            const permission = await prisma.permission.findUnique({
+                where: {
+                    id: permissionId
+                }
+            });
+
+            if (!permission) return false;
+
+            return true;
+
+        } catch (error) {
+            throw CustomError.internalServer();
+        }
+
+    }
 
 }

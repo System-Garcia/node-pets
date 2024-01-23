@@ -6,9 +6,11 @@ import {
   LoginUser,
   LoginUserDto,
   PaginationDto,
+  UpdateUserDto,
   UserRepository,
   handleError,
 } from "../../domain";
+import { UpdateUser } from "../../domain/use-cases/user/update-user";
 
 
 export class UsersController {
@@ -44,6 +46,7 @@ export class UsersController {
     todo: Devolver usuarios con el token en el login
     todo: Proteger rutas con un middleware
     todo: Terminar todas las rutas de permissions
+    todo: documentar todo el codigo actual
     
     */
     public loginUser = (req: Request, res: Response) => {
@@ -55,6 +58,20 @@ export class UsersController {
             .execute(loginUserDto!)
             .then( user => res.json(user))
             .catch( error => handleError(error, res))
+
+    }
+
+    public updateUser = (req: Request, res: Response) => {
+
+        const id = +req.params.id;
+       
+        const  [ error, updateUserDto] = UpdateUserDto.create({...req.body, id});
+        if ( error ) return res.status(400).json({ error });
+
+       new UpdateUser(this.userRepository)
+        .execute(updateUserDto!)
+        .then( user => res.json(user))
+        .catch( error => handleError(error, res));
 
     }
 }

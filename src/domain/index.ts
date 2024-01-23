@@ -25,6 +25,7 @@ export * from './dtos/permissions/update-permission.dto';
 export * from './dtos/shared/pagination.dto';
 export * from './dtos/users/login-user.dto';
 export * from './dtos/pets/update-pet.dto';
+export * from './dtos/users/update-user.dto';
 
 // Interfaces
 export * from './interfaces';

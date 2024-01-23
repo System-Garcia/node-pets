@@ -28,4 +28,8 @@ export class PermissionRepositoryImpl implements PermissionRepository {
         return this.datasoruce.deleteById(id);
     }
 
+    verifyPermissionExist(permissionId: number): Promise<boolean> {
+        return this.datasoruce.verifyPermissionExist(permissionId);
+    }
+
 }
