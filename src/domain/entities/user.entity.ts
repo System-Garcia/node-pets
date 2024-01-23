@@ -62,7 +62,6 @@ export class UserEntity {
       permissions,
     } = object;
 
-    console.log(permissions)
 
     if(!id || isNaN(id)) throw 'id is required and must be a valid number';
     if(!firstName) throw 'firstName is required';

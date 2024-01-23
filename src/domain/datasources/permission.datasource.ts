@@ -15,4 +15,6 @@ export abstract class PermissionDatasource {
     abstract updateById(updatePermissionDto: UpdatePermissionDto): Promise<PermissionEntity>
 
     abstract deleteById(id: number): Promise<PermissionEntity>;
+
+    abstract verifyPermissionExist(permissionId: number): Promise<boolean>;
 }

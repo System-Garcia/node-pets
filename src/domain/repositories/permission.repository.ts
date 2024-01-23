@@ -16,4 +16,6 @@ export abstract class PermissionRepository {
     abstract updateById(updatePermissionDto: UpdatePermissionDto): Promise<PermissionEntity>
 
     abstract deleteById(id: number): Promise<PermissionEntity>;
+
+    abstract verifyPermissionExist(permissionId: number): Promise<boolean>;
 }
