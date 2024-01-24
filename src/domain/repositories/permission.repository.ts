@@ -9,7 +9,7 @@ export abstract class PermissionRepository {
 
     abstract create(createPermissionDto: CreatePermissionDto): Promise<PermissionEntity>;
     
-    abstract getAll(paginationDto: PaginationDto): Promise<PaginatedPermissionResponse[]>;
+    abstract getAll(paginationDto: PaginationDto): Promise<PaginatedPermissionResponse>;
 
     abstract findById(id: number): Promise<PermissionEntity>;
 

@@ -23,8 +23,6 @@ export class UpdatePermissionDto {
 
 
     if (!id || isNaN(id)) return ['id must be a valid number'];
-    if (!name) return ['name is required'];
-
 
     return [undefined, new UpdatePermissionDto(id, name)]
 

@@ -38,3 +38,7 @@ export * from './use-cases/user/get-user';
 export * from './use-cases/user/get-users';
 export * from './use-cases/user/login-user';
 export * from './use-cases/permissions/create-permission';
+export * from './use-cases/permissions/get-permission'
+export * from './use-cases/permissions/get-permissions'
+export * from './use-cases/permissions/update-permission';
+export * from './use-cases/permissions/delete-permission';

@@ -15,7 +15,10 @@ export class PermissionRoutes {
         const permissionController = new PermissionController(permissionRepository);
 
         router.post('/', permissionController.createPermission);
-
+        router.get('/:id', permissionController.getPermissionById);
+        router.get('/', permissionController.getPermissions);
+        router.put('/:id', permissionController.updatePermissionById);
+        router.delete('/:id', permissionController.deletePermissionById)
 
         return router;
     }

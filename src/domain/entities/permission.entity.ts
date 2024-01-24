@@ -6,7 +6,13 @@ export interface IPermission {
 
 export class PermissionEntity {
 
-    constructor( private readonly permission: IPermission) {}
+    public readonly id: number;
+    public readonly name: string;
+
+    constructor( permission: IPermission) {
+        this.id = permission.id;
+        this.name = permission.name;
+    }
 
     static fromObject(object: { [key: string]: any }): PermissionEntity {
 
