@@ -15,7 +15,7 @@ export class PermissionRepositoryImpl implements PermissionRepository {
     create(createPermissionDto: CreatePermissionDto): Promise<PermissionEntity> {
         return this.datasoruce.create(createPermissionDto);
     }
-    getAll(paginationDto: PaginationDto): Promise<PaginatedPermissionResponse[]> {
+    getAll(paginationDto: PaginationDto): Promise<PaginatedPermissionResponse> {
         return this.datasoruce.getAll(paginationDto);
     }
     findById(id: number): Promise<PermissionEntity> {

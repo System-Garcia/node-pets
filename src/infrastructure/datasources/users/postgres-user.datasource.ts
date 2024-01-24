@@ -36,12 +36,12 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       ]);
      
       const nextPage =
-        page * limit >= total
+        (page * limit) >= total
           ? null
           : `/api/users?page=${page + 1}&limit=${limit}`;
 
       const prevPage =
-        page - 1 > 0 ? `api/users?page=${page - 1}&limit=${limit}` : null;
+        (page - 1) > 0 ? `api/users?page=${page - 1}&limit=${limit}` : null;
 
       return {
         page,

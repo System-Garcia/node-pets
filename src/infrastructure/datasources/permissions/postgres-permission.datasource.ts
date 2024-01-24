@@ -33,23 +33,101 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
             return PermissionEntity.fromObject(permission);
 
         } catch (error) {
-            throw CustomError.internalServer();
+            throw error;
         }
 
     }
-    async getAll(paginationDto: PaginationDto): Promise<PaginatedPermissionResponse[]> {
-        throw new Error("Method not implemented.");
-    }
-    async findById(id: number): Promise<PermissionEntity> {
-        throw new Error("Method not implemented.");
-    }
-    async updateById(updatePermissionDto: UpdatePermissionDto): Promise<PermissionEntity> {
-        throw new Error("Method not implemented.");
-    }
-    async deleteById(id: number): Promise<PermissionEntity> {
-        throw new Error("Method not implemented.");
-    }
 
+    async getAll(paginationDto: PaginationDto): Promise<PaginatedPermissionResponse> {
+        
+        const { page, limit } = paginationDto;
+
+        const skip = ( page - 1) * limit;
+
+        const [ total, permissions ] = await Promise.all([
+            prisma.permission.count(),
+            prisma.permission.findMany({
+                skip: skip,
+                take: limit,
+            })
+        ]);
+
+
+        const nextPage =
+            page * limit >= total
+                ? null
+                : `api/permissions?page=${ page + 1}&limit=${limit}`;
+        
+        const prevPage =
+            page - 1 > 0
+                ? `api/permissions?page=${ page - 1}&limit=${limit}`
+                : null;
+        
+        console.log(permissions)
+        return {
+            page,
+            limit,
+            total,
+            next: nextPage,
+            prev: prevPage,
+            permissions: permissions.map( permission => PermissionEntity.fromObject(permission)),
+        }
+
+    };
+
+    async findById(id: number): Promise<PermissionEntity> {
+        
+       try {
+
+        const permission = await prisma.permission.findUnique({
+            where: { id },
+        });
+
+        if (!permission) throw CustomError.notFound(`Permission with id ${id} not found`);
+
+        return PermissionEntity.fromObject(permission);
+
+       } catch (error) {
+            throw error;
+       }
+    };
+
+    async updateById(updatePermissionDto: UpdatePermissionDto): Promise<PermissionEntity> {
+        
+        try {
+            
+            const { id } = updatePermissionDto;
+
+            await this.findById(updatePermissionDto.id);
+
+            const permission = await prisma.permission.update({
+                where: { id },
+                data: updatePermissionDto.values
+            });
+
+            return PermissionEntity.fromObject(permission);
+
+        } catch (error) {
+            throw error;
+        }
+
+    };
+
+    async deleteById(id: number): Promise<PermissionEntity> {
+        
+        try {
+            await this.findById(id);
+
+            const permissionDeleted = await prisma.permission.delete({
+                where: { id },
+            });
+
+            return PermissionEntity.fromObject(permissionDeleted);
+        } catch (error) {
+            throw error;
+        }
+
+    };
 
     async verifyPermissionExist(permissionId: number): Promise<boolean> {
 
