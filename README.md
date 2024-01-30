@@ -10,3 +10,8 @@
 ``` 
  docker compose up -d
 ```
+
+5. Run to Dev:
+```  
+npm run dev
+```
