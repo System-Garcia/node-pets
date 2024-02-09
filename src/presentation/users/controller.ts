@@ -11,6 +11,8 @@ import {
   handleError,
 } from "../../domain";
 import { UpdateUser } from "../../domain/use-cases/user/update-user";
+import { JwtGeneraton } from "../../config/jwt.adapter";
+import { envs } from "../../config";
 
 
 export class UsersController {
@@ -49,16 +51,21 @@ export class UsersController {
     todo: documentar todo el codigo actual
     
     */
-    public loginUser = (req: Request, res: Response) => {
+    public loginUser = async (req: Request, res: Response) => {
         
-        const [error, loginUserDto] = LoginUserDto.create(req.body);
-        if ( error ) return res.status(400).json({ error });
+        try {
+            const [error, loginUserDto] = LoginUserDto.create(req.body);
+            if ( error ) return res.status(400).json({ error });
 
-        new LoginUser(this.userRepository)
-            .execute(loginUserDto!)
-            .then( user => res.json(user))
-            .catch( error => handleError(error, res))
+            const user = await new LoginUser(this.userRepository).execute(loginUserDto!);
+            
+            const token = await new JwtGeneraton(envs.JWT_SEED).generateToken({ id: user.id });
 
+            res.json({user, token});
+
+        } catch (error) {
+            handleError(error, res);
+        }
     }
 
     public updateUser = (req: Request, res: Response) => {
