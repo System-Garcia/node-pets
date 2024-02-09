@@ -62,8 +62,8 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
             page - 1 > 0
                 ? `api/permissions?page=${ page - 1}&limit=${limit}`
                 : null;
+                
         
-        console.log(permissions)
         return {
             page,
             limit,
