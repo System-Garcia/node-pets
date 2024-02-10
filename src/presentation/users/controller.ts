@@ -45,9 +45,7 @@ export class UsersController {
 
     /* 
     
-    todo: Devolver usuarios con el token en el login
     todo: Proteger rutas con un middleware
-    todo: Terminar todas las rutas de permissions
     todo: documentar todo el codigo actual
     
     */
