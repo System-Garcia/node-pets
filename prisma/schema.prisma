@@ -15,10 +15,9 @@ model Pet {
   ownerId   Int
   name      String    @db.VarChar
   speciesId Int
-  age       Int       @db.Integer
   color     String    @db.VarChar
-  missingAt DateTime? @db.Timestamp()
-  img       String    @db.VarChar
+  missingAt DateTime  @db.Timestamp()
+  img       String    @default("placeholer.png") @db.VarChar
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   owner     User      @relation(fields: [ownerId], references: [id])
@@ -36,7 +35,7 @@ model User {
   emailValidated Boolean      @default(false) @db.Boolean
   password       String       @db.VarChar
   dateOfBirth    DateTime
-  img            String       @db.VarChar
+  img            String       @default("placeholder.png") @db.VarChar
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   pets           Pet[]
@@ -67,11 +66,11 @@ model Species {
 }
 
 model Location {
-  id      Int    @id @default(autoincrement())
+  id      Int      @id @default(autoincrement())
   address String
   city    String
   country String
-  Reward Reward[]
+  Reward  Reward[]
 }
 
 model Comment {
