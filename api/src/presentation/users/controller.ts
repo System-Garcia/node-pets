@@ -6,11 +6,13 @@ import {
   LoginUser,
   LoginUserDto,
   PaginationDto,
+  UpdatePermissionsUser,
+  UpdateUser,
   UpdateUserDto,
+  UpdateUserPermissionsDto,
   UserRepository,
   handleError,
 } from "../../domain";
-import { UpdateUser } from "../../domain/use-cases/user/update-user";
 import { JwtGeneraton } from "../../config/jwt.adapter";
 import { envs } from "../../config";
 
@@ -45,7 +47,6 @@ export class UsersController {
 
     /* 
     
-    todo: Proteger rutas con un middleware
     todo: documentar todo el codigo actual
     
     */
@@ -78,5 +79,18 @@ export class UsersController {
         .then( user => res.json(user))
         .catch( error => handleError(error, res));
 
+    }
+
+    public updatePermissions = (req: Request, res: Response) => {
+        
+        const id = +req.params.id;
+        const [ error, updateUserPermissionsDto] = UpdateUserPermissionsDto.create({...req.body, id});
+
+        if ( error ) return res.status(400).json({ error });
+
+        new UpdatePermissionsUser(this.userRepository)
+            .execute(updateUserPermissionsDto!)
+            .then( user => res.json(user))
+            .catch( error => handleError(error, res))
     }
 }

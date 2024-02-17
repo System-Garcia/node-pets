@@ -8,6 +8,7 @@ import {
   PaginationDto,
   PermissionRepository,
   UpdateUserDto,
+  UpdateUserPermissionsDto,
   UserDatasource,
   UserEntity,
 } from "../../../domain";
@@ -174,7 +175,6 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
  * 
  * @param updateUserDto - Object containing user update information.
  *   Includes the user's ID and new values for user fields.
- *   Can also include an array of permission IDs if permissions need to be updated.
  * @returns A promise that resolves to the updated UserEntity.
  * @throws Throws an error if the update operation fails.
  */
@@ -182,32 +182,30 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
     
       try {
         // Ensure the user exists
-        await this.findById(updateUserDto.id);
-        
+        const existingUser  = await this.findById(updateUserDto.id);
         let userData = updateUserDto.values;
+        
+        // Check if there's an attempt to update the email
+        if (userData.email && userData.email !== existingUser.email ) {
+          // Look for any other user already using the new email
+          const existEmail = await prisma.user.findUnique({
+            where: { email: userData.email }
+          });
 
-        // Update permissions if provided
-        if( updateUserDto.permissions ) {
-          
-           // Verify each permission exists
-          const permissions = await Promise.all(
+          // If another user with that email exists and it's not the current user, throw an error
+          // This prevents violations of the uniqueness constraint on the 'email' field
+          if ( existEmail ) throw CustomError.badRequest('Email already exists')
+        };
 
-            updateUserDto.permissions.map( async (permissionId) => {
+        if (userData.phoneNumber && userData.phoneNumber !== existingUser.phoneNumber) {
+          const existPhoneNumber = await prisma.user.findUnique({
+            where: { phoneNumber: userData.phoneNumber }
+          });
 
-              const permissionExist = await this.permissionRepository.verifyPermissionExist(permissionId);
-              if( !permissionExist ) throw CustomError.badRequest(`Permission with id ${permissionId} not found`);
-              return permissionId
-
-          }));
-
-          // Set the new permissions in userData
-          userData.permissions = {
-            set: permissions.map( permissionId => ({ id: permissionId }))
-          }
-
+          if ( existPhoneNumber ) throw CustomError.badRequest('PhoneNumber already exists')
         }
 
-         // Perform the user update operation
+        // Perform the user update operation
         const user = await prisma.user.update( {
           where: { id: updateUserDto.id },
           data: userData,
@@ -216,6 +214,8 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
           }
         });
 
+
+
         // Convert and return the updated user
         return UserEntity.fromObject(user);
 
@@ -223,5 +223,43 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
         // Propagate any caught errors
         throw error;
       }
+  }
+
+  async updatePermissionsById(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity> {
+    
+    try {
+      // Ensure the user exists
+      await this.findById(updateUserPermissionsDto.id);
+
+      // Verify each permission exists
+      const permissions = await Promise.all(
+        updateUserPermissionsDto.permissions.map(async (permissionId) => {
+          const permissionExist = await this.permissionRepository.verifyPermissionExist(permissionId);
+          if (!permissionExist)
+            throw CustomError.badRequest(
+              `Permission with id ${permissionId} not found`
+            );
+          return permissionId;
+        })
+      );
+ 
+      const { id } = updateUserPermissionsDto;
+
+      const userUpdated = await prisma.user.update({
+        where: { id },
+        data: {
+          permissions: {
+            set: permissions.map((permissionId) => ({ id: permissionId })),
+          }
+        },
+        include: {
+          permissions: true,
+        }
+      });
+
+      return UserEntity.fromObject(userUpdated);
+    } catch (error) {
+      throw error;
+    }
   }
 }

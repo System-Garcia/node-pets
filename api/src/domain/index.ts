@@ -26,10 +26,12 @@ export * from './dtos/shared/pagination.dto';
 export * from './dtos/users/login-user.dto';
 export * from './dtos/pets/update-pet.dto';
 export * from './dtos/users/update-user.dto';
+export * from './dtos/users/update-permissions.dto';
 
 // Interfaces
 export * from './interfaces';
 export * from './interfaces/paginated-user-res.interface';
+export * from './interfaces/location.interface';
 
 // Use cases
 export * from './use-cases/user/create-user';
@@ -42,3 +44,5 @@ export * from './use-cases/permissions/get-permission'
 export * from './use-cases/permissions/get-permissions'
 export * from './use-cases/permissions/update-permission';
 export * from './use-cases/permissions/delete-permission';
+export * from './use-cases/user/update-permissions';
+export * from './use-cases/user/update-user';

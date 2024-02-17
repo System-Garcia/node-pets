@@ -4,6 +4,7 @@ import { UserRepositoryImpl } from "../../infrastructure/repositories/user.repos
 import { UsersController } from "./controller";
 import { PermissionRepositoryImpl } from "../../infrastructure/repositories/permission.repository";
 import { PostgresPermissionDatasourceImpl } from "../../infrastructure/datasources/permissions/postgres-permission.datasource";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 
 export class UserRoutes {
@@ -19,10 +20,13 @@ export class UserRoutes {
         const userRepository = new UserRepositoryImpl(postgresDatasource);
         const userController = new UsersController(userRepository);
 
-        router.get('/', userController.getUsers);
+        const authMiddleware = new AuthMiddleware(postgresDatasource);
+
+        router.get('/',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ] ,userController.getUsers);
         router.post('/', userController.createUser);
-        router.put('/:id', userController.updateUser);
+        router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin ], userController.updateUser);
         router.post('/login', userController.loginUser);
+        router.put('/:id/permissions',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ], userController.updatePermissions)
 
         return router;
     }

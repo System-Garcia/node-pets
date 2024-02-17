@@ -1,5 +1,6 @@
 import { PaginationDto, UserEntity, CreateUserDto, UserDatasource, PaginatedUsersResponse, UpdateUserDto } from "../../domain";
 import { LoginUserDto } from "../../domain/dtos/users/login-user.dto";
+import { UpdateUserPermissionsDto } from "../../domain/dtos/users/update-permissions.dto";
 import { UserRepository } from "../../domain/repositories/user.repository";
 
 
@@ -28,6 +29,10 @@ export class UserRepositoryImpl implements UserRepository {
 
     updateUserById(updateUserDto: UpdateUserDto): Promise<UserEntity> {
         return this.userDatasource.updateUserById(updateUserDto);
+    }
+
+    updatePermissionsById(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity> {
+        return this.userDatasource.updatePermissionsById(updateUserPermissionsDto);
     }
     
 }

@@ -40,10 +40,26 @@ export class AuthMiddleware {
 
       const user = req.body.user as UserEntity
      
-      // Verificar que user y user.permissions existen
+      // Verify that user and user.permissions exist
       if (!user || !user.permissions || !user.permissions.some( permission => permission.name === 'Admin')) {
         return res.status(403).json({ error: 'Access denied' });
       };
+
+      next();
+    }
+
+    verifySelfOrAdmin = async (req: Request, res: Response, next: NextFunction) => {
+
+      const user = req.body.user as UserEntity;
+      const userIdToUpdate = parseInt(req.params.id);
+
+      if (isNaN(userIdToUpdate)) {
+        return res.status(400).json({ error: 'Invalid user ID' });
+      }
+      
+      if( !user.permissions.some( permission => permission.name === 'Admin') && user.id !== userIdToUpdate) {
+        return res.status(403).json({ error: 'Access denied - You can only update your own data' });
+      }
 
       next();
     }

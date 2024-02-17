@@ -4,6 +4,7 @@ import { LoginUserDto } from "../dtos/users/login-user.dto";
 import { UpdateUserDto } from "../dtos/users/update-user.dto";
 import { UserEntity } from "../entities/user.entity";
 import { PaginatedUsersResponse } from "../interfaces";
+import { UpdateUserPermissionsDto } from '../dtos/users/update-permissions.dto';
 
 
 export abstract class UserRepository {
@@ -19,5 +20,7 @@ export abstract class UserRepository {
     abstract findByEmailAndPassword(loginUserDto: LoginUserDto): Promise<UserEntity>;
 
     abstract updateUserById(updateUserDto: UpdateUserDto): Promise<UserEntity>;
+
+    abstract updatePermissionsById(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity>;
 
 }

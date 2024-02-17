@@ -9,7 +9,6 @@ interface IUpdateUserDto {
     password?: string;
     dateOfBirth?: Date;
     img?: string;
-    permissions?: number[]; 
 }
 
 
@@ -23,7 +22,6 @@ export class UpdateUserDto {
     public readonly password;
     public readonly dateOfBirth;
     public readonly img;
-    public readonly permissions;
 
     private constructor(userProps: IUpdateUserDto) {
         this.id = userProps.id;
@@ -34,11 +32,6 @@ export class UpdateUserDto {
         this.password = userProps.password;
         this.dateOfBirth = userProps.dateOfBirth;
         this.img = userProps.img;
-        this.permissions = userProps.permissions;
-    }
-
-    get permission() {
-        return this.permissions;
     }
 
     get values() {
@@ -68,7 +61,6 @@ export class UpdateUserDto {
             password,
             dateOfBirth,
             img,
-            permissions,
         } = props;
 
         
@@ -79,23 +71,6 @@ export class UpdateUserDto {
             if(newDateOfBirth.toString() === 'Invalid Date') {
                 return ['CompletedAt must be a valid date'];
             }
-        };
-
-        
-        if( permissions ) {
-
-            if(!Array.isArray(permissions)) {
-                return ['Permissions must be an array'];
-            }
-
-            if (permissions.length === 0) return ['Permissions must not be empty'];
-
-            permissions.forEach( permission => {
-
-                if(isNaN(permission)) {
-                    return ['Permissions must be an array of numbers'];
-                }
-            });
         };
 
         if (email) {
@@ -112,7 +87,6 @@ export class UpdateUserDto {
             password,
             dateOfBirth,
             img,
-            permissions,
         })];
 
     }
