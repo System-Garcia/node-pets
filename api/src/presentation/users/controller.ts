@@ -15,11 +15,16 @@ import {
 } from "../../domain";
 import { JwtGeneraton } from "../../config/jwt.adapter";
 import { envs } from "../../config";
+import { S3Service } from "../services/s3.service";
+import { UploadedFile } from "express-fileupload";
 
 
 export class UsersController {
 
-    constructor( private readonly userRepository: UserRepository) {}
+    constructor( 
+        private readonly userRepository: UserRepository, 
+        private readonly s3Service: S3Service
+    ) {}
 
     public getUsers = (req: Request, res: Response) => {
         
@@ -33,15 +38,25 @@ export class UsersController {
             .catch( error => handleError(error, res));
     };
 
-    public createUser = (req: Request, res: Response) => {
+    public  createUser = async (req: Request, res: Response) => {
 
-        const [error, createUserDto] = CreateUserDto.create(req.body);
-        if (error) return res.status(400).json({ error });
+        try {
 
-        new CreateUser(this.userRepository)
-            .execute(createUserDto!)
-            .then( user => res.json(user))
-            .catch( error => handleError(error, res));
+            const imageFile = req.body.files.at(0) as UploadedFile;
+            const imageURL = await this.s3Service.uploadImage(imageFile);
+            
+            const [error, createUserDto] = CreateUserDto.create({...req.body, img: imageURL});
+            if (error) return res.status(400).json({ error });
+    
+            const user = await new CreateUser(this.userRepository).execute(createUserDto!);
+
+            res.json(user)
+                
+        } catch (error) {
+            handleError(error, res)
+        }
+
+       
     };
 
 

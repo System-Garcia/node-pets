@@ -5,6 +5,10 @@ import { UsersController } from "./controller";
 import { PermissionRepositoryImpl } from "../../infrastructure/repositories/permission.repository";
 import { PostgresPermissionDatasourceImpl } from "../../infrastructure/datasources/permissions/postgres-permission.datasource";
 import { AuthMiddleware } from "../middlewares/auth.middleware";
+import fileUpload from "express-fileupload";
+import { FileUploadMiddleware } from "../middlewares/file-upload.middleware";
+import { S3Service } from "../services/s3.service";
+import { envs } from "../../config";
 
 
 export class UserRoutes {
@@ -18,13 +22,27 @@ export class UserRoutes {
         
         const postgresDatasource = new PostgresUserDatasourceImpl(permissionRepository);
         const userRepository = new UserRepositoryImpl(postgresDatasource);
-        const userController = new UsersController(userRepository);
+
+        const s3Service = new S3Service({
+            accessKeyId: envs.AWS_ACCESS_KEY_ID,
+            bucketName: envs.AWS_BUCKET_NAME,
+            region: envs.AWS_REGION,
+            secretAccessKey: envs.AWS_SECRET_ACCESS_KEY,
+        });
+
+        const userController = new UsersController(userRepository, s3Service);
 
         const authMiddleware = new AuthMiddleware(postgresDatasource);
 
+        const fileUploadMiddleware = fileUpload({
+            limits: { fileSize: 5 * 1024 * 1024 },
+            abortOnLimit: true, 
+            responseOnLimit: 'The file size exceeds the allowed limit.',
+        });
+
         router.get('/',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ] ,userController.getUsers);
-        router.post('/', userController.createUser);
-        router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin ], userController.updateUser);
+        router.post('/', [ fileUploadMiddleware, FileUploadMiddleware.containFiles ], userController.createUser);
+        router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin, fileUploadMiddleware ], userController.updateUser);
         router.post('/login', userController.loginUser);
         router.put('/:id/permissions',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ], userController.updatePermissions)
 
@@ -32,3 +50,5 @@ export class UserRoutes {
     }
 
 }
+
+// TODO: Implementar el update de imagen en los usuarios
