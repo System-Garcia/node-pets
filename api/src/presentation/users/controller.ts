@@ -17,6 +17,7 @@ import { JwtGeneraton } from "../../config/jwt.adapter";
 import { envs } from "../../config";
 import { S3Service } from "../services/s3.service";
 import { UploadedFile } from "express-fileupload";
+import { regularExps } from "../../config/regular-exp";
 
 
 export class UsersController {
@@ -42,6 +43,9 @@ export class UsersController {
 
         try {
 
+            const [ hasError, isValid ] = this.validateCreateUserInput(req.body);
+            if (hasError) return res.status(400).json({ error: hasError }); 
+
             const imageFile = req.body.files.at(0) as UploadedFile;
             const imageURL = await this.s3Service.uploadImage(imageFile);
             
@@ -63,7 +67,6 @@ export class UsersController {
     /* 
     
     todo: documentar todo el codigo actual
-    todo: En la creacion del usuario ver de que forma se pueden validar los dtos antes de subir la imagen.
     
     */
     public loginUser = async (req: Request, res: Response) => {
@@ -108,5 +111,47 @@ export class UsersController {
             .execute(updateUserPermissionsDto!)
             .then( user => res.json(user))
             .catch( error => handleError(error, res))
+    }
+
+    /**
+     * Performs a preliminary validation of user input before creating a user.
+     * This method serves as an initial check to quickly catch missing or obviously invalid fields
+     * before proceeding with more in-depth validation handled by the CreateUserDto.
+     * It is designed to improve efficiency by preventing unnecessary operations (e.g., image upload to AWS S3)
+     * if the basic criteria are not met.
+     * 
+     * @param object The user input data from the request body.
+     * @returns A tuple where the first element is an optional error message, and the second element is a boolean indicating the validation result.
+     * 
+     * Note: This validation checks for the presence of essential fields such as firstName, lastName, phoneNumber, email, password, and dateOfBirth,
+     * and performs a basic format validation on the email. The presence of the dateOfBirth is validated and checked to ensure it is a valid date.
+     * A more comprehensive validation including business logic and constraints is delegated to the CreateUserDto.
+     */
+    private validateCreateUserInput = (object: {[key: string]: any}) => {
+        const {
+            firstName,
+            lastName,
+            phoneNumber,
+            email,
+            password,
+            dateOfBirth,
+        } = object;
+
+        if ( !firstName ) return ['Missing firstName'];
+        if ( !lastName ) return ['Missing lastName'];
+        if ( !phoneNumber ) return ['Missing phone number'];
+        if ( !email ) return ['Missing email'];
+        if ( !regularExps.email.test(email)) return ['Email is not valid'];
+        if ( !password ) return ['Missing password'];
+        if ( password.length < 6) return ['Password too short, the minimum length is 6']
+        if ( !dateOfBirth ) return ['Missing dateOfBirth'];
+        
+        let newDateOfBirth = new Date(dateOfBirth);
+
+        if( isNaN(newDateOfBirth.getTime())) {
+            return ['dateOfBirth must be a valid Date']
+        }
+        
+        return [undefined, true];
     }
 }
