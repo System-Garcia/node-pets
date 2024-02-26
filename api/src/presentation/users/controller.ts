@@ -67,6 +67,8 @@ export class UsersController {
     /* 
     
     todo: Agregar validacion al numero al phoneNumber
+    todo: Agregar campo 'isDeleted' a la base de datos en lugar de borrar literalmente los registros'
+    todo: Implementar validacion de email
     todo: documentar todo el codigo actual
     
     */
