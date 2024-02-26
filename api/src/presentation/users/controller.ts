@@ -63,7 +63,6 @@ export class UsersController {
     /* 
     
     todo: documentar todo el codigo actual
-    todo: intentar crear usuario con imagen distinto a 'file', genera error. 
     todo: En la creacion del usuario ver de que forma se pueden validar los dtos antes de subir la imagen.
     
     */
