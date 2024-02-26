@@ -42,7 +42,7 @@ export class UserRoutes {
 
         router.get('/',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ] ,userController.getUsers);
         router.post('/', [ fileUploadMiddleware, FileUploadMiddleware.containFiles ], userController.createUser);
-        router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin, fileUploadMiddleware ], userController.updateUser);
+        router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin, fileUploadMiddleware, FileUploadMiddleware.objectToArray ], userController.updateUser);
         router.post('/login', userController.loginUser);
         router.put('/:id/permissions',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ], userController.updatePermissions)
 

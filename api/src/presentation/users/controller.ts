@@ -66,6 +66,7 @@ export class UsersController {
 
     /* 
     
+    todo: Agregar validacion al numero al phoneNumber
     todo: documentar todo el codigo actual
     
     */
@@ -86,7 +87,19 @@ export class UsersController {
         }
     }
 
-    public updateUser = (req: Request, res: Response) => {
+    public updateUser = async (req: Request, res: Response) => {
+
+        const [ hasError, isValid ] = this.validateUpdateUserInput(req.body);
+        if ( hasError ) return res.status(400).json({ error: hasError });
+        
+        if (req.body.files) {
+            const imageFile = req.body.files.at(0) as UploadedFile;
+            const imageURL = await this.s3Service.uploadImage(imageFile);
+
+            req.body.img = imageURL;
+        } else {
+            req.body.img = null;
+        }
 
         const id = +req.params.id;
        
@@ -152,6 +165,28 @@ export class UsersController {
             return ['dateOfBirth must be a valid Date']
         }
         
+        return [undefined, true];
+    }
+
+    private validateUpdateUserInput = (object: {[key: string]: any}) => {
+
+        const { 
+            email,
+            dateOfBirth,
+        } = object;
+
+        let newDateOfBirth = new Date(dateOfBirth);
+        if(dateOfBirth) {
+            if(newDateOfBirth.toString() === 'Invalid Date') {
+                return ['CompletedAt must be a valid date'];
+            }
+        };
+
+        if (email) {
+            if (!regularExps.email.test(email)) return ['Email must be a valid email'];
+        }
+
+
         return [undefined, true];
     }
 }
