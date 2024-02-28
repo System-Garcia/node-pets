@@ -45,6 +45,7 @@ export class CreateUserDto {
         if ( !firstName ) return ['Missing firstName'];
         if ( !lastName ) return ['Missing lastName'];
         if ( !phoneNumber ) return ['Missing phone number'];
+        if ( !regularExps.phoneNumber.test(phoneNumber)) return ['Phone number is not valid']
         if ( !email ) return ['Missing email'];
         if ( !regularExps.email.test(email)) return ['Email is not valid'];
         if ( !password ) return ['Missing password'];

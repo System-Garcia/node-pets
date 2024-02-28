@@ -77,6 +77,10 @@ export class UpdateUserDto {
             if (!regularExps.email.test(email)) return ['Email must be a valid email'];
         }
 
+        if (phoneNumber) {
+            if (regularExps.phoneNumber.test(phoneNumber)) return ['Phone number is not valid']
+        }
+
 
         return [undefined, new UpdateUserDto({
             id,
