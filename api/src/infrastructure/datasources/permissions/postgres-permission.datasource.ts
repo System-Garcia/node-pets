@@ -47,6 +47,7 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
         const [ total, permissions ] = await Promise.all([
             prisma.permission.count(),
             prisma.permission.findMany({
+                where: { isDeleted: false },
                 skip: skip,
                 take: limit,
             })
@@ -80,7 +81,7 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
        try {
 
         const permission = await prisma.permission.findUnique({
-            where: { id },
+            where: { id, isDeleted: false },
         });
 
         if (!permission) throw CustomError.notFound(`Permission with id ${id} not found`);
@@ -101,7 +102,7 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
             await this.findById(updatePermissionDto.id);
 
             const permission = await prisma.permission.update({
-                where: { id },
+                where: { id, isDeleted: false },
                 data: updatePermissionDto.values
             });
 
@@ -118,8 +119,9 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
         try {
             await this.findById(id);
 
-            const permissionDeleted = await prisma.permission.delete({
-                where: { id },
+            const permissionDeleted = await prisma.permission.update({
+                data: { isDeleted: true },
+                where: { id, isDeleted: false },
             });
 
             return PermissionEntity.fromObject(permissionDeleted);
@@ -135,7 +137,8 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
             
             const permission = await prisma.permission.findUnique({
                 where: {
-                    id: permissionId
+                    id: permissionId,
+                    isDeleted: false,
                 }
             });
 

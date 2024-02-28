@@ -29,10 +29,16 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       const [total, users] = await Promise.all([
         prisma.user.count(),
         prisma.user.findMany({
+          where: { isDeleted: false },
           skip: skip,
           take: limit,
           include: {
-            permissions: true,
+            permissions: {
+              select: {
+                id: true,
+                name: true,
+              }
+            },
           }
         }),
       ]);
@@ -99,7 +105,12 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
           }
         },
         include: {
-          permissions: true,
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
         }
       });
 
@@ -113,9 +124,14 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
   async findById(id: number): Promise<UserEntity> {
     try {
       const user = await prisma.user.findUnique({
-        where: { id },
+        where: { id, isDeleted: false },
         include: {
-          permissions: true,
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
         }
       });
 
@@ -132,10 +148,16 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
     try {
       await this.findById(id);
 
-      const deleted = prisma.user.delete({
+      const deleted = prisma.user.update({
+        data: { isDeleted: true },
         where: { id },
         include: {
-          permissions: true,
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
         }
       });
      
@@ -152,9 +174,14 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       const { email, password } = loginUserDto;
 
       const user = await prisma.user.findUnique( {
-        where: { email },
+        where: { email, isDeleted: false },
         include: {
-          permissions: true,
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
         }
       });
 
@@ -211,7 +238,12 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
           where: { id: updateUserDto.id },
           data: userData,
           include: {
-            permissions: true,
+            permissions: {
+              select: {
+                id: true,
+                name: true,
+              }
+            },
           }
         });
 
@@ -254,7 +286,12 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
           }
         },
         include: {
-          permissions: true,
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
         }
       });
 
@@ -272,8 +309,8 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       const userExists = await prisma.user.findFirst({
         where: {
           OR: [
-            { email },
-            { phoneNumber }
+            { email, isDeleted: false },
+            { phoneNumber, isDeleted: false }
           ]
         }
       });

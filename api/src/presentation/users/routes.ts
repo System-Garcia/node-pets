@@ -47,6 +47,7 @@ export class UserRoutes {
         router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin, fileUploadMiddleware, FileUploadMiddleware.objectToArray ], userController.updateUser);
         router.post('/login', userController.loginUser);
         router.put('/:id/permissions',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ], userController.updatePermissions)
+        router.delete('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin ], userController.deleteUser)
 
         return router;
     }

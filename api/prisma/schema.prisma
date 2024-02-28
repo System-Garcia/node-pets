@@ -20,6 +20,7 @@ model Pet {
   img       String    @default("placeholer.png") @db.VarChar
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  isDeleted Boolean   @default(false)
   owner     User      @relation(fields: [ownerId], references: [id])
   species   Species   @relation(fields: [speciesId], references: [id])
   comments  Comment[]
@@ -38,6 +39,7 @@ model User {
   img            String       @default("placeholder.png") @db.VarChar
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  isDeleted      Boolean   @default(false)
   pets           Pet[]
   comments       Comment[]
   permissions    Permission[]
@@ -49,6 +51,7 @@ model Reward {
   description String
   petId       Int
   locationId  Int
+  isDeleted Boolean    @default(false)
   pet         Pet      @relation(fields: [petId], references: [id])
   location    Location @relation(fields: [locationId], references: [id])
 }
@@ -56,12 +59,14 @@ model Reward {
 model Permission {
   id    Int    @id @default(autoincrement())
   name  String
+  isDeleted Boolean   @default(false)
   users User[]
 }
 
 model Species {
   id   Int    @id @default(autoincrement())
   name String
+  isDeleted Boolean   @default(false)
   pets Pet[]
 }
 
@@ -70,6 +75,7 @@ model Location {
   address String
   city    String
   country String
+  isDeleted Boolean   @default(false)
   Reward  Reward[]
 }
 
@@ -78,6 +84,7 @@ model Comment {
   text   String
   userId Int
   petId  Int
+  isDeleted Boolean   @default(false)
   user   User   @relation(fields: [userId], references: [id])
   pet    Pet    @relation(fields: [petId], references: [id])
 }

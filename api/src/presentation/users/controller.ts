@@ -199,4 +199,9 @@ export class UsersController {
 
         return [undefined, true];
     }
+
+    // TODO: Implementar metodo
+    public deleteUser = async (req: Request, res: Response) => {
+        return res.json('Borrando')
+    }
 }
