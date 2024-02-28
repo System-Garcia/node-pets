@@ -5,6 +5,7 @@ import { UpdateUserPermissionsDto } from "../dtos/users/update-permissions.dto";
 import { UpdateUserDto } from "../dtos/users/update-user.dto";
 import { UserEntity } from "../entities/user.entity";
 import { PaginatedUsersResponse } from "../interfaces";
+import { UserSearchCriteria } from "../interfaces/user-search-criteria.interface";
 
 
 export abstract class UserDatasource {
@@ -22,5 +23,7 @@ export abstract class UserDatasource {
     abstract updateUserById(updateUserDto: UpdateUserDto): Promise<UserEntity>;
 
     abstract updatePermissionsById(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity>;
+
+    abstract existsByEmailOrPhoneNumber(criteria: UserSearchCriteria): Promise<boolean>;
 
 }

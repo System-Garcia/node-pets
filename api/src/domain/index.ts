@@ -32,6 +32,7 @@ export * from './dtos/users/update-permissions.dto';
 export * from './interfaces';
 export * from './interfaces/paginated-user-res.interface';
 export * from './interfaces/location.interface';
+export * from './interfaces/user-search-criteria.interface';
 
 // Use cases
 export * from './use-cases/user/create-user';

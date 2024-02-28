@@ -39,4 +39,28 @@ export class S3Service {
             throw error;
         }
     }
+
+    async deleteImage(url: string): Promise<{ success: boolean; error?: Error}> {
+
+        const key = url.split('/').at(-1);
+
+        if(!key) {
+            throw new Error('Invalid image URL for deletion');
+        };
+
+        const deleteParams = {
+            Bucket: this.bucketName,
+            Key: key,
+        };
+
+        try {
+            await this.s3.deleteObject(deleteParams).promise();
+
+            return { success: true };
+        } catch (error) {
+            const isError = error instanceof Error;
+            return { success: false, error: isError ? error: new Error('Error desconocido al borrar la imagen') };
+        }
+
+    }
 }

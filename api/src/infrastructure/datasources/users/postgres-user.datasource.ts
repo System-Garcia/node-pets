@@ -11,6 +11,7 @@ import {
   UpdateUserPermissionsDto,
   UserDatasource,
   UserEntity,
+  UserSearchCriteria,
 } from "../../../domain";
 
 
@@ -260,6 +261,27 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       return UserEntity.fromObject(userUpdated);
     } catch (error) {
       throw error;
+    }
+  }
+
+  async existsByEmailOrPhoneNumber(criteria: UserSearchCriteria): Promise<boolean> {
+    
+    try {
+      const { email, phoneNumber} = criteria;
+
+      const userExists = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { email },
+            { phoneNumber }
+          ]
+        }
+      });
+
+      return !!userExists;
+
+    } catch (error) {
+      throw error
     }
   }
 }

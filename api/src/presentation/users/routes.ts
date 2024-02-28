@@ -9,6 +9,7 @@ import fileUpload from "express-fileupload";
 import { FileUploadMiddleware } from "../middlewares/file-upload.middleware";
 import { S3Service } from "../services/s3.service";
 import { envs } from "../../config";
+import { userExistsMiddleware } from "../middlewares/userExistsMiddleware";
 
 
 export class UserRoutes {
@@ -33,6 +34,7 @@ export class UserRoutes {
         const userController = new UsersController(userRepository, s3Service);
 
         const authMiddleware = new AuthMiddleware(postgresDatasource);
+        const existsUserMiddleware = userExistsMiddleware(userRepository);
 
         const fileUploadMiddleware = fileUpload({
             limits: { fileSize: 5 * 1024 * 1024 },
@@ -41,7 +43,7 @@ export class UserRoutes {
         });
 
         router.get('/',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ] ,userController.getUsers);
-        router.post('/', [ fileUploadMiddleware, FileUploadMiddleware.containFiles ], userController.createUser);
+        router.post('/', [ fileUploadMiddleware, existsUserMiddleware, FileUploadMiddleware.containFiles ], userController.createUser);
         router.put('/:id', [ authMiddleware.validateJWT, authMiddleware.verifySelfOrAdmin, fileUploadMiddleware, FileUploadMiddleware.objectToArray ], userController.updateUser);
         router.post('/login', userController.loginUser);
         router.put('/:id/permissions',[ authMiddleware.validateJWT, authMiddleware.verifyAdmin ], userController.updatePermissions)
@@ -50,5 +52,3 @@ export class UserRoutes {
     }
 
 }
-
-// TODO: Implementar el update de imagen en los usuarios

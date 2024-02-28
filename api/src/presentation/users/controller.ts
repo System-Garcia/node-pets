@@ -41,13 +41,15 @@ export class UsersController {
 
     public  createUser = async (req: Request, res: Response) => {
 
+        let imageURL: string | null = null;
+
         try {
 
             const [ hasError, isValid ] = this.validateCreateUserInput(req.body);
             if (hasError) return res.status(400).json({ error: hasError }); 
 
             const imageFile = req.body.files.at(0) as UploadedFile;
-            const imageURL = await this.s3Service.uploadImage(imageFile);
+            imageURL = await this.s3Service.uploadImage(imageFile);
             
             const [error, createUserDto] = CreateUserDto.create({...req.body, img: imageURL});
             if (error) return res.status(400).json({ error });
@@ -57,7 +59,13 @@ export class UsersController {
             res.json(user)
                 
         } catch (error) {
-            handleError(error, res)
+
+            if (imageURL) {
+                const deletionResult = await this.s3Service.deleteImage(imageURL);
+                if(!deletionResult.success) console.log(deletionResult.error);
+            }
+        
+            handleError(error, res);
         }
 
        
@@ -68,8 +76,8 @@ export class UsersController {
     
     todo: Agregar validacion al numero al phoneNumber
     todo: Agregar campo 'isDeleted' a la base de datos en lugar de borrar literalmente los registros'
-    todo: Implementar validacion de email
     todo: documentar todo el codigo actual
+    todo: Agregar un middleware de manejo de errores
     
     */
     public loginUser = async (req: Request, res: Response) => {

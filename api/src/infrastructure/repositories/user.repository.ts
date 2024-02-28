@@ -1,4 +1,4 @@
-import { PaginationDto, UserEntity, CreateUserDto, UserDatasource, PaginatedUsersResponse, UpdateUserDto } from "../../domain";
+import { PaginationDto, UserEntity, CreateUserDto, UserDatasource, PaginatedUsersResponse, UpdateUserDto, UserSearchCriteria } from "../../domain";
 import { LoginUserDto } from "../../domain/dtos/users/login-user.dto";
 import { UpdateUserPermissionsDto } from "../../domain/dtos/users/update-permissions.dto";
 import { UserRepository } from "../../domain/repositories/user.repository";
@@ -33,6 +33,10 @@ export class UserRepositoryImpl implements UserRepository {
 
     updatePermissionsById(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity> {
         return this.userDatasource.updatePermissionsById(updateUserPermissionsDto);
+    }
+
+    existsByEmailOrPhoneNumber(criteria: UserSearchCriteria): Promise<boolean> {
+        return this.userDatasource.existsByEmailOrPhoneNumber(criteria);
     }
     
 }
