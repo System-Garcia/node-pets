@@ -148,7 +148,7 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
     try {
       await this.findById(id);
 
-      const deleted = prisma.user.update({
+      const userDeleted = await prisma.user.update({
         data: { isDeleted: true },
         where: { id },
         include: {
@@ -161,7 +161,7 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
         }
       });
      
-      return UserEntity.fromObject(deleted);
+      return UserEntity.fromObject(userDeleted);
     } catch (error) {
   
       throw error;

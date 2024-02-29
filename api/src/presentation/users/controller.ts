@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   CreateUser,
   CreateUserDto,
+  DeleteUser,
   GetUsers,
   LoginUser,
   LoginUserDto,
@@ -200,8 +201,16 @@ export class UsersController {
         return [undefined, true];
     }
 
-    // TODO: Implementar metodo
     public deleteUser = async (req: Request, res: Response) => {
-        return res.json('Borrando')
+
+        const id = +req.params.id;
+
+        if ( !id ) return res.status(400).json({ error: 'id is required'}); 
+        if ( isNaN(id)) return res.status(400).json({ error: 'id must be a valid number'});
+    
+        new DeleteUser(this.userRepository)
+            .execute(id)
+            .then( deletedUser => res.json(deletedUser))
+            .catch( error => handleError(error, res))
     }
 }
