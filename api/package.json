@@ -8,7 +8,7 @@
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/app.js",
     "prisma:migrate:prod": "prisma migrate deploy",
-    "seed": "ts-node-dev ./prisma/seed.ts",
+    "seed": "ts-node-dev ./prisma/seed/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
