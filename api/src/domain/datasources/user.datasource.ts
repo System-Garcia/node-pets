@@ -12,7 +12,7 @@ export abstract class UserDatasource {
 
     abstract getAll(pagination: PaginationDto): Promise<PaginatedUsersResponse>;
 
-    abstract create(createPetDto: CreateUserDto): Promise<UserEntity>;
+    abstract create(createUserDto: CreateUserDto): Promise<UserEntity>;
 
     abstract findById(id: number): Promise<UserEntity>;
 
