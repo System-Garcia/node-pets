@@ -33,6 +33,7 @@ export * from './interfaces';
 export * from './interfaces/paginated-user-res.interface';
 export * from './interfaces/location.interface';
 export * from './interfaces/user-search-criteria.interface';
+export * from './interfaces/paginated-pet-res.interface';
 
 // Use cases
 export * from './use-cases/user/create-user';
@@ -47,3 +48,4 @@ export * from './use-cases/permissions/update-permission';
 export * from './use-cases/permissions/delete-permission';
 export * from './use-cases/user/update-permissions';
 export * from './use-cases/user/update-user';
+export * from './use-cases/pet/get-pets';
