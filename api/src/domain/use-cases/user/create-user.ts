@@ -1,18 +1,21 @@
 import { CreateUserDto } from "../../dtos/users/create-user.dto";
-import { UserEntity } from "../../entities/user.entity";
+import { UserResponseDto } from "../../dtos/users/user-response.dto";
 import { UserRepository } from "../../repositories/user.repository";
 
 
 export interface CreateUserUseCase {
-    execute(dto: CreateUserDto): Promise<UserEntity>
+    execute(dto: CreateUserDto): Promise<UserResponseDto>
 }
 
 export class CreateUser implements CreateUserUseCase{
 
     constructor(private readonly repository: UserRepository) { }
 
-    execute(dto: CreateUserDto): Promise<UserEntity> {
-        return this.repository.create(dto);
+    async execute(dto: CreateUserDto): Promise<UserResponseDto> {
+        
+        const userEntity = await this.repository.create(dto);
+
+        return UserResponseDto.create(userEntity);
     };
 
 }

@@ -1,8 +1,8 @@
-import { UserEntity } from "../../entities/user.entity";
+import { UserResponseDto } from "../../dtos/users/user-response.dto";
 import { UserRepository } from "../../repositories/user.repository";
 
 interface GetUserUseCase {
-    execute(id: number): Promise<UserEntity>
+    execute(id: number): Promise<UserResponseDto>
 };
 
 
@@ -10,8 +10,10 @@ export class GetUser implements GetUserUseCase {
 
     constructor(private readonly repository: UserRepository) { }
 
-    execute(id: number): Promise<UserEntity> {
-        return this.repository.findById(id);
+    async execute(id: number): Promise<UserResponseDto> {
+        const user = await this.repository.findById(id);
+
+        return UserResponseDto.create(user)
     };
 
 }

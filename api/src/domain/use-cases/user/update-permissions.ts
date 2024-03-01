@@ -1,10 +1,9 @@
 import { UpdateUserPermissionsDto } from "../../dtos/users/update-permissions.dto";
-import { UpdateUserDto } from "../../dtos/users/update-user.dto";
-import { UserEntity } from "../../entities/user.entity";
+import { UserResponseDto } from "../../dtos/users/user-response.dto";
 import { UserRepository } from "../../repositories/user.repository";
 
 interface UpdatePermissionsUserUseCase {
-    execute(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity>;
+    execute(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserResponseDto>;
 };
 
 
@@ -14,7 +13,9 @@ export class UpdatePermissionsUser implements UpdatePermissionsUserUseCase {
         private readonly repository: UserRepository
     ) {}
 
-    async execute(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserEntity> {
-        return await this.repository.updatePermissionsById(updateUserPermissionsDto);
+    async execute(updateUserPermissionsDto: UpdateUserPermissionsDto): Promise<UserResponseDto> {
+        const updatedUser = await this.repository.updatePermissionsById(updateUserPermissionsDto);
+
+        return UserResponseDto.create(updatedUser);
     }
 }

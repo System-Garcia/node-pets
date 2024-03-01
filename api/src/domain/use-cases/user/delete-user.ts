@@ -1,16 +1,18 @@
-import { UserEntity } from "../../entities/user.entity";
+import { UserResponseDto } from "../../dtos/users/user-response.dto";
 import { UserRepository } from "../../repositories/user.repository";
 
 export interface DeleteUserUseCase {
-    execute(id: number): Promise<UserEntity>
+    execute(id: number): Promise<UserResponseDto>
 }
 
 export class DeleteUser implements DeleteUserUseCase{
 
     constructor(private readonly repository: UserRepository) {}
 
-    execute(id: number): Promise<UserEntity> {  
-        return this.repository.deleteById(id);
+    async execute(id: number): Promise<UserResponseDto> {  
+        const user = await this.repository.deleteById(id);
+
+        return UserResponseDto.create(user);
     };
 
 }
