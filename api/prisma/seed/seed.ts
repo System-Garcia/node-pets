@@ -28,6 +28,7 @@ async function main() {
         password: BcryptAdapter.hash('123456'), 
         dateOfBirth: new Date('1990-01-01T00:00:00.000Z'),
         img: 'placeholder.png',
+        emailValidated: true,
         permissions: {
           connect: [{ id: adminPermission.id }],
         },
@@ -71,7 +72,7 @@ async function main() {
       data: seedData.comments,
     })
   
-    console.log(`Database seeded\n Admin user: ${JSON.stringify(user)}`);
+    console.log('Database seeded\n Admin user: ', user);
   }
   
 main()

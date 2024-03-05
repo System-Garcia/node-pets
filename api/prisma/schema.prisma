@@ -23,7 +23,6 @@ model Pet {
   isDeleted Boolean   @default(false)
   owner     User      @relation(fields: [ownerId], references: [id])
   species   Species   @relation(fields: [speciesId], references: [id])
-  comments  Comment[]
   rewards   Reward[]
 }
 
@@ -54,6 +53,7 @@ model Reward {
   isDeleted Boolean    @default(false)
   pet         Pet      @relation(fields: [petId], references: [id])
   location    Location @relation(fields: [locationId], references: [id])
+  comments    Comment[]
 }
 
 model Permission {
@@ -83,8 +83,8 @@ model Comment {
   id     Int    @id @default(autoincrement())
   text   String
   userId Int
-  petId  Int
+  rewardId   Int
   isDeleted Boolean   @default(false)
   user   User   @relation(fields: [userId], references: [id])
-  pet    Pet    @relation(fields: [petId], references: [id])
+  reward     Reward    @relation(fields: [rewardId], references: [id])
 }
