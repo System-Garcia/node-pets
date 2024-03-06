@@ -19,10 +19,10 @@ export class AuthRoutes {
 
         const router = Router();
 
-        const permissionDatasource = new PostgresPermissionDatasourceImpl();
+        const permissionDatasource = new PostgresPermissionDatasourceImpl(envs.WEBSERVICE_URL);
         const permissionRepository = new PermissionRepositoryImpl(permissionDatasource);
 
-        const userDatasource = new PostgresUserDatasourceImpl(permissionRepository);
+        const userDatasource = new PostgresUserDatasourceImpl(permissionRepository, envs.WEBSERVICE_URL);
         const userRepository = new UserRepositoryImpl(userDatasource);
 
         const emailService = new SmtpEmailService(
