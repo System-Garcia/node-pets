@@ -17,10 +17,10 @@ export class UserRoutes {
 
         const router = Router();
 
-        const permissionDatasource = new PostgresPermissionDatasourceImpl();
+        const permissionDatasource = new PostgresPermissionDatasourceImpl(envs.WEBSERVICE_URL);
         const permissionRepository = new PermissionRepositoryImpl(permissionDatasource);
         
-        const postgresDatasource = new PostgresUserDatasourceImpl(permissionRepository);
+        const postgresDatasource = new PostgresUserDatasourceImpl(permissionRepository, envs.WEBSERVICE_URL);
         const userRepository = new UserRepositoryImpl(postgresDatasource);
 
         const s3Service = new S3Service({

@@ -4,6 +4,9 @@ import { CreatePetDto, PaginatedPetsResponse, PaginationDto, PetDatasource, PetE
 
 export class PostgresPetDatasourceImpl implements PetDatasource {
 
+    constructor(
+        private readonly webServiceUrl: string,
+    ) {}
 
     create(createPetDto: CreatePetDto): Promise<PetEntity> {
         throw new Error("Method not implemented.");
@@ -28,10 +31,10 @@ export class PostgresPetDatasourceImpl implements PetDatasource {
             const nextPage =
                 (page * limit) >= total
                 ? null
-                : `/api/pets?page=${page + 1}&limit=${limit}`;
+                : `${this.webServiceUrl}/pets?page=${page + 1}&limit=${limit}`;
 
             const prevPage =
-                (page - 1) > 0 ? `api/pets?page=${page - 1}&limit=${limit}` : null;
+                (page - 1) > 0 ? `${this.webServiceUrl}/pets?page=${page - 1}&limit=${limit}` : null;
             
             return {
                 page,

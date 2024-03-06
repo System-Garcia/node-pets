@@ -4,6 +4,7 @@ import { PermissionRepositoryImpl } from '../../infrastructure/repositories/perm
 import { PermissionController } from "./controller";
 import { AuthMiddleware } from "../middlewares/auth.middleware";
 import { PostgresUserDatasourceImpl } from "../../infrastructure/datasources/users/postgres-user.datasource";
+import { envs } from "../../config";
 
 
 
@@ -12,12 +13,12 @@ export class PermissionRoutes {
     static get routes(): Router {
 
         const router = Router();
-        const postgresDatasource = new PostgresPermissionDatasourceImpl();
+        const postgresDatasource = new PostgresPermissionDatasourceImpl(envs.WEBSERVICE_URL);
         const permissionRepository = new PermissionRepositoryImpl(postgresDatasource);
         const permissionController = new PermissionController(permissionRepository);
 
 
-        const postgresUserDatasource = new PostgresUserDatasourceImpl(permissionRepository);
+        const postgresUserDatasource = new PostgresUserDatasourceImpl(permissionRepository, envs.WEBSERVICE_URL);
         const authMiddleware = new AuthMiddleware(postgresUserDatasource);
 
         router.use( authMiddleware.validateJWT );

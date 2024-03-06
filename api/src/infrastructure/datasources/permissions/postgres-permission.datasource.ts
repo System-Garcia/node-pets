@@ -9,6 +9,10 @@ import { PaginatedPermissionResponse } from "../../../domain/interfaces/paginate
 
 
 export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
+
+    constructor(
+        private readonly webServiceUrl: string,
+    ) {}
     
     async create(createPermissionDto: CreatePermissionDto): Promise<PermissionEntity> {
         
@@ -57,11 +61,11 @@ export class PostgresPermissionDatasourceImpl implements PermissionDatasource{
         const nextPage =
             page * limit >= total
                 ? null
-                : `api/permissions?page=${ page + 1}&limit=${limit}`;
+                : `${this.webServiceUrl}/permissions?page=${ page + 1}&limit=${limit}`;
         
         const prevPage =
             page - 1 > 0
-                ? `api/permissions?page=${ page - 1}&limit=${limit}`
+                ? `${this.webServiceUrl}/permissions?page=${ page - 1}&limit=${limit}`
                 : null;
                 
         

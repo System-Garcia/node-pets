@@ -2,6 +2,7 @@ import { Router } from "express";
 import { PostgresPetDatasourceImpl } from "../../infrastructure/datasources/pets/postgres-pet.datasource";
 import { PetRepositoryImpl } from "../../infrastructure/repositories/pet.repository";
 import { PetController } from "./controller";
+import { envs } from "../../config";
 
 
 
@@ -12,7 +13,7 @@ export class PetRoutes {
 
         const router = Router();
 
-        const postgresPetDatasource = new PostgresPetDatasourceImpl();
+        const postgresPetDatasource = new PostgresPetDatasourceImpl(envs.WEBSERVICE_URL);
         const petRepository = new PetRepositoryImpl(postgresPetDatasource);
 
         const petController = new PetController(petRepository);
