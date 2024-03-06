@@ -321,4 +321,49 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       throw error
     }
   }
+
+  async findByEmail(email: string): Promise<UserEntity> {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { email, isDeleted: false },
+        include: {
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
+        }
+      });
+
+      if (!user) throw CustomError.notFound(`User with email ${email} not found`);
+
+      return UserEntity.fromObject(user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async validateUserEmail(Id: number): Promise<UserEntity> {
+    try {
+      const user = await this.findById(Id);
+
+      const userUpdated = await prisma.user.update({
+        where: { id: user.id },
+        data: { emailValidated: true },
+        include: {
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
+        }
+      });
+
+      return UserEntity.fromObject(userUpdated);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

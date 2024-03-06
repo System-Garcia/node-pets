@@ -26,4 +26,8 @@ export abstract class UserDatasource {
 
     abstract existsByEmailOrPhoneNumber(criteria: UserSearchCriteria): Promise<boolean>;
 
+    abstract findByEmail(email: string): Promise<UserEntity>;
+
+    abstract validateUserEmail(Id: number): Promise<UserEntity>;
+
 }

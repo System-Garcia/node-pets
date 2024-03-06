@@ -38,5 +38,13 @@ export class UserRepositoryImpl implements UserRepository {
     existsByEmailOrPhoneNumber(criteria: UserSearchCriteria): Promise<boolean> {
         return this.userDatasource.existsByEmailOrPhoneNumber(criteria);
     }
+
+    findByEmail(email: string): Promise<UserEntity> {
+        return this.userDatasource.findByEmail(email);
+    }
+
+    validateUserEmail(Id: number): Promise<UserEntity> {
+        return this.userDatasource.validateUserEmail(Id);
+    }
     
 }
