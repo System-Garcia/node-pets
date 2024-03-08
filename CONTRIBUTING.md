@@ -1,64 +1,55 @@
-# PIS
+# NODE-PETS Contributions
 
-Estamos emocionados de que estés interesado en contribuir a NODE-PETS. Cada contribución es bienvenida y muy valorada.
+We are excited that you are interested in contributing to NODE-PETS. Every contribution is welcome and highly valued.
 
 ## Roles
 
-- **Contribuyentes**: Desarrolladores que deseen añadir nuevas características o mejorar las existentes.
-- **Revisor Maestro**: Encargado de revisar y aprobar los Pull Requests.
+- **Contributors**: Developers who wish to add new features or improve existing ones.
+- **Lead Reviewer**: Responsible for reviewing and approving Pull Requests.
 
-## Tareas
+## Tasks
 
-Contribuyentes:
-- Desarrollar nuevas características y correcciones de bugs. [Ver tareas](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature")
-- Escribir y actualizar la documentación. [Actualizar Documentación](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Adocs)
-- Optimizar el rendimiento del código existente. [Optimizar Rendimiento](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Aperf)
-- Diseñar interfaces de usuario y experiencia de usuario. [Diseño UI/UX](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3A"ui/ux")
-- Traducir la aplicación a otros idiomas. [Traducciones](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3A"i18n")
-- Crear y mejorar tests automatizados. [Mejorar Tests](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Atest)
-- Refactorizar código no eficiente o difícil de entender. [Refactorización](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Arefactor)
-- Ayudar con el manejo de dependencias y actualizaciones. [Gestión de Dependencias](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Adependencies)
-- Contribuir a la estrategia general y a la toma de decisiones. [Estrategia y Planificación](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3A"strategy")
-- Reportar y manejar errores encontrados por los usuarios. [Reportar Errores](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"bug")
+Contributors:
+- Develop new features and bug fixes. [View tasks](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature")
+- Write and update documentation. [Update Documentation](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Adocs)
+- Optimize the performance of existing code. [Optimize Performance](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Aperf)
+- Design user interfaces and user experience. [UI/UX Design](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3A"ui/ux")
+- Translate the application into other languages. [Translations](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3A"i18n")
+- Create and improve automated tests. [Improve Tests](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Atest)
+- Refactor inefficient or hard-to-understand code. [Refactoring](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Arefactor)
+- Help with dependency management and updates. [Dependency Management](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3Adependencies)
+- Contribute to the overall strategy and decision-making. [Strategy and Planning](https://github.com/system-garcia/node-pets/issues?q=is%3Aissue+is%3Aopen+label%3A"strategy")
+- Report and handle errors found by users. [Report Bugs](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"bug")
 
-Revisor Maestro:
-- Revisar los Pull Requests para asegurarse de que cumplen con los estándares. [Revisar PRs](https://github.com/system-garcia/node-pets/pulls)
-- Asegurar que el código siga los estándares del proyecto. [Ver Estándares](https://github.com/system-garcia/node-pets/wiki/Coding-Standards)
-- Coordinar la publicación de nuevas versiones. [Coordinar Lanzamientos](https://github.com/system-garcia/node-pets/projects/1)
-- Facilitar la discusión sobre propuestas de cambios. [Discutir Propuestas](https://github.com/system-garcia/node-pets/discussions)
-- Mantener el roadmap del proyecto actualizado. [Actualizar Roadmap](https://github.com/system-garcia/node-pets/projects/1)
+Lead Reviewer:
+- Review Pull Requests to ensure they meet standards. [Review PRs](https://github.com/system-garcia/node-pets/pulls)
+- Ensure that the code follows the project's standards. [View Standards](https://github.com/system-garcia/node-pets/wiki/Coding-Standards)
+- Coordinate the release of new versions. [Coordinate Releases](https://github.com/system-garcia/node-pets/projects/1)
+- Facilitate discussion on change proposals. [Discuss Proposals](https://github.com/system-garcia/node-pets/discussions)
+- Keep the project roadmap updated. [Update Roadmap](https://github.com/system-garcia/node-pets/projects/1)
 
-...
+Please follow the GitHub workflow for Pull Requests and ensure you comply with our style and contribution guides.
 
+## Specific Contributions
 
+- **Product Store**: Please check issues tagged with `feature:store` for tasks related to the store. [Product Store Tasks](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature:store")
+- **Social Section**: Issues tagged with `feature:social` are for improvements in our social network. [Social Section Improvements](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature:social")
+- **Funeral Services**: To contribute to this sensitive area, look for issues with the `feature:funeral` label. [Contribute to Funeral Services](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature:funeral")
 
-Por favor, sigue el flujo de trabajo de GitHub para las Pull Requests y asegúrate de cumplir con nuestras guías de estilo y contribución.
+## Commit Conventions
 
-## Contribuciones Específicas
+When contributing to the project, we ask you to follow our conventions for commit messages:
 
-## Contribuciones Específicas
+- `feat` - A new feature is introduced with the changes.
+- `fix` - A bug has been fixed.
+- `chore` - Changes that are not related to a fix or feature and do not modify source or test files (e.g., updating dependencies).
+- `refactor` - Refactored code that neither fixes a bug nor adds a feature.
+- `docs` - Updates to documentation like the README or other markdown files.
+- `style` - Changes that do not affect the meaning of the code, mostly formatting, such as whitespace, missing semicolons, etc.
+- `test` - Including new or correcting previous tests.
+- `perf` - Performance improvements.
+- `ci` - Related to continuous integration.
+- `build` - Changes that affect the build system or external dependencies.
+- `revert` - Reverts a previous commit.
 
-- **Tienda de Productos**: Por favor, consulta los issues etiquetados con `feature:tienda` para tareas relacionadas con la tienda. [Tareas Tienda de Productos](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature:tienda")
-- **Apartado Social**: Los issues etiquetados con `feature:social` son para mejoras en nuestra red social. [Mejoras Apartado Social](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature:social")
-- **Servicios de Velorio**: Para contribuir a este apartado sensible, busca los issues con la etiqueta `feature:velorio`. [Contribuir a Servicios de Velorio](https://github.com/system-garcia/node-pets/issues?q=is%3Aopen+is%3Aissue+label%3A"feature:velorio")
-
-
-## Convenios de Commit
-
-Cuando contribuyas al proyecto, te pedimos que sigas nuestras convenciones para los mensajes de commit:
-
-- `feat` - Una nueva característica es introducida con los cambios.
-- `fix` - Se ha corregido un error.
-- `chore` - Cambios que no están relacionados con una corrección o una característica y que no modifican los archivos de código fuente ni de pruebas (por ejemplo, actualizar dependencias).
-- `refactor` - Código refactorizado que ni corrige un error ni añade una característica.
-- `docs` - Actualizaciones a la documentación como el README u otros archivos markdown.
-- `style` - Cambios que no afectan el significado del código, generalmente relacionados con el formato, como espacios en blanco, puntos y comas faltantes, etc.
-- `test` - Incluyendo nuevos o corrigiendo pruebas anteriores.
-- `perf` - Mejoras de rendimiento.
-- `ci` - Relacionado con la integración continua.
-- `build` - Cambios que afectan el sistema de compilación o dependencias externas.
-- `revert` - Revierte un commit anterior.
-
-...
-
-Para más detalles sobre cómo empezar, revisa nuestro archivo `pull_request_template.md`.
+For more details on how to get started, check out our `pull_request_template.md` file.

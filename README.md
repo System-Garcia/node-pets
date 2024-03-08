@@ -15,3 +15,49 @@ Join us in creating a caring and vigilant community where every lost pet stands 
   - See [client/README.md](client/README.md) for more details.
 - `api/`: Contains all the source code for the project's backend.
   - See [api/README.md](api/README.md) for more details.
+
+
+## Technology Stack
+
+### Frontend (`client/` directory)
+The Lost Pet Finder frontend is built using the following technologies:
+- **UI Framework**: [React](https://reactjs.org/) for building a dynamic and interactive user interface.
+- **State Management**: [Redux](https://redux.js.org/) for managing and centralizing the application's state, facilitating communication between components.
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS, allowing for rapid UI development without leaving your HTML.
+- **Routing**: [React Router](https://reactrouter.com/) for navigation within the application.
+
+### Backend (`api/` directory)
+The Lost Pet Finder backend leverages these technologies:
+- **Programming Language**: [Node.js](https://nodejs.org/) with [TypeScript](https://www.typescriptlang.org/), combining the runtime efficiency of Node.js with the type safety of TypeScript.
+- **Web Framework**: [Express](https://expressjs.com/) for efficient handling of server requests and responses.
+- **Database**: [PostgreSQL](https://www.postgresql.org/) for storing detailed information about lost pets, their owners, and any rewards offered.
+- **ORM (Object-Relational Mapping)**: [Prisma](https://www.prisma.io/) for database access and management, offering a powerful and type-safe API for querying and manipulating data.
+- **Email Service**: [Nodemailer](https://nodemailer.com/about/) for sending emails directly from our server, crucial for notifications and user verification processes.
+- **Image Storage**: [Amazon S3](https://aws.amazon.com/s3/) for scalable and secure cloud storage solutions for our application's images and assets.
+
+
+### Development and Deployment Tools
+- **Version Control**: Git for tracking changes and facilitating code collaboration.
+- **Containerization**: [Docker](https://www.docker.com/) for packaging the application and its dependencies into a container for easy deployment.
+- **API Testing and Collaboration Tool**: [Postman](https://www.postman.com/) for designing, testing, documenting, and sharing APIs within the team.
+
+## Additional Project Details
+
+### Development Scripts
+- `npm run dev`: Starts the development server with live reloading.
+- `npm run build`: Compiles TypeScript to JavaScript for production.
+- `npm run start`: Runs the built application.
+- `npm run prisma:migrate:prod`: Deploys database migrations in production.
+- `npm run seed`: Populates the database with initial seed data.
+
+### Environment Variable Management
+We use `dotenv` and `env-var` for managing environment variables, ensuring that our application configuration is secure and adaptable to different environments.
+
+### Security Practices
+- **Password Hashing**: `bcryptjs` for secure password hashing.
+- **Authentication**: `jsonwebtoken` for managing JWTs, ensuring secure and efficient user authentication.
+
+### Future Considerations
+- **Testing**: We aim to incorporate testing to ensure reliability and stability. Contributions in this area are welcome.
+
+

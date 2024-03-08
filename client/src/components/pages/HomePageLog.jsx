@@ -1,7 +1,19 @@
 import React from 'react';
-import "../../styles/homepage.css"
+import "../../styles/homepageL.css"
+import { useNavigate } from 'react-router-dom';
+import peito from '../../img/peito.png';
 
-const HomePage = () => {
+const HomePageLog = () => {
+  const navigate = useNavigate();
+
+  const handleSignInClick = () => {
+    navigate('/login');
+  };
+
+  const handleSignUpClick = () => {
+    navigate('/signup');
+  };
+
   return (
     <>
       <header>
@@ -11,8 +23,8 @@ const HomePage = () => {
             <a href="/">Events</a>
             <a href="/">Shop</a>
         </nav>
-        <button className="sign">Sign in</button>
-        <button className="sign">Sign up</button>
+        <button className="sign" onClick={handleSignInClick}>Sign in</button>
+        <button className="sign" onClick={handleSignUpClick}>Sign up</button>
       </header>
 
       <section className="presentation">
@@ -21,7 +33,7 @@ const HomePage = () => {
             <p>Actually there are <span>98</span> pets connected</p>
         </div>
         <div className="image-container">
-            <img src="/img/peito.png" alt="inspirational" />
+            <img src={peito} alt="inspirational" />
         </div>
       </section>
 
@@ -96,4 +108,4 @@ const Card = ({ frontImg, frontAlt, frontTitle, backTitle, backImg, backAlt, bac
   </div>
 );
 
-export default HomePage;
+export default HomePageLog;
