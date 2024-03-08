@@ -14,12 +14,17 @@ const LoginPage = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await login(email, password);
-      navigate('/home');
+      const success = await login(email, password);
+      if (success) {
+        navigate('/home');
+      }
     } catch (error) {
+      alert(error.message);
       console.error('Login failed:', error);
     }
   };
+  
+  
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -31,52 +36,52 @@ const LoginPage = () => {
 
   return (
     <section className="login-container">
-  <div className="login-logo">
-    <img src={logo} alt="PIS Logo" />
-    <h1>PIS</h1>
-  </div>
-  <div className="login-form">
-    <h2>Admin Login</h2>
-    <p>Welcome back. Enter your credentials to access your account</p>
-    <form onSubmit={handleLogin}>
-      <div className="input-group">
-        <label htmlFor="email">Email Address</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
+      <div className="login-logo">
+        <img src={logo} alt="PIS Logo" />
+        <h1>PIS</h1>
       </div>
-      <div className="input-group">
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
+      <div className="login-form">
+        <h2>Admin Login</h2>
+        <p>Welcome back. Enter your credentials to access your account</p>
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+          </div>
+          <div className="actions">
+            <button type="submit" className="continue-button">Continue</button>
+            <a href="#" className="forgot-password">Forgot Password</a>
+          </div>
+          <label className="keep-signed">
+            <input type="checkbox" /> Keep me signed in
+          </label>
+        </form>
+        <div className="login-footer">
+          <img src={corgi} alt="Cute corgi" />
+          <span>Don't have an Account? <a href="#">Sign up here</a></span>
+        </div>
       </div>
-      <div className="actions">
-  <button type="submit" className="continue-button">Continue</button>
-  <a href="#" className="forgot-password">Forgot Password</a>
-</div>
-<label className="keep-signed">
-  <input type="checkbox" /> Keep me signed in
-</label>
-
-    </form>
-    <div className="login-footer">
-  <img src={corgi} alt="Cute corgi" />
-  <span>Don't have an Account? <a href="#">Sign up here</a></span>
-</div>
-
-  </div>
-</section>
-
+    </section>
   );
 };
+
 
 export default LoginPage;
