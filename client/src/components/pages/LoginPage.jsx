@@ -16,11 +16,10 @@ const LoginPage = () => {
     try {
       const success = await login(email, password);
       if (success) {
-        navigate('/home');
+        navigate('/main-menu');
       }
     } catch (error) {
-      alert(error.message);
-      console.error('Login failed:', error);
+      alert(error.message || 'Login failed. Please try again.');
     }
   };
   

@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useState } from 'react';
 import axios from 'axios';
 
@@ -10,29 +9,27 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
-      if (response.data.emailValidated) {
-        setAuth(response.data);
+      const { token } = response.data;
+      if (token) {
+        setAuth({ ...response.data });
+        localStorage.setItem('token', token);
         return true;
       } else {
-        throw new Error('Email not validated.');
+        throw new Error('Login failed. No token received.');
       }
     } catch (error) {
-      if (error.response) {
-        console.error(error.response.data);
-        throw new Error(error.response.data.message || 'Login failed.');
-      } else if (error.request) {
-        console.error('No response was received', error.request);
-        throw new Error('No response was received.');
-      } else {
-        console.error('An error occurred while logging in', error.message);
-        throw new Error('An error occurred while logging in.');
-      }
+      console.error('Login error:', error.response ? error.response.data : error);
+      throw error;
     }
   };
-  
+
+  const logout = () => {
+    setAuth(null);
+    localStorage.removeItem('token');
+  };
 
   return (
-    <AuthContext.Provider value={{ auth, login }}>
+    <AuthContext.Provider value={{ auth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
