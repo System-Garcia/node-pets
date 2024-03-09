@@ -48,7 +48,7 @@ const LoginPage = () => {
             <input
               id="email"
               type="email"
-              placeholder="email"
+              placeholder="john.doe@gmail.com"
               value={email}
               onChange={handleEmailChange}
               required
@@ -58,8 +58,9 @@ const LoginPage = () => {
             <label htmlFor="password">Password</label>
             <input
               id="password"
+              class="input"
               type="password"
-              placeholder="Password"
+              placeholder="123456"
               value={password}
               onChange={handlePasswordChange}
               required
@@ -74,8 +75,8 @@ const LoginPage = () => {
           </label>
         </form>
         <div className="login-footer">
+        <span>Don't have an Account? <a href="#">Sign up here</a></span>
           <img src={corgi} alt="Cute corgi" />
-          <span>Don't have an Account? <a href="#">Sign up here</a></span>
         </div>
       </div>
     </section>
