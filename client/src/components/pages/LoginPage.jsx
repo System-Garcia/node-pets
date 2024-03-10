@@ -4,6 +4,8 @@ import { AuthContext } from '../../context/AuthContext';
 import "../../styles/loginS.css"
 import logo from '../../img/amuleto.png';
 import corgi from '../../img/corgi.png';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +35,7 @@ const LoginPage = () => {
     setPassword(event.target.value);
   };
 
-  return (
+   return (
     <section className="login-container">
       <div className="login-logo">
         <img src={logo} alt="PIS Logo" />
@@ -45,43 +47,51 @@ const LoginPage = () => {
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label htmlFor="email">Email Address</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="john.doe@gmail.com"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
+            <div className="input-icon-container">
+              <FaEnvelope className="input-icon" />
+              <input
+                id="email"
+                type="email"
+                placeholder="john.doe@gmail.com"
+                value={email}
+                onChange={handleEmailChange}
+                required
+              />
+            </div>
           </div>
           <div className="input-group">
+            <div>
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              class="input"
-              type="password"
-              placeholder="123456"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
+            <a href="#" className="forgot-password">Forgot Password</a>
+            </div>
+            <div className="input-icon-container">
+              <FaLock className="input-icon" />
+              <input
+                id="password"
+                className="input"
+                type="password"
+                placeholder="123456"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="keep-signed">
+            <input type="checkbox" id="keep-signed-in" />
+            <label htmlFor="keep-signed-in">Keep me signed in</label>
           </div>
           <div className="actions">
             <button type="submit" className="continue-button">Continue</button>
-            <a href="#" className="forgot-password">Forgot Password</a>
           </div>
-          <label className="keep-signed">
-            <input type="checkbox" /> Keep me signed in
-          </label>
         </form>
         <div className="login-footer">
-        <span>Don't have an Account? <a href="#">Sign up here</a></span>
+          <span>Don't have an Account? <a href="#">Sign up here</a></span>
           <img src={corgi} alt="Cute corgi" />
         </div>
       </div>
     </section>
   );
 };
-
 
 export default LoginPage;
