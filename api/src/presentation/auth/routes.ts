@@ -37,6 +37,7 @@ export class AuthRoutes {
             emailService, 
             envs.JWT_SEED, 
             envs.WEBSERVICE_URL,
+            envs.FRONTEND_URL,
         );
 
         const s3Service = new S3Service({

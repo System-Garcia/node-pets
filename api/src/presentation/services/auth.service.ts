@@ -10,6 +10,7 @@ export class AuthService {
         private readonly emailService: EmailService,
         private readonly jwtSeed: string,
         private readonly webServiceUrl: string,
+        private readonly frontendUrl: string,
     ) {
          
     }
@@ -85,7 +86,7 @@ export class AuthService {
         const token = await this.jwtGenerator.generateToken({ email });
         if(!token) throw CustomError.internalServer('Error getting token');
 
-        const link = `${this.webServiceUrl}/auth/reset-password?token=${token}`;
+        const link = `${this.frontendUrl}/auth/reset-password?token=${token}`;
         
         const html = `
             <h1>Reset your password</h1>
