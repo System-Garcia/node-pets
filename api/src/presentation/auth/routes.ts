@@ -62,6 +62,8 @@ export class AuthRoutes {
         router.post('/login', authController.loginUser);
         router.post('/register', [ fileUploadMiddleware, existsUserMiddleware, FileUploadMiddleware.containFiles ], authController.registerUser);
         router.get('/validate-email/:token', authController.validateEmail);
+        router.post('/forgot-password', authController.forgotPassword);
+        router.post('/reset-password', authController.resetPassword);
 
         return router;
     }
