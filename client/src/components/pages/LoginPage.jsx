@@ -6,6 +6,8 @@ import logo from '/img/amuleto.png';
 import corgi from '/img/corgi.png';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const LoginPage = () => {
@@ -19,10 +21,11 @@ const LoginPage = () => {
     try {
       const success = await login(email, password);
       if (success) {
+      toast.success('Login successful!');
         navigate('/main-menu');
       }
     } catch (error) {
-      alert(error.message || 'Login failed. Please try again.');
+      throw error;
     }
   };
   
@@ -63,7 +66,7 @@ const LoginPage = () => {
           <div className="input-group">
             <div>
             <label htmlFor="password">Password</label>
-            <Link to="/forgot-password" className="forgot-password">Forgot Password</Link>
+            <Link to="/auth/forgot-password" className="forgot-password">Forgot Password</Link>
             </div>
             <div className="input-icon-container">
               <FaLock className="input-icon" />

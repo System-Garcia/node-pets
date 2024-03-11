@@ -14,12 +14,14 @@ const ForgotPassword = () => {
     try {
       const response = await axios.post('http://localhost:3000/api/auth/forgot-password', { email });
       console.log(response.data);
-      toast.success('Check your email for password reset instructions.');
-    } catch (error) {
-      console.error(error.response.data);
-      toast.error('An error occurred while requesting a password reset.');
+      toast.success("Email Sent")
+    } catch (error){
+      toast.error('Error email sent.');
+      console.log(error)
     }
-  };
+    }
+
+  
 
   return (
     <>
@@ -44,7 +46,7 @@ const ForgotPassword = () => {
               type="submit" 
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Reset Password
+              Send Email
             </button>
           </form>
         </div>
@@ -52,5 +54,7 @@ const ForgotPassword = () => {
     </>
   );
 };
+  
+
 
 export default ForgotPassword;
