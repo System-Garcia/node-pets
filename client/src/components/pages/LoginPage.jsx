@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import "../../styles/loginS.css"
-import logo from '../../img/amuleto.png';
-import corgi from '../../img/corgi.png';
+import "../../styles/pages/loginS.css"
+import logo from '/img/amuleto.png';
+import corgi from '/img/corgi.png';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 
 
