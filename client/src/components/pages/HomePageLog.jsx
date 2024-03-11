@@ -1,7 +1,7 @@
 import React from 'react';
-import "../../styles/homepageL.css"
+import "../../styles/pages/homepageL.css"
 import { useNavigate } from 'react-router-dom';
-import peito from '../../img/peito.png';
+import peito from '/img/peito.png';
 
 const HomePageLog = () => {
   const navigate = useNavigate();

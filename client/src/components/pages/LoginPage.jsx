@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import "../../styles/loginS.css"
-import logo from '../../img/amuleto.png';
-import corgi from '../../img/corgi.png';
+import "../../styles/pages/loginS.css"
+import logo from '/img/amuleto.png';
+import corgi from '/img/corgi.png';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
 const LoginPage = () => {
@@ -62,7 +63,7 @@ const LoginPage = () => {
           <div className="input-group">
             <div>
             <label htmlFor="password">Password</label>
-            <a href="#" className="forgot-password">Forgot Password</a>
+            <Link to="/forgot-password" className="forgot-password">Forgot Password</Link>
             </div>
             <div className="input-icon-container">
               <FaLock className="input-icon" />
@@ -86,7 +87,7 @@ const LoginPage = () => {
           </div>
         </form>
         <div className="login-footer">
-          <span>Don't have an Account? <a href="#">Sign up here</a></span>
+          <span>Don't have an Account? <a href="/signup">Sign up here</a></span>
           <img src={corgi} alt="Cute corgi" />
         </div>
       </div>

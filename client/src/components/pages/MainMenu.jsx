@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../styles/mainMenu.css"
+import "../../styles/pages/mainMenu.css"
 
 const MainMenu = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
