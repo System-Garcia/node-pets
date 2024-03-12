@@ -1,5 +1,7 @@
 import React, { createContext, useState } from 'react';
 import axios from 'axios';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AuthContext = createContext();
 
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Login error:', error.response ? error.response.data : error);
-      
+      toast.error('Registration failed.');
     }
   };
 

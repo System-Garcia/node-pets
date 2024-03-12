@@ -10,6 +10,7 @@ export class AuthService {
         private readonly emailService: EmailService,
         private readonly jwtSeed: string,
         private readonly webServiceUrl: string,
+        private readonly frontendUrl: string,
     ) {
          
     }
@@ -71,6 +72,51 @@ export class AuthService {
         if(!user) throw CustomError.notFound('User not found');
 
         await this.userRepository.validateUserEmail(user.id);
+
+        return true;
+    }
+
+
+    public async forgotPassword(email: string){
+        const user = await this.userRepository.findByEmail(email);
+        if(!user) throw CustomError.notFound('User not found');
+
+        if(user.emailValidated === false) throw CustomError.unauthorized('Email not validated');
+
+        const token = await this.jwtGenerator.generateToken({ email });
+        if(!token) throw CustomError.internalServer('Error getting token');
+
+        const link = `${this.frontendUrl}/auth/reset-password?token=${token}`;
+        
+        const html = `
+            <h1>Reset your password</h1>
+            <p>Click on the following link to reset your password</p>
+            <a href="${ link }">Reset your password</a>
+        `;
+
+        const options = {
+            to: email,
+            subject: 'Reset your password',
+            htmlBody: html,
+        };
+
+        const isSent = await this.emailService.sendEmail(options);
+        if(!isSent) throw CustomError.internalServer('Error sending email');
+
+        return true;
+    }
+
+    public async resetPassword(token: string, newPassword: string){
+        const payload = await this.jwtGenerator.validateToken(token);
+        if(!payload) throw CustomError.unauthorized('Invalid token');
+
+        const { email } = payload as { email: string};
+        if(!email) throw CustomError.internalServer('Email not in token');
+
+        const user = await this.userRepository.findByEmail(email);
+        if(!user) throw CustomError.notFound('User not found');
+
+        await this.userRepository.updatePasswordById(user.id, newPassword);
 
         return true;
     }

@@ -37,6 +37,7 @@ export class AuthRoutes {
             emailService, 
             envs.JWT_SEED, 
             envs.WEBSERVICE_URL,
+            envs.FRONTEND_URL,
         );
 
         const s3Service = new S3Service({
@@ -62,6 +63,8 @@ export class AuthRoutes {
         router.post('/login', authController.loginUser);
         router.post('/register', [ fileUploadMiddleware, existsUserMiddleware, FileUploadMiddleware.containFiles ], authController.registerUser);
         router.get('/validate-email/:token', authController.validateEmail);
+        router.post('/forgot-password', authController.forgotPassword);
+        router.post('/reset-password', authController.resetPassword);
 
         return router;
     }

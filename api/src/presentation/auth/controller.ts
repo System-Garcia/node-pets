@@ -64,6 +64,30 @@ export class AuthController {
             .catch( error => handleError(error, res));
     }
 
+    forgotPassword = (req: Request, res: Response) => {
+
+        const email = req.body.email;
+        if (!email) return res.status(400).json({ error: 'Missing email' });
+
+        const validatedEmail = regularExps.email.test(email);
+        if (!validatedEmail) return res.status(400).json({ error: 'Invalid email' });
+
+        this.authService.forgotPassword(email)
+            .then( () => res.json({ message: 'If your email is registered, you will receive a link to reset your password.'}))
+            .catch( error => handleError(error, res));
+    };
+
+    resetPassword = (req: Request, res: Response) => {
+
+        const { token, password } = req.body;
+        if (!token) return res.status(400).json({ error: 'Missing token' });
+        if (!password) return res.status(400).json({ error: 'Missing password' });
+
+        this.authService.resetPassword(token, password)
+            .then( () => res.json({ message: 'Password reset successfully'}))
+            .catch( error => handleError(error, res));
+    }
+
     /**
      * Performs a preliminary validation of user input before creating a user.
      * This method serves as an initial check to quickly catch missing or obviously invalid fields

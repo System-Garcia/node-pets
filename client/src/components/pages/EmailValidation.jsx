@@ -24,3 +24,5 @@ const EmailValidation = () => {
   }, [token, history]);
 
 };
+
+export default EmailValidation;
