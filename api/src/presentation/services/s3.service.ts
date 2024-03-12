@@ -29,7 +29,7 @@ export class S3Service {
             Bucket: this.bucketName,
             Key: `${Date.now()}_${file.name}`,
             Body: file.data,
-            ContentType: 'png'
+            ContentType: file.mimetype,
         };
 
         try {
