@@ -27,6 +27,8 @@ const HomePageLog = () => {
         <button className="sign" onClick={handleSignUpClick}>Sign up</button>
       </header>
 
+
+
       <section className="presentation">
         <div className="titulo-sub">
             <h1>The home of the pets</h1>
@@ -108,4 +110,4 @@ const Card = ({ frontImg, frontAlt, frontTitle, backTitle, backImg, backAlt, bac
   </div>
 );
 
-export default HomePageLog;
+export default HomePageLog; 

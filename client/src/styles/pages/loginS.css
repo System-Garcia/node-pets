@@ -151,6 +151,8 @@ body, html {
   border-radius: 4px;
   transition: background-color 0.2s, border-color 0.2s;
   vertical-align: middle;
+  position: relative;
+  font-size: 1.5rem;
 }
 
 .keep-signed input[type="checkbox"]:checked {
@@ -158,16 +160,17 @@ body, html {
 }
 
 .keep-signed input[type="checkbox"]:checked::before {
-  content: '✓';
+  content: '\2713';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.5rem;
   color: white;
 }
+
 
 .login-footer {
   text-align: center;

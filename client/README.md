@@ -1,34 +1,61 @@
-# PIS-Frontend
+# 🌐 PIS-Frontend
 
-Este es el repositorio del frontend del proyecto PIS (Project Information System). Es una aplicación web desarrollada con React, utilizando Vite como build tool y Yarn para la gestión de paquetes.
+This is the repository for the frontend of the Project Information System (PIS). It's a web application 🌟 developed with React, using Vite as the build tool and Yarn 🧶 for package management.
 
-## Pre-requisitos
+## 📋 Prerequisites
 
-Este proyecto requiere Node.js y Yarn. Asegúrate de tenerlos instalados antes de proceder:
+This project requires Node.js 🟢 and Yarn 🧶. Make sure you have them installed before proceeding:
 
-- Node.js: [Descargar Node.js](https://nodejs.org/)
+- Node.js: [Download Node.js](https://nodejs.org/)
 
-## Instalación
+## 🛠️ Installation
 
-Para instalar las dependencias del proyecto, ejecuta el siguiente comando en la raíz del proyecto:
+To install the project's dependencies, run the following command at the project's root:
 
-```bash
+\`\`\`
 yarn install
-```
-Configuración Local
-Necesitarás configurar las variables de entorno locales antes de iniciar la aplicación. Crea un archivo .env.local en la raíz del proyecto y configúralo siguiendo el ejemplo proporcionado en .env.example.
+\`\`\`
 
-Desarrollo
-Para iniciar el servidor de desarrollo, ejecuta:
-```bash
+## ⚙️ Local Configuration
+
+You will need to configure local environment variables before starting the application. Create a `.env.local` file at the root of the project and configure it following the example provided in `.env.example`.
+
+## 🚀 Development
+
+To start the development server, run:
+
+\`\`\`
 yarn dev
-```
-El servidor de desarrollo se iniciará y podrás acceder a la aplicación en http://localhost:3000.
+\`\`\`
 
-Construcción para Producción
-Para construir el proyecto para el entorno de producción, ejecuta:
+The development server will start, and you can access the application at http://localhost:3000.
 
-```bash
+## 🏗️ Building for Production
+
+To build the project for the production environment, run:
+
+\`\`\`
 yarn build
-```
-Este comando generará el directorio dist con los archivos optimizados para producción.
+\`\`\`
+
+This command will generate the `dist` directory with the files optimized for production.
+
+## 🧹 Linting
+
+To lint your code with ESLint, run:
+
+\`\`\`
+yarn lint
+\`\`\`
+
+This command will help maintain code quality by checking for errors and style issues.
+
+## 🔍 Production Preview
+
+After building your application for production, you can locally preview it before deploying by running:
+
+\`\`\`
+yarn preview
+\`\`\`
+
+This will start a local server serving your application from the `dist` directory, allowing you to test the production version in your own environment.

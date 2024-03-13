@@ -9,6 +9,7 @@ import ErrorPage from './components/pages/errors/ErrorPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import ResetPassword from './components/pages/ResetPassword';
+import EmailValidation from './components/pages/EmailValidation'
  
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
   <Route path="/main-menu" element={<MainMenu />} />
   <Route path="/auth/forgot-password" element={<ForgotPassword />} />
   <Route path="/auth/reset-password" element={<ResetPassword />} />
+  <Route path="/auth/validate-email" element={<EmailValidation />} />
   <Route path="/error" element={<ErrorPage errorMessage="Bad Request - The server could not understand the request due to invalid syntax." />} />
 </Routes>
 <ToastContainer />
