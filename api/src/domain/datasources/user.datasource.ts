@@ -30,4 +30,6 @@ export abstract class UserDatasource {
 
     abstract validateUserEmail(Id: number): Promise<UserEntity>;
 
+    abstract updatePasswordById(id: number, password: string): Promise<UserEntity>;
+
 }

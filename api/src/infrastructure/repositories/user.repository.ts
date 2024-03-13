@@ -46,5 +46,9 @@ export class UserRepositoryImpl implements UserRepository {
     validateUserEmail(Id: number): Promise<UserEntity> {
         return this.userDatasource.validateUserEmail(Id);
     }
+
+    updatePasswordById(id: number, password: string): Promise<UserEntity> {
+        return this.userDatasource.updatePasswordById(id, password);
+    }
     
 }

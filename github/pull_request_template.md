@@ -1,36 +1,37 @@
-# Pull Request para NODE-PETS
+# Pull Request for NODE-PETS
 
-Gracias por tomar el tiempo para mejorar NODE-PETS. Aquí hay una plantilla para ayudarte a estructurar tu Pull Request de manera efectiva.
+Thank you for taking the time to improve NODE-PETS. Here is a template to help you structure your Pull Request effectively.
 
-## Descripción de los Cambios
+## Description of Changes
 
-Por favor, incluye una lista de los cambios significativos que has hecho y qué problema o característica están resolviendo.
+Please, include a list of the significant changes you have made and what problem or feature they are addressing.
 
-## Área de Enfoque
-Indica si tu PR se centra en `Tienda de Productos`, `Apartado Social` o `Servicios de Velorio`.
+## Focus Area
 
-## Cómo Probar los Cambios
+Indicate if your PR focuses on `Product Store`, `Social Section`, or `Funeral Services`.
 
-Describe los pasos necesarios para probar tu PR y los casos de uso que se deben verificar para asegurar que todo funcione como se espera.
+## How to Test the Changes
 
-## Documentación
+Describe the necessary steps to test your PR and the use cases that must be verified to ensure that everything works as expected.
 
-Si estás introduciendo una nueva característica, asegúrate de actualizar la documentación relevante en `/docs` y comenta aquí cualquier cambio importante en la documentación.
+## Documentation
+
+If you are introducing a new feature, make sure to update the relevant documentation in `/docs` and comment here any major changes in the documentation.
 
 ## Checklist
 
-Antes de enviar tu PR, asegúrate de que:
+Before submitting your PR, make sure that:
 
-- [ ] Has creado issues relacionados con los cambios realizados.
-- [ ] Has etiquetado tu PR adecuadamente (por ejemplo, `feature:tienda`, `feature:social`, `feature:velorio`).
-- [ ] Has añadido pruebas que validan tus cambios.
-- [ ] Todos los tests pasan exitosamente.
-- [ ] Has actualizado cualquier documentación relevante.
+- [ ] You have created issues related to the changes made.
+- [ ] You have properly labeled your PR (for example, `feature:store`, `feature:social`, `feature:funeral`).
+- [ ] You have added tests that validate your changes.
+- [ ] All tests pass successfully.
+- [ ] You have updated any relevant documentation.
 
-## Comentarios Adicionales
+## Additional Comments
 
-Si tienes algo más que añadir sobre este PR, escríbelo aquí.
+If you have anything else to add about this PR, write it here.
 
 ---
 
-Gracias por tu contribución a PIS!
+Thank you for your contribution to NODE-PETS!

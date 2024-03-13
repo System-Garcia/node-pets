@@ -30,4 +30,6 @@ export abstract class UserRepository {
 
     abstract validateUserEmail(Id: number): Promise<UserEntity>;
 
+    abstract updatePasswordById(id: number, password: string): Promise<UserEntity>;
+
 }

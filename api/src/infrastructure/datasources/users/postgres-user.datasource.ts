@@ -369,4 +369,27 @@ export class PostgresUserDatasourceImpl implements UserDatasource {
       throw error;
     }
   }
+
+  async updatePasswordById(id: number, password: string): Promise<UserEntity> {
+    try {
+      const user = await this.findById(id);
+
+      const userUpdated = await prisma.user.update({
+        where: { id: user.id },
+        data: { password: BcryptAdapter.hash(password) },
+        include: {
+          permissions: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      });
+
+      return UserEntity.fromObject(userUpdated);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
