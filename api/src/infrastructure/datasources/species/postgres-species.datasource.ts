@@ -20,8 +20,8 @@ export class PostgresSpeciesDatasourceImpl implements SpeciesDatasource {
     async verifySpeciesExistByName(name: string): Promise<boolean> {
         
         const species = await prisma.species.findFirst(
-            { where: { name } 
-        });
+            { where: { name,isDeleted: false } }
+        );
 
         return !!species;
     }
