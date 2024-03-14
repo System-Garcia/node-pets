@@ -1,3 +1,5 @@
+import exp from 'constants';
+
 // Custom Errors
 export * from './errors/custom.error';
 export * from './errors/handle-error';
@@ -6,16 +8,19 @@ export * from './errors/handle-error';
 export * from './entities/pet.entity';
 export * from './entities/user.entity';
 export * from './entities/permission.entity';
+export * from './entities/species.entity';
 
 // Repositories
 export * from './repositories/pet.repository';
 export * from './repositories/permission.repository';
 export * from './repositories/user.repository';
+export * from './repositories/species.repository';
 
 // Data Sources
 export * from './datasources/pet.datasource';
 export * from './datasources/user.datasource';
 export * from './datasources/permission.datasource';
+export * from './datasources/species.datasource';
 
 // DTOs (Data Transfer Objects)
 export * from './dtos/pets/create-pet.dto';
@@ -28,6 +33,7 @@ export * from './dtos/pets/update-pet.dto';
 export * from './dtos/users/update-user.dto';
 export * from './dtos/users/update-permissions.dto';
 export * from './dtos/users/user-response.dto';
+export * from './dtos/species/create-species.dto';
 
 // Interfaces
 export * from './interfaces';
@@ -52,6 +58,7 @@ export * from './use-cases/permissions/delete-permission';
 export * from './use-cases/user/update-permissions';
 export * from './use-cases/user/update-user';
 export * from './use-cases/pet/get-pets';
+export * from './use-cases/species/create-species';
 
 // Services
 export * from './services/email-service';
