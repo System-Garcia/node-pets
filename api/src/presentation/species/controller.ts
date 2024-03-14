@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateSpecies, CreateSpeciesDto, GetSpecies, PaginationDto, SpeciesRepository, handleError } from "../../domain";
+import { CreateSpecies, CreateSpeciesDto, DeleteSpecies, GetSpecies, PaginationDto, SpeciesRepository, handleError } from "../../domain";
 
 
 export class SpeciesController {
@@ -27,6 +27,19 @@ export class SpeciesController {
         new GetSpecies(this.speciesRepository)
             .execute(paginationDto!)
             .then( species => res.json(species)) 
+            .catch( error => handleError(error, res));
+    }
+
+    public deleteSpecies = (req: Request, res: Response) => {
+        
+        const id = +req.params.id;
+
+        if ( !id ) return res.status(400).json({ error: 'id is required'}); 
+        if ( isNaN(id)) return res.status(400).json({ error: 'id must be a valid number'});
+
+        new DeleteSpecies(this.speciesRepository)
+            .execute(id)
+            .then( species => res.json(species))
             .catch( error => handleError(error, res));
     }
 

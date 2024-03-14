@@ -13,4 +13,6 @@ export abstract class SpeciesRepository {
     abstract verifySpeciesExist(speciesId: number): Promise<boolean>;
 
     abstract getAll(paginationDto: PaginationDto): Promise<PaginatedSpeciesResponse>;
+
+    abstract deleteById(speciesId: number): Promise<SpeciesEntity>;
 }
