@@ -6,6 +6,19 @@ export class PostgresSpeciesDatasourceImpl implements SpeciesDatasource {
     
     constructor(private readonly webServiceUrl: string) {}
 
+    async deleteById(speciesId: number): Promise<SpeciesEntity> {
+        
+        const speciesExists = await this.verifySpeciesExist(speciesId);
+        if (!speciesExists) throw CustomError.notFound(`Species with id ${speciesId} not found`);
+
+        const deletedSpecies = await prisma.species.update({
+            where: { id: speciesId },
+            data: { isDeleted: true }
+        });
+
+        return SpeciesEntity.fromObject(deletedSpecies);
+    }
+
     async getAll(paginationDto: PaginationDto): Promise<PaginatedSpeciesResponse> {
         const { page, limit } = paginationDto;
 
@@ -67,8 +80,14 @@ export class PostgresSpeciesDatasourceImpl implements SpeciesDatasource {
 
         return !!species;
     }
-    verifySpeciesExist(speciesId: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+
+    async verifySpeciesExist(speciesId: number): Promise<boolean> {
+        
+        const species = await prisma.species.findFirst(
+            { where: { id: speciesId, isDeleted: false } }
+        );
+
+        return !!species;
     }
    
 }

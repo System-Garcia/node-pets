@@ -5,6 +5,10 @@ export class SpeciesRepositoryImpl implements SpeciesRepository {
 
     constructor(private readonly datasource: SpeciesDatasource) { }
 
+    deleteById(speciesId: number): Promise<SpeciesEntity> {
+        return this.datasource.deleteById(speciesId);
+    }
+
     getAll(paginationDto: PaginationDto): Promise<PaginatedSpeciesResponse> {
         return this.datasource.getAll(paginationDto);
     }

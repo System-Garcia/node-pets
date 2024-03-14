@@ -31,7 +31,7 @@ export class SpeciesRoutes {
 
         router.post('/', [authMiddleware.validateJWT, authMiddleware.verifyAdmin] ,speciesController.createSpecies);
         router.get('/', speciesController.getAllSpecies)
-
+        router.delete('/:id', [authMiddleware.validateJWT, authMiddleware.verifyAdmin], speciesController.deleteSpecies)
 
         return router;
     }
