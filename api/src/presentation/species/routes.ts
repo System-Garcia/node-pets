@@ -14,7 +14,7 @@ export class SpeciesRoutes {
     static get routes(): Router {
         const router = Router();
 
-        const speciesDatasource = new PostgresSpeciesDatasourceImpl();
+        const speciesDatasource = new PostgresSpeciesDatasourceImpl(envs.WEBSERVICE_URL);
         const speciesRepository = new SpeciesRepositoryImpl(speciesDatasource);
 
         const speciesController = new SpeciesController(speciesRepository);
@@ -30,6 +30,7 @@ export class SpeciesRoutes {
         const authMiddleware = new AuthMiddleware(userDatasource);
 
         router.post('/', [authMiddleware.validateJWT, authMiddleware.verifyAdmin] ,speciesController.createSpecies);
+        router.get('/', speciesController.getAllSpecies)
 
 
         return router;
