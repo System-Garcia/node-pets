@@ -1,8 +1,13 @@
-import { CreateSpeciesDto, SpeciesDatasource, SpeciesEntity, SpeciesRepository } from "../../domain";
+import { CreateSpeciesDto, PaginationDto, SpeciesDatasource, SpeciesEntity, SpeciesRepository } from "../../domain";
+import { PaginatedSpeciesResponse } from "../../domain/interfaces/paginated-species-res.interface";
 
 export class SpeciesRepositoryImpl implements SpeciesRepository {
 
     constructor(private readonly datasource: SpeciesDatasource) { }
+
+    getAll(paginationDto: PaginationDto): Promise<PaginatedSpeciesResponse> {
+        return this.datasource.getAll(paginationDto);
+    }
 
     async create(dto: CreateSpeciesDto): Promise<SpeciesEntity> {
         return this.datasource.create(dto);
