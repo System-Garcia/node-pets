@@ -9,7 +9,7 @@ export class PetRepositoryImpl implements PetRepository {
         return this.petDatasource.getAll(pagination);
     }
     create(createPetDto: CreatePetDto): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+        return this.petDatasource.create(createPetDto);
     }
     findById(id: number): Promise<PetEntity> {
         throw new Error("Method not implemented.");

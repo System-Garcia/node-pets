@@ -8,8 +8,27 @@ export class PostgresPetDatasourceImpl implements PetDatasource {
         private readonly webServiceUrl: string,
     ) {}
 
-    create(createPetDto: CreatePetDto): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+    async create(createPetDto: CreatePetDto): Promise<PetEntity> {
+        
+        try {
+            const { ownerId, name, speciesId, color, img, missingAt } = createPetDto;
+        
+            const newPet = await prisma.pet.create({
+                data: {
+                    ownerId,
+                    name,
+                    speciesId,
+                    color,
+                    img,
+                    missingAt,
+                },
+            });
+
+            return PetEntity.fromObject(newPet);
+            
+        } catch (error) {
+            throw error;
+        }
     };
 
     async getAll(pagination: PaginationDto): Promise<PaginatedPetsResponse> {
