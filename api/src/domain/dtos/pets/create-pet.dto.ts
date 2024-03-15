@@ -46,7 +46,7 @@ export class CreatePetDto {
      * @returns A tuple containing an error message (if any) and an instance of CreatePetDto.
      */
   static create(object: { [key: string]: any }): [string?, CreatePetDto?] {
-    const {
+    let {
       ownerId,
       name,
       speciesId,
@@ -56,11 +56,35 @@ export class CreatePetDto {
     } = object;
 
     if ( !ownerId ) return ["Missing ownerId"];
+    if ( isNaN(ownerId) ) return ["OwnerId must be a number"];
+    ownerId = parseInt(ownerId);
+
     if ( !name ) return ["Missing name"];
+    if ( typeof name !== 'string') return ["Name must be a string"];
+    if ( name.trim().length === 0 ) return ["Name cannot be empty"];
+    if ( name.trim().length > 50 ) return ["Name cannot be longer than 50 characters"];
+    name = name.trim().toLowerCase();
+
     if ( !speciesId ) return ["Missing species"];
+    if ( isNaN(speciesId) ) return ["Species must be a number"];
+    speciesId = parseInt(speciesId);
+
     if ( !color ) return ["Missing color"];
+    if ( typeof color !== 'string') return ["Color must be a string"];
+    if ( color.trim().length === 0 ) return ["Color cannot be empty"];
+    if ( color.trim().length > 50 ) return ["Color cannot be longer than 50 characters"];
+    color = color.trim().toLowerCase();
+
     if ( !img) return ["Missing img"];
+    if ( typeof img !== 'string') return ["Img must be a string"];
+
     if ( !missingAt ) return ["Missing missingAt"];
+
+    let newMissingAt = new Date(missingAt);
+
+    if (isNaN(newMissingAt.getTime())) {
+      return ["missingAt must be a valid Date"];
+    }
   
     
     return [
@@ -71,7 +95,7 @@ export class CreatePetDto {
         speciesId,
         color,
         img,
-        missingAt,
+        missingAt: newMissingAt,
       }),
     ];
   }
