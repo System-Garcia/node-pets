@@ -34,6 +34,7 @@ export * from './dtos/users/update-user.dto';
 export * from './dtos/users/update-permissions.dto';
 export * from './dtos/users/user-response.dto';
 export * from './dtos/species/create-species.dto';
+export * from './dtos/species/update-species.dto';
 
 // Interfaces
 export * from './interfaces';
@@ -61,6 +62,7 @@ export * from './use-cases/pet/get-pets';
 export * from './use-cases/species/create-species';
 export * from './use-cases/species/get-species';
 export * from './use-cases/species/delete-species';
+export * from './use-cases/species/update-species';
 
 // Services
 export * from './services/email-service';

@@ -1,10 +1,29 @@
 import { prisma } from "../../../data/postgres";
 import { CreateSpeciesDto, CustomError, PaginationDto, SpeciesDatasource, SpeciesEntity } from "../../../domain";
+import { UpdateSpeciesDto } from "../../../domain/dtos/species/update-species.dto";
 import { PaginatedSpeciesResponse } from "../../../domain/interfaces/paginated-species-res.interface";
 
 export class PostgresSpeciesDatasourceImpl implements SpeciesDatasource {
     
     constructor(private readonly webServiceUrl: string) {}
+
+    async update(updateSpeciesDto: UpdateSpeciesDto): Promise<SpeciesEntity> {
+        
+        const { id } = updateSpeciesDto;
+
+        const speciesExists = await this.verifySpeciesExist(id);
+        if (!speciesExists) throw CustomError.notFound(`Species with id ${id} not found`);
+
+        const speciesData = updateSpeciesDto.values;
+        
+        const species = await prisma.species.update({
+            where: { id },
+            data: speciesData,
+        });
+
+        return SpeciesEntity.fromObject(species);
+
+    }
 
     async deleteById(speciesId: number): Promise<SpeciesEntity> {
         
