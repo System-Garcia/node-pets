@@ -2,6 +2,7 @@ import { CreateSpeciesDto } from "../dtos/species/create-species.dto";
 import { SpeciesEntity } from "../entities/species.entity";
 import { PaginationDto } from '../dtos/shared/pagination.dto';
 import { PaginatedSpeciesResponse } from "../interfaces/paginated-species-res.interface";
+import { UpdateSpeciesDto } from "../dtos/species/update-species.dto";
 
 
 export abstract class SpeciesDatasource {
@@ -15,4 +16,5 @@ export abstract class SpeciesDatasource {
 
     abstract deleteById(speciesId: number): Promise<SpeciesEntity>;
 
+    abstract update(updateSpeciesDto: UpdateSpeciesDto): Promise<SpeciesEntity>;
 }
