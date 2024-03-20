@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/pages/LoginPage';
 import HomePageLog from './components/pages/HomePageLog';
 import CreateA from './components/pages/CreateAccount';
-import MainMenu from './components/pages/MainMenu';
+const MainMenu = React.lazy(() => import('./components/pages/MainMenu'));
 import ForgotPassword from './components/pages/ForgotPassword';
 import ErrorPage from './components/pages/errors/ErrorPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import ResetPassword from './components/pages/ResetPassword';
 import EmailValidation from './components/pages/EmailValidation'
+import LoaderIn from './components/animations/Loaders';
  
 
 const App = () => {
@@ -19,7 +20,11 @@ const App = () => {
   <Route path="/" element={<HomePageLog />} />
   <Route path="/login" element={<LoginPage />}/>
   <Route path="/signup" element={<CreateA />} />
-  <Route path="/main-menu" element={<MainMenu />} />
+  <Route path="/main-menu" element={
+          <Suspense fallback={<LoaderIn />}>
+            <MainMenu />
+          </Suspense>
+        } />
   <Route path="/auth/forgot-password" element={<ForgotPassword />} />
   <Route path="/auth/reset-password" element={<ResetPassword />} />
   <Route path="/auth/validate-email" element={<EmailValidation />} />
