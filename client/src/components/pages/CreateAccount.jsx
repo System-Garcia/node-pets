@@ -94,7 +94,7 @@ const CreateA = () => {
     <>
       <ToastContainer />
       <div className="min-h-screen flex items-center justify-center px-4 ">
-        <div className="flex rounded-lg shadow-xl w-full max-w-4xl">
+        <div className="flex w-full max-w-4xl md:rounded-lg md:shadow-xl">
           {/* Contenedor de imagen, visible solo en pantallas md y superiores */}
           <div className="hidden md:flex bg-[#4B92FC] rounded-l-lg w-full md:w-1/2 justify-center items-center">
             <img
