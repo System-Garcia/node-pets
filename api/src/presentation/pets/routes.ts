@@ -47,9 +47,10 @@ export class PetRoutes {
 
         const petMiddleware = new PetMiddleware(petRepository);
 
-        router.get('/', petController.getPets);
+        router.get('/', [authMiddleware.validateJWT, authMiddleware.verifyAdmin ], petController.getPets);
         router.post('/',[ fileUploadMiddleware,  authMiddleware.validateJWT, FileUploadMiddleware.containFiles ], petController.createPet);
         router.delete('/:id', [ authMiddleware.validateJWT, petMiddleware.verifyOwnership ], petController.deletePet);
+        router.get('/my-pets', [ authMiddleware.validateJWT ], petController.getUserPets);
 
         return router;
     }

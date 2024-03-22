@@ -13,4 +13,6 @@ export abstract class PetRepository {
     abstract findById(id: number): Promise<PetEntity>;
 
     abstract deleteById(id: number): Promise<PetEntity>;
+
+    abstract getUserPets(pagination: PaginationDto, userId: number): Promise<PaginatedPetsResponse>;
 }

@@ -105,4 +105,42 @@ export class PostgresPetDatasourceImpl implements PetDatasource {
         }
     }
 
+    async getUserPets(pagination: PaginationDto, userId: number): Promise<PaginatedPetsResponse> {
+        
+        const { page, limit } = pagination;
+
+        try {
+            const skip = (page - 1) * limit;
+
+            const [total, pets] = await Promise.all([
+                prisma.pet.count({ where: { ownerId: userId, isDeleted: false } }),
+                prisma.pet.findMany({
+                    where: { ownerId: userId, isDeleted: false },
+                    skip: skip,
+                    take: limit,
+                }),
+            ]);
+
+            const nextPage =
+                (page * limit) >= total
+                ? null
+                : `${this.webServiceUrl}/pets/my-pets?page=${page + 1}&limit=${limit}`;
+
+            const prevPage =
+                (page - 1) > 0 ? `${this.webServiceUrl}/pets/my-pets?page=${page - 1}&limit=${limit}` : null;
+            
+            return {
+                page,
+                limit,
+                total,
+                next: nextPage,
+                prev: prevPage,
+                pets: pets.map((pet) => PetEntity.fromObject(pet)),
+            };
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
 }

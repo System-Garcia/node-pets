@@ -16,4 +16,6 @@ export abstract class PetDatasource {
     abstract updateById(updatePetDto: UpdatePetDto): Promise<PetEntity>;
     
     abstract deleteById(id: number): Promise<PetEntity>;
+
+    abstract getUserPets(pagination: PaginationDto, userId: number): Promise<PaginatedPetsResponse>;
 }
