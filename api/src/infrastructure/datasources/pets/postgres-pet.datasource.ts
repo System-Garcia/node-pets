@@ -1,5 +1,5 @@
 import { prisma } from "../../../data/postgres";
-import { CreatePetDto, PaginatedPetsResponse, PaginationDto, PetDatasource, PetEntity, UpdatePetDto } from "../../../domain";
+import { CreatePetDto, CustomError, PaginatedPetsResponse, PaginationDto, PetDatasource, PetEntity, UpdatePetDto } from "../../../domain";
 
 
 export class PostgresPetDatasourceImpl implements PetDatasource {
@@ -67,14 +67,42 @@ export class PostgresPetDatasourceImpl implements PetDatasource {
             throw error;
         }
     }
-    findById(id: number): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+
+    async findById(id: number): Promise<PetEntity> {
+        
+        try {
+            const pet = await prisma.pet.findUnique({
+                where: { id, isDeleted: false },
+            });
+    
+            if (!pet) throw CustomError.notFound(`Pet with id ${id} not found`);
+    
+    
+            return PetEntity.fromObject(pet);
+        } catch (error) {
+            throw error;
+        }
     }
+
     updateById(updatePetDto: UpdatePetDto): Promise<PetEntity> {
         throw new Error("Method not implemented.");
     }
-    deleteById(id: number): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+
+    async deleteById(id: number): Promise<PetEntity> {
+        
+        try {
+            await this.findById(id);
+
+            const deletedPet = await prisma.pet.update({
+                where: { id },
+                data: { isDeleted: true },
+            });
+
+            return PetEntity.fromObject(deletedPet);
+            
+        } catch (error) {
+            throw error;
+        }
     }
 
 }

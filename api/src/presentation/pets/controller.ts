@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreatePet, CreatePetDto, GetPets, PaginationDto, PetRepository, handleError } from "../../domain";
+import { CreatePet, CreatePetDto, DeletePet, GetPets, PaginationDto, PetRepository, handleError } from "../../domain";
 import { S3Service } from "../services/s3.service";
 import { UploadedFile } from "express-fileupload";
 
@@ -56,6 +56,19 @@ export class PetController {
         }
     
     };
+
+    public deletePet = (req: Request, res: Response) => {
+
+        const petId = +req.params.id;
+        if ( !petId ) return res.status(400).json({ error: "Missing pet id" });
+        if ( isNaN(petId) ) return res.status(400).json({ error: "Pet id must be a number" });
+        
+        new DeletePet(this.petRepository)
+            .execute( petId )
+            .then( petDeleted => res.json(petDeleted))
+            .catch( error => handleError(error, res));
+
+    }
 
 
     private validateCreatePetInput = (object: {[key: string]: any}) => {

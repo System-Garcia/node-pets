@@ -10,6 +10,7 @@ import { PermissionRepositoryImpl } from "../../infrastructure/repositories/perm
 import { S3Service } from "../services/s3.service";
 import fileUpload from "express-fileupload";
 import { FileUploadMiddleware } from "../middlewares/file-upload.middleware";
+import { PetMiddleware } from "../middlewares/pet.middleware";
 
 
 
@@ -44,8 +45,11 @@ export class PetRoutes {
             responseOnLimit: 'The file size exceeds the allowed limit.',
         });
 
+        const petMiddleware = new PetMiddleware(petRepository);
+
         router.get('/', petController.getPets);
         router.post('/',[ fileUploadMiddleware,  authMiddleware.validateJWT, FileUploadMiddleware.containFiles ], petController.createPet);
+        router.delete('/:id', [ authMiddleware.validateJWT, petMiddleware.verifyOwnership ], petController.deletePet);
 
         return router;
     }
