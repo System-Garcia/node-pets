@@ -84,8 +84,23 @@ export class PostgresPetDatasourceImpl implements PetDatasource {
         }
     }
 
-    updateById(updatePetDto: UpdatePetDto): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+    async updateById(updatePetDto: UpdatePetDto): Promise<PetEntity> {
+        
+        try {
+            await this.findById(updatePetDto.id);
+            const petData = updatePetDto.values;
+        
+            const updatedPet = await prisma.pet.update({
+                where: { id: updatePetDto.id },
+                data: petData,
+            });
+
+            return PetEntity.fromObject(updatedPet);
+
+        } catch (error) {
+            throw error;
+        }
+
     }
 
     async deleteById(id: number): Promise<PetEntity> {

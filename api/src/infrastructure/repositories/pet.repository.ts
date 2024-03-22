@@ -1,4 +1,12 @@
-import { CreatePetDto, PaginatedPetsResponse, PaginationDto, PetDatasource, PetEntity, PetRepository } from "../../domain";
+import { 
+    CreatePetDto, 
+    PaginatedPetsResponse, 
+    PaginationDto, 
+    PetDatasource, 
+    PetEntity, 
+    PetRepository, 
+    UpdatePetDto 
+} from "../../domain";
 
 
 export class PetRepositoryImpl implements PetRepository {
@@ -22,6 +30,10 @@ export class PetRepositoryImpl implements PetRepository {
 
     async getUserPets(pagination: PaginationDto, userId: number): Promise<PaginatedPetsResponse> {
         return this.petDatasource.getUserPets(pagination, userId);
+    }
+
+    async updateById(updatePetDto: UpdatePetDto): Promise<PetEntity> {
+        return this.petDatasource.updateById(updatePetDto);
     }
     
 }
