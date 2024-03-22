@@ -52,10 +52,24 @@ export class UpdatePetDto {
 
         const { id, name, speciesId, color, img, missingAt } = object; 
 
-        if(!id || isNaN(id)) {
-            return ['id must be a valid number']
-        };
+        if(!id || isNaN(id)) return ['id must be a valid number']
+        
+        if(name && typeof name !== 'string') return ['Name must be a string']
+        if(name && name.trim().length === 0) return ['Name cannot be empty']
+        if(name && name.trim().length > 50)  return ['Name cannot be longer than 50 characters']
 
+        if(speciesId && isNaN(speciesId)) return ['speciesId must be a valid number']
+        
+
+        if(color && typeof color !== 'string') return ['Color must be a string'];
+        if(color && color.trim().length === 0) return ['Color cannot be empty'];
+        if(color && color.trim().length > 50) return ['Color cannot be longer than 50 characters'];
+    
+        if(img && typeof img !== 'string') return ['Img must be a string'];
+        if(img && img.trim().length === 0) return ['Img cannot be empty'];
+        if(img && img.trim().length > 255) return ['Img cannot be longer than 255 characters'];
+
+        
         let newMissingAt =  missingAt;
 
         if(missingAt) {

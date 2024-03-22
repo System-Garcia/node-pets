@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreatePet, CreatePetDto, DeletePet, GetPets, GetUserPets, PaginationDto, PetRepository, handleError } from "../../domain";
+import { CreatePet, CreatePetDto, DeletePet, GetPets, GetUserPets, PaginationDto, PetRepository, UpdatePet, UpdatePetDto, handleError } from "../../domain";
 import { S3Service } from "../services/s3.service";
 import { UploadedFile } from "express-fileupload";
 
@@ -63,6 +63,7 @@ export class PetController {
         if ( !petId ) return res.status(400).json({ error: "Missing pet id" });
         if ( isNaN(petId) ) return res.status(400).json({ error: "Pet id must be a number" });
         
+        console.log('pasando')
         new DeletePet(this.petRepository)
             .execute( petId )
             .then( petDeleted => res.json(petDeleted))
@@ -83,6 +84,19 @@ export class PetController {
                 .then( paginatedPetsResponse => res.json(paginatedPetsResponse))
                 .catch( error => handleError(error, res));
         }
+
+    public updatePet = ( req: Request, res: Response) => {
+        
+        const petId = +req.params.id;
+        
+        const [error, updatePetDto] = UpdatePetDto.create({...req.body, id: petId});
+        if (error) return res.status(400).json({ error });
+        
+        new UpdatePet(this.petRepository)
+            .execute( updatePetDto! )
+            .then( pet => res.json(pet))
+            .catch( error => handleError(error, res));
+    }
 
 
     private validateCreatePetInput = (object: {[key: string]: any}) => {

@@ -51,6 +51,7 @@ export class PetRoutes {
         router.post('/',[ fileUploadMiddleware,  authMiddleware.validateJWT, FileUploadMiddleware.containFiles ], petController.createPet);
         router.delete('/:id', [ authMiddleware.validateJWT, petMiddleware.verifyOwnership ], petController.deletePet);
         router.get('/my-pets', [ authMiddleware.validateJWT ], petController.getUserPets);
+        router.put('/:id', [ fileUploadMiddleware, authMiddleware.validateJWT, petMiddleware.verifyOwnership, FileUploadMiddleware.objectToArray ], petController.updatePet);
 
         return router;
     }
