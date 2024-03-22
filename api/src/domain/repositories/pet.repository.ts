@@ -12,5 +12,5 @@ export abstract class PetRepository {
 
     abstract findById(id: number): Promise<PetEntity>;
 
-    abstract deleteById(id: string): Promise<PetEntity>;
+    abstract deleteById(id: number): Promise<PetEntity>;
 }

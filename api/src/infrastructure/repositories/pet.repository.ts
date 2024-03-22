@@ -11,11 +11,13 @@ export class PetRepositoryImpl implements PetRepository {
     create(createPetDto: CreatePetDto): Promise<PetEntity> {
         return this.petDatasource.create(createPetDto);
     }
-    findById(id: number): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+
+    async findById(id: number): Promise<PetEntity> {
+        return this.petDatasource.findById(id);
     }
-    deleteById(id: string): Promise<PetEntity> {
-        throw new Error("Method not implemented.");
+
+    async deleteById(id: number): Promise<PetEntity> {
+        return this.petDatasource.deleteById(id);
     }
     
 }
