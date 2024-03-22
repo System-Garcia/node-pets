@@ -65,6 +65,7 @@ export * from './use-cases/species/delete-species';
 export * from './use-cases/species/update-species';
 export * from './use-cases/pet/create-pet';
 export * from './use-cases/pet/delete-pet';
+export * from './use-cases/pet/get-user-pets';
 
 // Services
 export * from './services/email-service';

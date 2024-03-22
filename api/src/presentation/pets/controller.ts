@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreatePet, CreatePetDto, DeletePet, GetPets, PaginationDto, PetRepository, handleError } from "../../domain";
+import { CreatePet, CreatePetDto, DeletePet, GetPets, GetUserPets, PaginationDto, PetRepository, handleError } from "../../domain";
 import { S3Service } from "../services/s3.service";
 import { UploadedFile } from "express-fileupload";
 
@@ -69,6 +69,20 @@ export class PetController {
             .catch( error => handleError(error, res));
 
     }
+
+    public getUserPets = (req: Request, res: Response) => {
+            
+            const userId = req.body.user.id;
+            
+            const { page = 1, limit = 10} = req.query;
+            const [error, paginationDto] = PaginationDto.create( +page, +limit );
+            if (error) return res.status(400).json({ error });
+
+            new GetUserPets(this.petRepository)
+                .execute( paginationDto!, userId )
+                .then( paginatedPetsResponse => res.json(paginatedPetsResponse))
+                .catch( error => handleError(error, res));
+        }
 
 
     private validateCreatePetInput = (object: {[key: string]: any}) => {

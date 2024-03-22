@@ -19,5 +19,9 @@ export class PetRepositoryImpl implements PetRepository {
     async deleteById(id: number): Promise<PetEntity> {
         return this.petDatasource.deleteById(id);
     }
+
+    async getUserPets(pagination: PaginationDto, userId: number): Promise<PaginatedPetsResponse> {
+        return this.petDatasource.getUserPets(pagination, userId);
+    }
     
 }
