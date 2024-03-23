@@ -12,7 +12,7 @@ const EmailValidation = () => {
       if (!token) return;
 
       try {
-        await axios.get(`http://localhost:3000/api/auth/validate-email/${token}`);
+        await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/validate-email/${token}`);
         alert('Correo electrónico validado con éxito. Ahora puedes iniciar sesión.');
       } catch (error) {
         console.error(error.response ? error.response.data : error);
