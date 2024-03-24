@@ -1,4 +1,4 @@
-import Animation from "../../../src/styles/animations/loaders.module.css";
+import styles from "../../../src/styles/atoms/loaders.module.css";
 
 const LoaderIn = () => {
   return (

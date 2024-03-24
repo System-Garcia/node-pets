@@ -38,7 +38,7 @@
             </div>
           </section>
 
-          <div className={styles.imageContainer}>
+          <div className={styles.imageContainer} >
                 <img className={styles.imageContainerImg} src="/img/peito.png" alt="inspirational" />
             </div>
 
