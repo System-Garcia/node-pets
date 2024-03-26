@@ -76,13 +76,17 @@
   }
   
   .cardBackLink {
-    border-top: solid 1px #f3f3f3;
+    border-top: solid 1px #F1DB12;
     height: 50px;
     line-height: 50px;
   }
   
   .cardBackLinkA {
-    color: #f3f3f3;
+    color: #8a8787;
+  }
+  
+  .cardBackLinkA:hover {
+    color: #F1DB12;
   }
   
   .cardBackH3 {

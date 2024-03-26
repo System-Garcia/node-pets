@@ -169,7 +169,7 @@ header {
   position: absolute;
   top: 50%;
   left: 95%;
-  transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   width: 37.5rem;
   height: 37.5rem;
   background: #ffffff;
@@ -178,13 +178,12 @@ header {
   overflow: hidden;
 }
 
-
 .imageContainerImg {
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .imageContainer::after {
@@ -192,15 +191,22 @@ header {
   position: absolute;
   width: 100%;
   height: 100%;
-  align-items: center;
-  background-image: url('/img/pata.png');
+  background-image: url('/img/loving.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   transition: opacity 0.5s ease;
   z-index: 1;
   opacity: 1;
 }
 
-.imageContainer:hover .imageContainerImg {
-  transform: translateY(-100%);
+.imageContainer:hover::after {
+  opacity: 0;
+}
+
+.imageContainer:hover::after,
+.imageContainerImg:hover + ::after {
+  opacity: 0;
 }
 
 .availables {

@@ -1,8 +1,9 @@
-import { useState, useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useFormInput } from "../../hooks/useLoginFields ";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/pages/loginPage.module.css";
-import logo from "/img/amuleto.png";
+import logo from "/amuleto.png";
 import corgi from "/img/corgi.png";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -10,12 +11,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [capsLockWarningShown, setCapsLockWarningShown] = useState({ email: false, password: false });
+  const {
+    email,
+    password,
+    handleEmailChange,
+    handlePasswordChange,
+    isCapsLockOn,
+  } = useFormInput();
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
   const handleLogin = async (event) => {
@@ -34,29 +38,19 @@ const LoginPage = () => {
       if (success) {
         toast.success("Login successful!");
         navigate("/main-menu");
+      } else {
+        toast.error("Invalid login credentials");
       }
     } catch (error) {
-      toast.error("Login failed");
+      toast.error(error.message || "Login failed");
     }
   };
 
-  const handleEmailChange = (event) => {
-    const emailValue = event.target.value;
-    setEmail(emailValue);
-    if (emailValue.toUpperCase() === emailValue && emailValue !== "" && !capsLockWarningShown.email) {
+  useEffect(() => {
+    if (isCapsLockOn) {
       toast.info("Caps Lock is on.");
-      setCapsLockWarningShown(prev => ({ ...prev, email: true }));
     }
-  };
-
-  const handlePasswordChange = (event) => {
-    const passwordValue = event.target.value;
-    setPassword(passwordValue);
-    if (passwordValue.toUpperCase() === passwordValue && passwordValue !== "" && !capsLockWarningShown.password) {
-      toast.info("Caps Lock is on.");
-      setCapsLockWarningShown(prev => ({ ...prev, password: true }));
-    }
-  };
+  }, [isCapsLockOn]);
 
   return (
     <section className={styles.loginContainer}>
@@ -85,7 +79,10 @@ const LoginPage = () => {
           <div className={styles.inputGroup}>
             <div>
               <label htmlFor="password">Password</label>
-              <Link to="/auth/forgot-password" className={styles.forgotPassword}>
+              <Link
+                to="/auth/forgot-password"
+                className={styles.forgotPassword}
+              >
                 Forgot Password
               </Link>
             </div>
@@ -124,3 +121,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

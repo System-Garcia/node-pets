@@ -12,9 +12,9 @@ This project requires Node.js 🟢 and Yarn 🧶. Make sure you have them instal
 
 To install the project's dependencies, run the following command at the project's root:
 
-\`\`\`
+```sh
 yarn install
-\`\`\`
+```
 
 ## ⚙️ Local Configuration
 
@@ -24,19 +24,39 @@ You will need to configure local environment variables before starting the appli
 
 To start the development server, run:
 
-\`\`\`
+```sh
 yarn dev
-\`\`\`
+```
 
 The development server will start, and you can access the application at http://localhost:3000.
+
+## 📘 Storybook
+
+Storybook is an open-source tool for developing UI components in isolation for React, Vue, and Angular. It makes building stunning UIs organized and efficient.
+
+### Starting Storybook
+
+To start the Storybook for component development, run the following command:
+
+```sh
+yarn storybook
+```
+
+To build a static version of Storybook, which can be deployed to a static hosting service, run:
+
+```sh
+yarn build-storybook
+```
+
+This will generate a storybook-static directory containing your Storybook as a static web application.
 
 ## 🏗️ Building for Production
 
 To build the project for the production environment, run:
 
-\`\`\`
+```sh
 yarn build
-\`\`\`
+```
 
 This command will generate the `dist` directory with the files optimized for production.
 
@@ -44,9 +64,9 @@ This command will generate the `dist` directory with the files optimized for pro
 
 To lint your code with ESLint, run:
 
-\`\`\`
+```sh
 yarn lint
-\`\`\`
+```
 
 This command will help maintain code quality by checking for errors and style issues.
 
@@ -54,8 +74,8 @@ This command will help maintain code quality by checking for errors and style is
 
 After building your application for production, you can locally preview it before deploying by running:
 
-\`\`\`
+```sh
 yarn preview
-\`\`\`
+```
 
 This will start a local server serving your application from the `dist` directory, allowing you to test the production version in your own environment.
