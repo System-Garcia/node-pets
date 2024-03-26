@@ -81,6 +81,9 @@ model Location {
   address String
   city    String
   country String
+  latitude  Float
+  longitude Float
+  description String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   isDeleted Boolean   @default(false)
