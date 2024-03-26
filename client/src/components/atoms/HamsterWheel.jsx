@@ -1,4 +1,4 @@
-import styles from "../../styles/pages/animations/hamsterWheel.module.css";
+import styles from "../../styles/pages/atoms/hamsterWheel.module.css";
 
 export const HamsterWheel = () => {
   return (

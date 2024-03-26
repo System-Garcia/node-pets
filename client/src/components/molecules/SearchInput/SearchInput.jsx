@@ -33,5 +33,13 @@ const SearchInput = () => {
     </section>
   );
 }
+
+SearchInput.propTypes = {
+  };
+  
+  SearchInput.defaultProps = {
+    
+  };
+  
   
 export default SearchInput;

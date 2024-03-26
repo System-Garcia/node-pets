@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import mankeyImage from "/img/mankey.png";
+import { useNavigate } from "react-router-dom";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,47 +13,60 @@ import {
   HiLockClosed,
   HiCalendar,
 } from "react-icons/hi";
+import { useForm } from "../../hooks/useForm";
+import { post } from "../../helpers/axiosHelper";
 
 const CreateA = () => {
-  const [formData, setFormData] = useState({
+  const { formValue, changeFormValue } = useForm({
     email: "",
     phoneNumber: "",
     firstName: "",
     lastName: "",
     password: "",
     dateOfBirth: "",
-    file: null,
   });
 
   const [dragging, setDragging] = useState(false);
   const [fileName, setFileName] = useState("");
 
+  const navigate = useNavigate();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, files } = e.target;
     if (name === "file") {
-      setFormData({ ...formData, file: files[0] });
       setFileName(files[0].name);
+      changeFormValue({
+        target: {
+          name: "file",
+          value: files[0],
+        },
+      });
     } else {
-      setFormData({ ...formData, [name]: value });
+      changeFormValue(e);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const dataToSend = new FormData();
-    for (const key in formData) {
-      if (formData[key] !== null) {
-        dataToSend.append(key, formData[key]);
-      }
-    }
+    Object.keys(formValue).forEach((key) => {
+      dataToSend.append(key, formValue[key]);
+    });
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, dataToSend);
-      console.log(response.data);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
+        dataToSend
+      );
       toast.success("Registration successful!");
+      setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
-      console.error(error.response.data);
-      toast.error("Registration failed.");
+      toast.error("Registration failed. " + error.response.data.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -61,9 +75,20 @@ const CreateA = () => {
     e.stopPropagation();
   };
 
+  const handleDragIn = (e) => {
+    handleDrag(e);
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setDragging(true);
+    }
+  };
+
+  const handleDragOut = (e) => {
+    handleDrag(e);
+    setDragging(false);
+  };
+
   const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    handleDrag(e);
     setDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length) {
       const files = e.dataTransfer.files;
@@ -73,18 +98,7 @@ const CreateA = () => {
           files: files,
         },
       });
-      setFileName(files[0].name);
     }
-  };
-
-  const handleDragIn = (e) => {
-    handleDrag(e);
-    setDragging(true);
-  };
-
-  const handleDragOut = (e) => {
-    handleDrag(e);
-    setDragging(false);
   };
 
   return (
@@ -92,7 +106,6 @@ const CreateA = () => {
       <ToastContainer />
       <div className="min-h-screen flex items-center justify-center px-4 ">
         <div className="flex w-full max-w-4xl md:rounded-lg md:shadow-xl">
-          {/* Contenedor de imagen, visible solo en pantallas md y superiores */}
           <div className="hidden md:flex bg-[#4B92FC] rounded-l-lg w-full md:w-1/2 justify-center items-center">
             <img
               src={mankeyImage}
@@ -100,13 +113,11 @@ const CreateA = () => {
               className="w-full max-w-lg"
             />
           </div>
-          {/* Contenedor del formulario */}
           <div className="w-full md:w-1/2 bg-white p-8 rounded-r-lg">
             <h1 className="text-2xl font-bold text-center mb-6">
               Create Account
             </h1>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Campos de formulario con iconos */}
               <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
                 <HiMail className="ml-2 text-gray-400" />
                 <input
@@ -172,8 +183,15 @@ const CreateA = () => {
                   className="block w-full px-3 py-2 rounded-md focus:outline-none"
                 />
               </div>
-              {/* File Upload Input */}
-              <div className="flex items-center justify-center p-5 relative border-2 border-dotted border-gray-300 rounded-md">
+              <div
+                className={`flex items-center justify-center p-5 relative border-2 ${
+                  dragging ? "border-blue-500" : "border-dotted border-gray-300"
+                } rounded-md`}
+                onDragOver={handleDrag}
+                onDragEnter={handleDragIn}
+                onDragLeave={handleDragOut}
+                onDrop={handleDrop}
+              >
                 <FaCloudUploadAlt className="text-[#4B92FC] mx-auto text-6xl" />
                 <input
                   type="file"
@@ -193,15 +211,21 @@ const CreateA = () => {
                   )}
                 </div>
               </div>
-              {/* Botón de registro */}
-              <button
-                type="submit"
-                className="block w-full text-white bg-[#4B92FC] rounded-md py-2 shadow-lg hover:bg-[#3b82f6]"
-              >
-                Register
-              </button>
+              <div className="relative">
+                <button
+                  type="submit"
+                  className="block w-full text-white bg-[#4B92FC] rounded-md py-2 shadow-lg hover:bg-[#3b82f6]"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Registering..." : "Register"}
+                </button>
+                {isSubmitting && (
+                  <div className="absolute inset-0 flex justify-center items-center">
+                    <div className="loader"></div>
+                  </div>
+                )}
+              </div>
             </form>
-            {/* Enlace a la página de inicio de sesión */}
             <p className="mt-6 text-center text-gray-600">
               Already have an account?
               <Link to="/login" className="text-[#4B92FC] hover:text-[#3b82f6]">

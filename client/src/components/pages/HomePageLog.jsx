@@ -38,8 +38,8 @@
             </div>
           </section>
 
-          <div className={styles.imageContainer}>
-                <img className={styles.imageContainerImg} src="/img/peito.png" alt="inspirational" />
+          <div className={styles.imageContainer} >
+                <img className={styles.imageContainerImg} src="/img/homepage/peito.png" alt="inspirational" />
             </div>
 
           <section className={styles.availables}>

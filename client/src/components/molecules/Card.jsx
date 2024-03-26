@@ -2,22 +2,22 @@ import styles from '../../styles/molecules/Card.module.css';
 
 export const cardsData = [
   {
-    imageFront: '/img/availables/adoptFront.jpg',
-    imageBack: '/img/availables/adoptBack.png',
+    imageFront: '/img/homepage/availables/adoptUs.png',
+    imageBack: '/img/homepage/availables/newFriend.png',
     title: 'Adopt',
     description: 'Get a friend',
     link: '#'
   },
   {
-    imageFront: '/img/availables/rescueFront.jpg',
-    imageBack: '/img/availables/rescueBack.png',
+    imageFront: '/img/homepage/availables/localizePet.png',
+    imageBack: '/img/homepage/availables/rescuePet.png',
     title: 'Rescue',
     description: 'Provide support',
     link: '#'
   },
   {
-    imageFront: '/img/availables/socializeFront.jpg',
-    imageBack: '/img/availables/socializeBack.png',
+    imageFront: '/img/homepage/availables/socialize.png',
+    imageBack: '/img/homepage/availables/connectPet.png',
     title: 'Socialize',
     description: 'Connect your pets',
     link: '#'

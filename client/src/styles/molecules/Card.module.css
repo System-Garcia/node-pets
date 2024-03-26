@@ -10,7 +10,7 @@
     width: 300px;
     height: 350px;
     margin: 20px;
-    transition: transform 0.6s;
+    transition: transform 0.8s;
     transform-style: preserve-3d;
     cursor: pointer;
   }
@@ -34,7 +34,7 @@
   }
   
   .cardFront {
-    transform: perspective(600px) rotateY(0deg);
+    transform: perspective(0px) rotateY(0deg);
     box-shadow: 0 5px 10px #000;
   }
   
@@ -58,7 +58,7 @@
   }
   
   .cardBack {
-    transform: perspective(600px) rotateY(180deg);
+    transform: perspective(0px) rotateY(180deg);
     background: #ffffff;
     padding: 15px;
     color: #000000;
@@ -76,13 +76,17 @@
   }
   
   .cardBackLink {
-    border-top: solid 1px #f3f3f3;
+    border-top: solid 1px #F1DB12;
     height: 50px;
     line-height: 50px;
   }
   
   .cardBackLinkA {
-    color: #f3f3f3;
+    color: #8a8787;
+  }
+  
+  .cardBackLinkA:hover {
+    color: #F1DB12;
   }
   
   .cardBackH3 {
