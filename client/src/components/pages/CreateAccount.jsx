@@ -47,10 +47,7 @@ const CreateA = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        dataToSend
-      );
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, dataToSend);
       console.log(response.data);
       toast.success("Registration successful!");
     } catch (error) {
