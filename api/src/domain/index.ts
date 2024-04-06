@@ -81,6 +81,7 @@ export * from './use-cases/pet/get-user-pets';
 export * from './use-cases/pet/update-pet';
 export * from './use-cases/location/create-location';
 export * from './use-cases/reward/create-reward';
+export * from './use-cases/reward/delete-reward';
 
 // Services
 export * from './services/email-service';

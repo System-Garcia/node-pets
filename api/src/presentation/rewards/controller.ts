@@ -25,7 +25,15 @@ export class RewardController {
     };
 
     public deleteById = (req: Request, res: Response) => {
-        res.json({ message: 'Delete reward by id' });
+        
+        const id = +req.params.id;
+        if (!id) return res.status(400).json({ error: "Missing reward id" });
+        if (isNaN(id)) return res.status(400).json({ error: "Invalid reward id" });
+
+        this.rewardService.deleteReward(id)
+            .then( reward => res.json(reward))
+            .catch( error => handleError(error, res));
+
     };
 
 }

@@ -9,4 +9,5 @@ export abstract class RewardRepository {
     abstract create(createRewardDto: CreateRewardDto): Promise<RewardEntity>;
     abstract updateById(updateRewardDto: UpdateRewardDto): Promise<RewardEntity>;
     abstract deleteById(id: number): Promise<RewardEntity>;
+    abstract findById(id: number): Promise<RewardEntity>;
 }

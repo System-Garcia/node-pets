@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { PetRepository, handleError } from "../../domain";
+import { PetRepository, RewardRepository, handleError } from "../../domain";
 
 export class RewardMiddleware {
-    constructor(private readonly petRepository: PetRepository) {}
+    constructor(
+        private readonly petRepository: PetRepository,
+        private readonly rewardRepository: RewardRepository,
+    ) {}
 
     /**
      * Middleware function to verify ownership of a pet.
@@ -35,4 +38,29 @@ export class RewardMiddleware {
             handleError(error, res);
         }
     };
+
+    public verifyRewardOwnership = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        const rewardId = +req.params.id;
+        if (!rewardId) return res.status(400).json({ error: "Missing reward id" });
+
+        const userId = req.body.user.id;
+
+        try {
+            const reward = await this.rewardRepository.findById(rewardId);
+
+            if (userId !== reward.pet.ownerId) {
+                return res
+                .status(403)
+                .json({ error: "You are not allowed to perform this action" });
+            }
+
+            next();
+        } catch (error) {
+            handleError(error, res);
+        }
+    }
 }
