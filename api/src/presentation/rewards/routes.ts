@@ -50,13 +50,13 @@ export class RewardRoutes {
         const rewardController = new RewardController(rewardService);
 
         const authMiddleware = new AuthMiddleware(userDatasource);
-        const rewardMiddleware = new RewardMiddleware(petRepository);
+        const rewardMiddleware = new RewardMiddleware(petRepository, rewardRepository);
         
 
         router.get('/', rewardController.getAll);
         router.post('/', [authMiddleware.validateJWT, rewardMiddleware.verifyPetOwnership ], rewardController.create);
         router.put('/', rewardController.updateById);
-        router.delete('/:id', rewardController.deleteById);
+        router.delete('/:id', [ authMiddleware.validateJWT, rewardMiddleware.verifyRewardOwnership ], rewardController.deleteById);
 
         return router
     }

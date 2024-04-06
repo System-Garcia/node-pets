@@ -25,4 +25,8 @@ export class RewardRepositoryImpl implements RewardRepository {
     async getAll(): Promise<PaginatedRewardResponse> {
         return this.datasource.getAll();
     }
+
+    async findById(id: number): Promise<RewardEntity> {
+        return this.datasource.findById(id);
+    }
 }
