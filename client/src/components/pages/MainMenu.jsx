@@ -1,5 +1,5 @@
 import "../../styles/pages/mainMenu.module.css"
-import SearchInput from '../molecules/SearchInput/SearchInput';
+import SearchInput from '../atoms/SearchInput/SearchInput';
 
 
 const MainMenu = () => {

@@ -54,6 +54,9 @@
             />
            ))}
           </section>
+          <div className={styles.dashboardLinkContainer}>
+        <Link to="/dashboard" className={styles.dashboardLink}>Go to Dashboard</Link>
+      </div>
       </div>
       </>
     );
