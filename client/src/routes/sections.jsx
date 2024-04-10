@@ -19,9 +19,9 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { index: true, element: <IndexPage /> },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: '/user', element: <UserPage /> },
+        { path: '/products', element: <ProductsPage /> },
+        { path: '/blog', element: <BlogPage /> },
         // Más rutas...
       ],
     },
