@@ -19,15 +19,15 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { index: true, element: <IndexPage /> },
-        { path: '/user', element: <UserPage /> },
-        { path: '/products', element: <ProductsPage /> },
-        { path: '/blog', element: <BlogPage /> },
+        { path: 'user', element: <UserPage /> },
+        { path: 'products', element: <ProductsPage /> },
+        { path: 'blog', element: <BlogPage /> },
         // Más rutas...
       ],
     },
     { path: 'login', element: <LoginPage /> },
     { path: '404', element: <Page404 /> },
-    { path: '*', element: <Navigate to="/404" replace /> },
+    { path: '*', element: <Navigate to="/dashboard/404" replace /> },
   ]);
 
   return routes;

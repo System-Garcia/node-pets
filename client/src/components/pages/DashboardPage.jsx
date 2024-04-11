@@ -9,7 +9,6 @@ const DashboardPage = () => {
 
   return (
     <>
-
     <ThemeProvider>
       <Router />
     </ThemeProvider>

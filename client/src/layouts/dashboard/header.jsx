@@ -24,58 +24,40 @@ import NotificationsPopover from './common/notifications-popover';
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
 
-  const lgUp = useResponsive('up', 'lg');
-
   const renderContent = (
-    <>
-      {!lgUp && (
+    <Toolbar sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+    }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
-      )}
+        <Searchbar />
+      </Box>
 
-      <Searchbar />
-
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Stack direction="row" alignItems="center" spacing={1}>
+      <Stack direction="row" alignItems="center" spacing={2}>
         <LanguagePopover />
         <NotificationsPopover />
         <AccountPopover />
       </Stack>
-    </>
+    </Toolbar>
   );
 
   return (
-    <AppBar
-      sx={{
-        boxShadow: 'none',
-        height: HEADER.H_MOBILE,
-        zIndex: theme.zIndex.appBar + 1,
-        ...bgBlur({
-          color: theme.palette.background.default,
-        }),
-        transition: theme.transitions.create(['height'], {
-          duration: theme.transitions.duration.shorter,
-        }),
-        ...(lgUp && {
-          width: `calc(100% - ${NAV.WIDTH + 1}px)`,
-          height: HEADER.H_DESKTOP,
-        }),
-      }}
-    >
-      <Toolbar
-        sx={{
-          height: 1,
-          px: { lg: 5 },
-        }}
-      >
-        {renderContent}
-      </Toolbar>
+    <AppBar sx={{
+      boxShadow: 'none',
+      zIndex: theme.zIndex.drawer + 1,
+      bgcolor: 'transparent',
+      transition: theme.transitions.create('width'),
+      ...theme.mixins.toolbar,
+    }}>
+      {renderContent}
     </AppBar>
   );
 }
 
 Header.propTypes = {
-  onOpenNav: PropTypes.func,
+  onOpenNav: PropTypes.func.isRequired,
 };

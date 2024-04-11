@@ -37,13 +37,22 @@ const StyledSearchbar = styled('div')(({ theme }) => ({
   },
 }));
 
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'flex-start', // Alinea los ítems al inicio (izquierda)
+  alignItems: 'center',
+  width: '100%', // Ocupa todo el ancho para asegurar la responsividad
+  paddingLeft: theme.spacing(2), // Añade un poco de espacio interno en el lado izquierdo
+  // Elimina otros estilos que puedan interferir con el posicionamiento
+}));
+
 // ----------------------------------------------------------------------
 
 export default function Searchbar() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    setOpen(!open);
+    setOpen(true);
   };
 
   const handleClose = () => {
@@ -53,34 +62,34 @@ export default function Searchbar() {
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <div>
-        {!open && (
-          <IconButton onClick={handleOpen}>
-            <Iconify icon="eva:search-fill" />
-          </IconButton>
+        {open ? (
+          <Slide direction="down" in={open} mountOnEnter unmountOnExit>
+            <StyledSearchbar>
+              {/* Contenido del Searchbar abierto */}
+              <Input
+                autoFocus
+                fullWidth
+                disableUnderline
+                placeholder="Search…"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+                  </InputAdornment>
+                }
+                sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
+              />
+              <Button variant="contained" onClick={handleClose}>
+                Search
+              </Button>
+            </StyledSearchbar>
+          </Slide>
+        ) : (
+          <SearchIconWrapper>
+            <IconButton onClick={handleOpen}>
+              <Iconify icon="eva:search-fill" />
+            </IconButton>
+          </SearchIconWrapper>
         )}
-
-        <Slide direction="down" in={open} mountOnEnter unmountOnExit>
-          <StyledSearchbar>
-            <Input
-              autoFocus
-              fullWidth
-              disableUnderline
-              placeholder="Search…"
-              startAdornment={
-                <InputAdornment position="start">
-                  <Iconify
-                    icon="eva:search-fill"
-                    sx={{ color: 'text.disabled', width: 20, height: 20 }}
-                  />
-                </InputAdornment>
-              }
-              sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
-            />
-            <Button variant="contained" onClick={handleClose}>
-              Search
-            </Button>
-          </StyledSearchbar>
-        </Slide>
       </div>
     </ClickAwayListener>
   );
