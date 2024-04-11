@@ -56,6 +56,7 @@ export * from './interfaces/attachement.interface';
 export * from './interfaces/paginated-species-res.interface';
 export * from './interfaces/paginated-permission-res.interface';
 export * from './interfaces/paginated-reward-res.interface';
+export * from './interfaces/updateRewardAndLocationData.interface';
 
 // Use cases
 export * from './use-cases/user/create-user';
@@ -82,6 +83,7 @@ export * from './use-cases/pet/update-pet';
 export * from './use-cases/location/create-location';
 export * from './use-cases/reward/create-reward';
 export * from './use-cases/reward/delete-reward';
+export * from './use-cases/reward/update-reward';
 
 // Services
 export * from './services/email-service';

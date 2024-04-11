@@ -21,7 +21,20 @@ export class RewardController {
     };
 
     public updateById = (req: Request, res: Response) => {
-        res.json({ message: 'Update reward by id' });
+
+        const reward = {
+            id: +req.params.id,
+            ...req.body.reward,
+        }
+        
+        const location = {
+            id: res.locals.reward.location.id,
+            ...req.body.location,
+        };
+
+        this.rewardService.updateReward({reward, location})
+            .then( reward => res.json(reward))
+            .catch( error => handleError(error, res));
     };
 
     public deleteById = (req: Request, res: Response) => {

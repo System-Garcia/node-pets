@@ -57,6 +57,8 @@ export class RewardMiddleware {
                 .status(403)
                 .json({ error: "You are not allowed to perform this action" });
             }
+            
+            res.locals.reward = reward;
 
             next();
         } catch (error) {

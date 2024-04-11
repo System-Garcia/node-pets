@@ -55,7 +55,7 @@ export class RewardRoutes {
 
         router.get('/', rewardController.getAll);
         router.post('/', [authMiddleware.validateJWT, rewardMiddleware.verifyPetOwnership ], rewardController.create);
-        router.put('/', rewardController.updateById);
+        router.put('/:id', [authMiddleware.validateJWT, rewardMiddleware.verifyRewardOwnership ],rewardController.updateById);
         router.delete('/:id', [ authMiddleware.validateJWT, rewardMiddleware.verifyRewardOwnership ], rewardController.deleteById);
 
         return router
