@@ -1,6 +1,7 @@
 import {
   CreateRewardDto,
   PaginatedRewardResponse,
+  PaginationDto,
   RewardDatasource,
   RewardEntity,
   RewardRepository,
@@ -22,8 +23,8 @@ export class RewardRepositoryImpl implements RewardRepository {
         return this.datasource.deleteById(id);
     }
 
-    async getAll(): Promise<PaginatedRewardResponse> {
-        return this.datasource.getAll();
+    async getAll(paginationDto: PaginationDto): Promise<PaginatedRewardResponse> {
+        return this.datasource.getAll(paginationDto);
     }
 
     async findById(id: number): Promise<RewardEntity> {

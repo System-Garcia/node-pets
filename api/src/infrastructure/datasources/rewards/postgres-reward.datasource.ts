@@ -3,14 +3,95 @@ import {
   CreateRewardDto,
   CustomError,
   PaginatedRewardResponse,
+  PaginationDto,
   RewardDatasource,
   RewardEntity,
   UpdateRewardDto,
 } from "../../../domain";
 
+const rewardInclude = {
+  location: {
+    select: {
+      id: true,
+      address: true,
+      country: true,
+      city: true,
+      latitude: true,
+      longitude: true,
+      description: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  },
+  comments: {
+    select: {
+      id: true,
+      rewardId: true,
+      userId: true,
+      text: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  },
+  pet: {
+    select: {
+      id: true,
+      ownerId: true,
+      name: true,
+      speciesId: true,
+      color: true,
+      img: true,
+      missingAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  },
+};
+
 export class PostgresRewardDatasource implements RewardDatasource {
-  async getAll(): Promise<PaginatedRewardResponse> {
-    throw new Error("Method not implemented.");
+
+  constructor(private readonly webServiceUrl: string) {}
+
+  async getAll(paginationDto: PaginationDto): Promise<PaginatedRewardResponse> {
+    
+    const { page, limit } = paginationDto;
+
+    try {
+      const skip = (page - 1) * limit;
+
+      const [total, rewards] = await Promise.all([
+        prisma.reward.count(),
+        prisma.reward.findMany({
+          where: { isDeleted: false },
+          include: {
+            ...rewardInclude,
+          },
+          skip: skip,
+          take: limit,
+        }),
+      ]);
+
+      const nextPage =
+        page * limit >= total
+          ? null
+          : `${this.webServiceUrl}/rewards?page=${page + 1}&limit=${limit}`;
+
+      const prevPage =
+        page - 1 > 0
+          ? `${this.webServiceUrl}/rewards?page=${page - 1}&limit=${limit}`
+          : null;
+
+      return {
+        page,
+        limit,
+        total,
+        next: nextPage,
+        prev: prevPage,
+        rewards: rewards.map((reward) => RewardEntity.fromObject(reward)),
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   async create(createRewardDto: CreateRewardDto): Promise<RewardEntity> {
@@ -20,42 +101,7 @@ export class PostgresRewardDatasource implements RewardDatasource {
           ...createRewardDto,
         },
         include: {
-          location: {
-            select: {
-              id: true,
-              address: true,
-              country: true,
-              city: true,
-              latitude: true,
-              longitude: true,
-              description: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          comments: {
-            select: {
-              id: true,
-              rewardId: true,
-              userId: true,
-              text: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          pet: {
-            select: {
-              id: true,
-              ownerId: true,
-              name: true,
-              speciesId: true,
-              color: true,
-              img: true,
-              missingAt: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
+          ...rewardInclude,
         },
       });
 
@@ -82,42 +128,7 @@ export class PostgresRewardDatasource implements RewardDatasource {
           ...updateRewardDto,
         },
         include: {
-          location: {
-            select: {
-              id: true,
-              address: true,
-              country: true,
-              city: true,
-              latitude: true,
-              longitude: true,
-              description: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          comments: {
-            select: {
-              id: true,
-              rewardId: true,
-              userId: true,
-              text: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          pet: {
-            select: {
-              id: true,
-              ownerId: true,
-              name: true,
-              speciesId: true,
-              color: true,
-              img: true,
-              missingAt: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
+          ...rewardInclude,
         },
       });
 
@@ -142,42 +153,7 @@ export class PostgresRewardDatasource implements RewardDatasource {
           isDeleted: true,
         },
         include: {
-          location: {
-            select: {
-              id: true,
-              address: true,
-              country: true,
-              city: true,
-              latitude: true,
-              longitude: true,
-              description: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          comments: {
-            select: {
-              id: true,
-              rewardId: true,
-              userId: true,
-              text: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          pet: {
-            select: {
-              id: true,
-              ownerId: true,
-              name: true,
-              speciesId: true,
-              color: true,
-              img: true,
-              missingAt: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
+          ...rewardInclude,
         },
       });
 
@@ -195,42 +171,7 @@ export class PostgresRewardDatasource implements RewardDatasource {
           isDeleted: false,
         },
         include: {
-          location: {
-            select: {
-              id: true,
-              address: true,
-              country: true,
-              city: true,
-              latitude: true,
-              longitude: true,
-              description: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          comments: {
-            select: {
-              id: true,
-              rewardId: true,
-              userId: true,
-              text: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          pet: {
-            select: {
-              id: true,
-              ownerId: true,
-              name: true,
-              speciesId: true,
-              color: true,
-              img: true,
-              missingAt: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
+          ...rewardInclude,
         },
       });
 

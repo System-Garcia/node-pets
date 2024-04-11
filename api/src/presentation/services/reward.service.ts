@@ -9,6 +9,8 @@ import {
   ICreateLocationDto,
   ICreateRewardDto,
   LocationRepository,
+  PaginatedRewardResponse,
+  PaginationDto,
   RewardEntity,
   RewardRepository,
   RewardService,
@@ -26,6 +28,12 @@ export class RewardServiceImpl implements RewardService {
     private readonly rewardRepository: RewardRepository,
     private readonly locationRepository: LocationRepository
   ) {}
+
+  getAll(paginationDto: PaginationDto): Promise<PaginatedRewardResponse> {
+    
+    return this.rewardRepository.getAll(paginationDto);
+
+  }
   
   async updateReward(data: UpdateRewardAndLocationData): Promise<RewardEntity> {
     

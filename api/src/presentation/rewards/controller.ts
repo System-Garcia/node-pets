@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { RewardService, handleError } from "../../domain";
+import { PaginationDto, RewardService, handleError } from "../../domain";
 
 
 export class RewardController {
@@ -9,7 +9,16 @@ export class RewardController {
     ) {}
 
     public getAll = (req: Request, res: Response) => {
-        res.json({ message: 'Get all rewards' });
+        
+        const { page = 1, limit = 10} = req.query;
+
+        const [error, paginationDto] = PaginationDto.create(+page, +limit);
+        if (error) return res.status(400).json({ error });
+        
+        this.rewardService.getAll(paginationDto!)
+            .then( rewards => res.json(rewards))
+            .catch( error => handleError(error, res));
+
     };
 
     public create = (req: Request, res: Response) => {
