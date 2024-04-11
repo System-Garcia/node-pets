@@ -41,9 +41,9 @@ export class RewardServiceImpl implements RewardService {
 
     if (rewardError) throw CustomError.badRequest(rewardError);
 
-    console.log(updateRewardDto);
+    this.locationRepository.update(updateLocationDto!);
 
-    throw new Error("Method not implemented.");
+    return this.rewardRepository.updateById(updateRewardDto!);
 
   }
 
