@@ -1,3 +1,4 @@
+import { UpdateLocationDto } from '../../domain/dtos/locations/update-location.dto';
 import {
   CreateLocation,
   CreateLocationDto,
@@ -11,6 +12,8 @@ import {
   RewardEntity,
   RewardRepository,
   RewardService,
+  UpdateRewardAndLocationData,
+  UpdateRewardDto,
 } from "../../domain/";
 
 interface RewardAndLocationData {
@@ -23,6 +26,26 @@ export class RewardServiceImpl implements RewardService {
     private readonly rewardRepository: RewardRepository,
     private readonly locationRepository: LocationRepository
   ) {}
+  
+  async updateReward(data: UpdateRewardAndLocationData): Promise<RewardEntity> {
+    
+    const { reward, location } = data;
+    
+    const [locationError, updateLocationDto] = UpdateLocationDto.create(location);
+    if (locationError) throw CustomError.badRequest(locationError);
+
+    const [rewardError, updateRewardDto] = UpdateRewardDto.create({
+      ...reward,
+      locationId: +updateLocationDto!.id,
+    });
+
+    if (rewardError) throw CustomError.badRequest(rewardError);
+
+    console.log(updateRewardDto);
+
+    throw new Error("Method not implemented.");
+
+  }
 
   async createRewardWithLocation(
     data: RewardAndLocationData
