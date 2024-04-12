@@ -1,6 +1,5 @@
-import "../../styles/pages/mainMenu.css"
-import SearchInput from '../molecules/searchInput';
-import React from 'react';
+import "../../styles/pages/mainMenu.module.css"
+import SearchInput from '../atoms/SearchInput/SearchInput';
 
 
 const MainMenu = () => {

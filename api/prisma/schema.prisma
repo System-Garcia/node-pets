@@ -50,6 +50,8 @@ model Reward {
   description String
   petId       Int
   locationId  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   isDeleted Boolean    @default(false)
   pet         Pet      @relation(fields: [petId], references: [id])
   location    Location @relation(fields: [locationId], references: [id])
@@ -59,6 +61,8 @@ model Reward {
 model Permission {
   id    Int    @id @default(autoincrement())
   name  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   isDeleted Boolean   @default(false)
   users User[]
 }
@@ -66,6 +70,8 @@ model Permission {
 model Species {
   id   Int    @id @default(autoincrement())
   name String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   isDeleted Boolean   @default(false)
   pets Pet[]
 }
@@ -75,6 +81,11 @@ model Location {
   address String
   city    String
   country String
+  latitude  Float
+  longitude Float
+  description String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   isDeleted Boolean   @default(false)
   Reward  Reward[]
 }
@@ -84,6 +95,8 @@ model Comment {
   text   String
   userId Int
   rewardId   Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   isDeleted Boolean   @default(false)
   user   User   @relation(fields: [userId], references: [id])
   reward     Reward    @relation(fields: [rewardId], references: [id])

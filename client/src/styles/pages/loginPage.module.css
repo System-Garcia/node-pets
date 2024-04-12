@@ -1,0 +1,238 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+body, html {
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 0;
+}
+
+.loginContainer {
+  width: 90%;
+  max-width: 400px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.loginLogo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.loginLogo img {
+  max-width: 100%;
+  width: 8rem;
+  margin-right: 1rem;
+}
+
+.loginLogo h1 {
+  font-size: 2.5rem;
+  color: #000;
+  font-weight: 900;
+  margin: 0;
+}
+
+.loginForm h2 {
+  font-size: 1.75rem;
+  color: #000;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.loginForm p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.inputIconContainer {
+  position: relative;
+}
+
+.inputGroup .inputIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #757575;
+  font-size: 1.2rem;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.inputGroup input:focus {
+  border-color: #FFD700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+  outline: none;
+}
+
+.actions .continueButton {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #FFD700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actions .continueButton:hover,
+.actions .continueButton:focus {
+  background-color: #e6c200;
+}
+
+.actions {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.forgotPassword {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #4B92FC;
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding-right: 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.keepSigned {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+  font-size: 1rem;
+
+}
+
+.keepSigned input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-right: 0.5rem;
+  color: currentColor;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #cccccc;
+  border-radius: 4px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.keepSigned input[type="checkbox"]:checked::after {
+  background-color: #4B92FC;
+  position: absolute;
+  content: '\2713';
+  width: 1.3rem;  
+  height: 1.30rem; 
+  text-align: center;
+  line-height: 1.5rem;
+  color: white;
+}
+
+.keepSigned input[type="checkbox"]:checked::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  line-height: 1.5rem;
+  color: white;
+}
+
+.loginFooter {
+  text-align: center;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.loginFooter span,
+.loginFooter a {
+  color: #333;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.loginFooter a {
+  color: #4B92FC;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.loginFooter img {
+  max-width: 100%;
+  display: block;
+  margin: 1rem auto 0;
+}
+
+@media (max-width: 767px) {
+  .loginContainer {
+    padding: 3rem;
+    width: 100%;
+    height: auto;
+
+  }
+  .keepSigned input[type="checkbox"]:checked::after {
+    width: 1.5rem;
+  }
+
+  .loginLogo h1 {
+    font-size: 2rem;
+  }
+
+  .inputGroup input {
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+  }
+
+  .actions .continueButton {
+    padding: 0.8rem;
+  }
+
+  .loginLogo img{
+    width: 6rem;
+    height: auto;
+    }
+    .loginFooter img {
+      width: 10rem;
+      height: auto;
+      }
+}

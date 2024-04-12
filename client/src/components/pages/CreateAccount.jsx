@@ -1,52 +1,73 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import mankey from '/img/mankey.png';
-import { FaCloudUploadAlt } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import axios from "axios";
+import mankeyImage from "/img/mankey.png";
+import { useNavigate } from "react-router-dom";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import {
+  HiMail,
+  HiPhone,
+  HiUser,
+  HiLockClosed,
+  HiCalendar,
+} from "react-icons/hi";
+import { useForm } from "../../hooks/useForm";
+import { post } from "../../helpers/axiosHelper";
 
 const CreateA = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    phoneNumber: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    dateOfBirth: '',
-    file: null,
+  const { formValue, changeFormValue } = useForm({
+    email: "",
+    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    dateOfBirth: "",
   });
 
   const [dragging, setDragging] = useState(false);
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName] = useState("");
+
+  const navigate = useNavigate();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === 'file') {
-      setFormData({ ...formData, file: files[0] });
+    const { name, files } = e.target;
+    if (name === "file") {
       setFileName(files[0].name);
+      changeFormValue({
+        target: {
+          name: "file",
+          value: files[0],
+        },
+      });
     } else {
-      setFormData({ ...formData, [name]: value });
+      changeFormValue(e);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const dataToSend = new FormData();
-    for (const key in formData) {
-      if (formData[key] !== null) {
-        dataToSend.append(key, formData[key]);
-      }
-    }
+    Object.keys(formValue).forEach((key) => {
+      dataToSend.append(key, formValue[key]);
+    });
 
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', dataToSend);
-      console.log(response.data);
-      toast.success('Registration successful!');
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
+        dataToSend
+      );
+      toast.success("Registration successful!");
+      setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
-      console.error(error.response.data);
-      toast.error('Registration failed.');
-    }
+      toast.error("Registration failed. " + error.response.data.message);
+    } finally {
+      setIsSubmitting(false);
+    } 
   };
 
   const handleDrag = (e) => {
@@ -54,24 +75,11 @@ const CreateA = () => {
     e.stopPropagation();
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length) {
-      const files = e.dataTransfer.files;
-      handleChange({
-        target: {
-          name: 'file',
-          files: files,
-        },
-      });
-      setFileName(files[0].name);
-    }}
-
   const handleDragIn = (e) => {
     handleDrag(e);
-    setDragging(true);
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setDragging(true);
+    }
   };
 
   const handleDragOut = (e) => {
@@ -79,69 +87,156 @@ const CreateA = () => {
     setDragging(false);
   };
 
-  
+  const handleDrop = (e) => {
+    handleDrag(e);
+    setDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+      const files = e.dataTransfer.files;
+      handleChange({
+        target: {
+          name: "file",
+          files: files,
+        },
+      });
+    }
+  };
 
   return (
     <>
-    <ToastContainer />
-  <div className="min-h-screen flex items-center justify-center px-4">
-    <div className="rounded-lg px-8 py-6 max-w-md w-full">
-      <h1 className="text-2xl font-bold text-center mb-6 text-black-200">Create Account</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-      <h2 className="text-2x1 mb-3 text-black-100">Email</h2>
-          <input type="email" name="email" placeholder="Email" onChange={handleChange} required className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-      <h2 className="text-2x1 mb-3 text-black-100">Phone Number</h2>
-          <input type="text" name="phoneNumber" placeholder="Phone Number" onChange={handleChange} required className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-      <h2 className="text-2x1 mb-3 text-black-100">First Name</h2>
-          
-          <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-      <h2 className="text-2x1 mb-3 text-black-100">Email</h2>
-          
-          <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-      <h2 className="text-2x1 mb-3 text-black-100">Password</h2>
-          
-          <input type="password" name="password" placeholder="Password" onChange={handleChange} required className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-      <h2 className="text-2x1 mb-3 text-black-100">Date Of Birth</h2>
-          
-          <input type="date" name="dateOfBirth" onChange={handleChange} required className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-      <h2 className="text-2x1 mb-3 text-black-100">Image</h2>
-          
-      <div
-          className={`file_upload p-5 relative border-4 ${dragging ? 'border-indigo-600' : 'border-dotted border-gray-300'} rounded-lg`}
-          style={{ width: '100%' }}
-          onDragEnter={handleDragIn}
-          onDragLeave={handleDragOut}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
-          <FaCloudUploadAlt className="text-indigo-500 w-24 mx-auto mb-4" />
-          <div className="input_field flex flex-col w-max mx-auto text-center">
-            <label className="cursor-pointer">
-              <input
-                type="file"
-                name="file"
-                className="hidden"
-                onChange={handleChange}
-                multiple
-              />
-              <div className="text bg-indigo-600 text-white rounded font-semibold p-1 px-3 hover:bg-indigo-500">
-                Select
-              </div>
-            </label>
-            {fileName && <div className="text-sm text-gray-600 mt-2">{fileName}</div>}
-            <div className="title text-indigo-500 uppercase mt-2">or drop files here</div>
+      <ToastContainer />
+      <div className="min-h-screen flex items-center justify-center px-4 ">
+        <div className="flex w-full max-w-4xl md:rounded-lg md:shadow-xl">
+          <div className="hidden md:flex bg-[#4B92FC] rounded-l-lg w-full md:w-1/2 justify-center items-center">
+            <img
+              src={mankeyImage}
+              alt="Ilustración"
+              className="w-full max-w-lg"
+            />
           </div>
-        </div></div>
-        <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Register</button>
-      </form>
-      <Link to="/login">Already have an account? Log in</Link>
-      <img src={mankey}></img>
-    </div>
-  </div>
-  </>
-);
-
+          <div className="w-full md:w-1/2 bg-white p-8 rounded-r-lg">
+            <h1 className="text-2xl font-bold text-center mb-6">
+              Create Account
+            </h1>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
+                <HiMail className="ml-2 text-gray-400" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                  required
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
+                <HiPhone className="ml-2 text-gray-400" />
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="Phone Number"
+                  onChange={handleChange}
+                  required
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
+                <HiUser className="ml-2 text-gray-400" />
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  onChange={handleChange}
+                  required
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
+                <HiUser className="ml-2 text-gray-400" />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  onChange={handleChange}
+                  required
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
+                <HiLockClosed className="ml-2 text-gray-400" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  required
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center border border-gray-300 focus:border-[#4B92FC] rounded-md">
+                <HiCalendar className="ml-2 text-gray-400" />
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  onChange={handleChange}
+                  required
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+              <div
+                className={`flex items-center justify-center p-5 relative border-2 ${
+                  dragging ? "border-blue-500" : "border-dotted border-gray-300"
+                } rounded-md`}
+                onDragOver={handleDrag}
+                onDragEnter={handleDragIn}
+                onDragLeave={handleDragOut}
+                onDrop={handleDrop}
+              >
+                <FaCloudUploadAlt className="text-[#4B92FC] mx-auto text-6xl" />
+                <input
+                  type="file"
+                  name="file"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  onChange={handleChange}
+                  multiple
+                />
+                <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center p-2">
+                  <span className="block text-[#4B92FC] bg-white rounded px-3 py-1 shadow-lg text-sm">
+                    Select or drop files here
+                  </span>
+                  {fileName && (
+                    <span className="text-sm text-gray-600 mt-2">
+                      {fileName}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="relative">
+                <button
+                  type="submit"
+                  className="block w-full text-white bg-[#4B92FC] rounded-md py-2 shadow-lg hover:bg-[#3b82f6]"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Registering..." : "Register"}
+                </button>
+                {isSubmitting && (
+                  <div className="absolute inset-0 flex justify-center items-center">
+                    <div className="loader"></div>
+                  </div>
+                )}
+              </div>
+            </form>
+            <p className="mt-6 text-center text-gray-600">
+              Already have an account?
+              <Link to="/login" className="text-[#4B92FC] hover:text-[#3b82f6]">
+                {" "}
+                Log in
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
-
 export default CreateA;

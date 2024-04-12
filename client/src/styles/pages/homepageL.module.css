@@ -1,0 +1,220 @@
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem;
+  z-index: 1000;
+}
+
+.brand {
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 3.75rem;
+  font-weight: bold;
+  margin-left: 1rem;
+  margin-right: 1.5625rem;
+  min-width: 100px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #6e6e6e;
+  margin-left: 1.5625rem;
+  font-size: 1.25rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navLink::after {
+  content: '▼';
+  font-size: 0.625rem;
+  margin-left: 0.3125rem;
+  margin-bottom: 0.0625rem;
+  position: relative;
+  top: -0.1875rem;
+}
+
+.navLink:hover {
+  text-decoration: wavy;
+  color: #aaa;
+}
+
+.signContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sign {
+  margin-left: 5rem;
+  background: #10a9fb;
+  text-decoration-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  padding: 0.6em 1.3em;
+  font-weight: 400;
+  font-size: 18px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.sign:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.sign:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 7px;
+  border: none;
+  background: #1875FF;
+  color: white;
+  font-family: inherit;
+  text-align: center;
+  font-size: 13px;
+  box-shadow: 0px 14px 56px -11px #1875FF;
+  width: 10em;
+  padding: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
+  margin-left: 1.5625rem;
+
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.4s;
+}
+
+.button span:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.7s;
+}
+
+.button:hover span {
+  padding-right: 3.55em;
+}
+
+.button:hover span:after {
+  opacity: 4;
+  right: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
+}
+
+
+.presentation {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem;
+  margin-bottom: 6rem;
+  margin-left: 3.3125rem;
+  background-color: #F1DB12;
+  width: 112.5rem;
+}
+
+.tituloSubH1 {
+  color: #000000;
+  font-size: 3.75rem;
+  font-weight: normal;
+  font-family: 'Red Hat Display', sans-serif;
+  width: 42.1875rem;
+}
+
+.tituloSubP {
+  color: #3f3f3f;
+  font-size: 1.6rem;
+  font-weight: 400;
+  width: 39.9375rem;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+}
+
+.tituloSubPSpan {
+  text-decoration: underline;
+  color: rgb(47, 46, 46);
+  text-decoration-color: #10a9fb;
+  text-decoration-thickness: 0.25rem;
+  text-decoration-style: solid;
+}
+
+.imageContainer {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+    transform: translate(-50%, -50%);
+  width: 37.5rem;
+  height: 37.5rem;
+  background: #ffffff;
+  border-radius: 50%;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.imageContainerImg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}
+
+.imageContainer::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('/img/loving.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+  opacity: 1;
+}
+
+.imageContainer:hover::after {
+  opacity: 0;
+}
+
+.imageContainer:hover::after,
+.imageContainerImg:hover + ::after {
+  opacity: 0;
+}
+
+.availables {
+  display: flex;
+  background-color: #4b92fc;
+  align-items: center;
+  padding: 0.625rem;
+  margin-left: 3.3125rem;
+  width: 112.5rem;
+  height: 27.5rem;
+}

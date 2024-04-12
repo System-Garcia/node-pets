@@ -1,7 +1,7 @@
-import React, { createContext, useState } from 'react';
-import axios from 'axios';
-import {toast } from 'react-toastify';
+import { createContext, useState } from 'react';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { post } from '../helpers/axiosHelper';
 
 export const AuthContext = createContext();
 
@@ -10,24 +10,25 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
-      const { token } = response.data;
-      if (token) {
-        setAuth({ ...response.data });
-        localStorage.setItem('token', token);
+      const data = await post('/auth/login', { email, password });
+      if (data.token) {
+        setAuth(data);
+        localStorage.setItem('token', data.token);
+        toast.success('Login successful!');
         return true;
       } else {
         throw new Error('Login failed. No token received.');
       }
     } catch (error) {
-      console.error('Login error:', error.response ? error.response.data : error);
-      toast.error('Registration failed.');
+      console.error('Login error:', error);
+      toast.error(error.message || 'Registration failed.');
     }
   };
 
   const logout = () => {
     setAuth(null);
     localStorage.removeItem('token');
+    toast.info('Logged out successfully.');
   };
 
   return (

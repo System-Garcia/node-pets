@@ -794,36 +794,239 @@ export const seedData = {
     },
   ],
   locations: [
-    { address: "123 Main St", city: "Anytown", country: "CountryA" },
-    { address: "456 Elm St", city: "Otherville", country: "CountryB" },
-    { address: "789 Oak St", city: "Sometown", country: "CountryC" },
-    { address: "101 Pine St", city: "Elsewhere", country: "CountryD" },
-    { address: "202 Maple St", city: "Thisplace", country: "CountryE" },
-    { address: "303 Birch St", city: "Thatplace", country: "CountryF" },
-    { address: "404 Cedar St", city: "Hereville", country: "CountryG" },
-    { address: "505 Redwood St", city: "Thereville", country: "CountryH" },
-    { address: "606 Willow St", city: "Everywhere", country: "CountryI" },
-    { address: "707 Palm St", city: "Nowhere", country: "CountryJ" },
-    { address: "808 Magnolia St", city: "Somewhere", country: "CountryK" },
-    { address: "909 Cherry St", city: "Whoville", country: "CountryL" },
-    { address: "1010 Apple St", city: "Howtown", country: "CountryM" },
-    { address: "1111 Orange St", city: "Whyville", country: "CountryN" },
-    { address: "1212 Banana St", city: "Whatcity", country: "CountryO" },
-    { address: "456 Elm St", city: "Springfield", country: "USA" },
-    { address: "789 Pine St", city: "Greendale", country: "USA" },
-    { address: "101 Maple Ave", city: "Shelbyville", country: "USA" },
-    { address: "202 Oak St", city: "Riverdale", country: "USA" },
-    { address: "303 Birch Ln", city: "Centerville", country: "USA" },
-    { address: "404 Cedar Rd", city: "Smallville", country: "USA" },
-    { address: "505 Walnut St", city: "Metropolis", country: "USA" },
-    { address: "606 Chestnut Ave", city: "Star City", country: "USA" },
-    { address: "707 Aspen Pl", city: "Coast City", country: "USA" },
-    { address: "808 Magnolia Blvd", city: "Gotham", country: "USA" },
-    { address: "909 Redwood St", city: "Central City", country: "USA" },
-    { address: "1010 Sequoia St", city: "National City", country: "USA" },
-    { address: "1111 Willow St", city: "Starling City", country: "USA" },
-    { address: "1313 Peachtree Ln", city: "Midway City", country: "USA" },
-    { address: "1212 Cherry St", city: "Hub City", country: "USA" },
+    {
+      address: "123 Main St",
+      city: "Anytown",
+      country: "CountryA",
+      latitude: -42.14557,
+      longitude: 111.4957,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "456 Elm St",
+      city: "Otherville",
+      country: "CountryB",
+      latitude: 44.00748,
+      longitude: -36.76434,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "789 Oak St",
+      city: "Sometown",
+      country: "CountryC",
+      latitude: -5.40876,
+      longitude: -127.23305,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "101 Pine St",
+      city: "Elsewhere",
+      country: "CountryD",
+      latitude: -65.5082,
+      longitude: 167.4548,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "202 Maple St",
+      city: "Thisplace",
+      country: "CountryE",
+      latitude: 1.03424,
+      longitude: 144.09766,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "404 Cedar St",
+      city: "Hereville",
+      country: "CountryG",
+      latitude: -18.80893,
+      longitude: 116.89981,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "505 Redwood St",
+      city: "Thereville",
+      country: "CountryH",
+      latitude: -69.76192,
+      longitude: -39.33322,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "606 Willow St",
+      city: "Everywhere",
+      country: "CountryI",
+      latitude: -63.26238,
+      longitude: 167.63485,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "707 Palm St",
+      city: "Nowhere",
+      country: "CountryJ",
+      latitude: -72.94048,
+      longitude: 73.82097,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "808 Magnolia St",
+      city: "Somewhere",
+      country: "CountryK",
+      latitude: 31.7856,
+      longitude: -94.08729,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "909 Cherry St",
+      city: "Whoville",
+      country: "CountryL",
+      latitude: -22.56943,
+      longitude: 57.15176,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "1010 Apple St",
+      city: "Howtown",
+      country: "CountryM",
+      latitude: 65.02725,
+      longitude: 84.08905,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "1111 Orange St",
+      city: "Whyville",
+      country: "CountryN",
+      latitude: -87.17042,
+      longitude: 80.71457,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "1212 Banana St",
+      city: "Whatcity",
+      country: "CountryO",
+      latitude: 8.94596,
+      longitude: 45.4412,
+      description: "A picturesque setting with unique cultural charm."
+    },
+    {
+      address: "456 Elm St",
+      city: "Springfield",
+      country: "USA",
+      latitude: -16.4346,
+      longitude: -101.54285,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "789 Pine St",
+      city: "Greendale",
+      country: "USA",
+      latitude: 17.47627,
+      longitude: -42.5676,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "101 Maple Ave",
+      city: "Shelbyville",
+      country: "USA",
+      latitude: -18.1719,
+      longitude: -13.88065,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "202 Oak St",
+      city: "Riverdale",
+      country: "USA",
+      latitude: 79.02519,
+      longitude: -168.76802,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "303 Birch Ln",
+      city: "Centerville",
+      country: "USA",
+      latitude: 4.36343,
+      longitude: 151.49414,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "404 Cedar Rd",
+      city: "Smallville",
+      country: "USA",
+      latitude: -18.98823,
+      longitude: 152.15991,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "505 Walnut St",
+      city: "Metropolis",
+      country: "USA",
+      latitude: 86.05052,
+      longitude: -3.93496,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "606 Chestnut Ave",
+      city: "Star City",
+      country: "USA",
+      latitude: -12.61491,
+      longitude: 143.99113,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "707 Aspen Pl",
+      city: "Coast City",
+      country: "USA",
+      latitude: 77.78956,
+      longitude: 14.00453,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "808 Magnolia Blvd",
+      city: "Gotham",
+      country: "USA",
+      latitude: -61.08197,
+      longitude: -141.93679,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "909 Redwood St",
+      city: "Central City",
+      country: "USA",
+      latitude: 6.11572,
+      longitude: 19.72404,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "1010 Sequoia St",
+      city: "National City",
+      country: "USA",
+      latitude: -38.0855,
+      longitude: -172.36966,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "1111 Willow St",
+      city: "Starling City",
+      country: "USA",
+      latitude: -87.59451,
+      longitude: 15.10425,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "1313 Peachtree Ln",
+      city: "Midway City",
+      country: "USA",
+      latitude: -86.91119,
+      longitude: -161.50206,
+      description: "A bustling location full of life and diversity."
+    },
+    {
+      address: "1212 Cherry St",
+      city: "Hub City",
+      country: "USA",
+      latitude: -80.08386,
+      longitude: 5.46654,
+      description: "A bustling location full of life and diversity."
+    },
+    
   ],
   rewards: [
     {
