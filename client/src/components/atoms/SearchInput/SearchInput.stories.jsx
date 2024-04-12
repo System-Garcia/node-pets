@@ -3,6 +3,7 @@ import SearchInput from './SearchInput';
 
 export default {
     title: 'Components/atoms/SearchInput',
+    tags: ['autodocs'], 
     component: SearchInput,
   parameters: {
     layout: 'centered',

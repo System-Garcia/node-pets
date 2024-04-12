@@ -57,7 +57,7 @@ const CreateA = () => {
     });
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
         dataToSend
       );
@@ -67,7 +67,7 @@ const CreateA = () => {
       toast.error("Registration failed. " + error.response.data.message);
     } finally {
       setIsSubmitting(false);
-    }
+    } 
   };
 
   const handleDrag = (e) => {
