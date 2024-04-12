@@ -28,7 +28,7 @@ export class RewardRoutes {
             permissionDatasource,
         );
 
-        const rewardDatasource = new PostgresRewardDatasource();
+        const rewardDatasource = new PostgresRewardDatasource(envs.WEBSERVICE_URL);
         const locationDatasource = new PostgresLocationDatasource();
         const userDatasource = new PostgresUserDatasourceImpl(
             permissionRepository,
