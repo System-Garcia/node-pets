@@ -9,7 +9,7 @@ export const cardsData = [
     link: '#'
   },
   {
-    imageFront: '/img/homepage/availables/localizePet.png',
+    imageFront: '/img/homepage/availables/savePet.png',
     imageBack: '/img/homepage/availables/rescuePet.png',
     title: 'Rescue',
     description: 'Provide support',
@@ -33,7 +33,7 @@ export const Card = ({ imageFront, imageBack, title, description, link }) => {
         <h3 className={styles.cardFrontH3}>{title}</h3>
       </div>
       <div className={`${styles.cardFace} ${styles.cardBack}`}>
-        <h3 className={styles.cardBackH3}>{title}</h3>
+        <h3 className={styles.cardBackH3}>You can</h3>
         <img className={styles.cardBackImg} src={imageBack} alt={`${title} back`} />
         <p className={styles.cardBackP}>{description}</p>
         <div className={`${styles.cardBackLink} ${styles.cardHover}`}>
