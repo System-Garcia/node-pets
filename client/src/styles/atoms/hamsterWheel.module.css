@@ -1,6 +1,13 @@
+.hamsterWheelContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 12em;
+}
+
 .wheelAndHamster {
     --dur: 1s;
-    position: relative;
+    position: absolute;
     width: 12em;
     height: 12em;
     font-size: 14px;
@@ -97,6 +104,14 @@
   }
   
   .hamsterLimbFr,
+  .hamsterLimbFl,
+  .hamsterLimbBr,
+  .hamsterLimbBl,
+  .hamsterTail {
+    transform: rotate(-Xdeg);
+  }
+
+  .hamsterLimbFr,
   .hamsterLimbFl {
     clip-path: polygon(0 0,100% 0,70% 80%,60% 100%,0% 100%,40% 80%);
     top: 2em;
@@ -156,6 +171,7 @@
   
   .spoke {
     animation: spoke var(--dur) linear infinite;
+    transform-origin: 50% 50%;
     background: radial-gradient(100% 100% at center,hsl(0,0%,60%) 4.8%,hsla(0,0%,60%,0) 5%),
           linear-gradient(hsla(0,0%,55%,0) 46.9%,hsl(0,0%,65%) 47% 52.9%,hsla(0,0%,65%,0) 53%) 50% 50% / 99% 99% no-repeat;
   }
@@ -267,6 +283,6 @@
     }
   
     to {
-      transform: rotate(-1turn);
+      transform: rotate(360deg);
     }
   }
