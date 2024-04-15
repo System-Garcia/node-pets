@@ -5,6 +5,7 @@ import { PermissionRoutes } from "./permissions/routes";
 import { AuthRoutes } from "./auth/routes";
 import { SpeciesRoutes } from "./species/routes";
 import { RewardRoutes } from "./rewards/routes";
+import { CommentRoutes } from "./comments/routes";
 
 
 
@@ -20,6 +21,7 @@ export class AppRoutes {
         router.use('/api/auth', AuthRoutes.routes)
         router.use('/api/species', SpeciesRoutes.routes)
         router.use('/api/rewards', RewardRoutes.routes)
+        router.use('/api/comments', CommentRoutes.routes)
 
         return router
     }
