@@ -2,6 +2,7 @@
   import { useNavigate, Link } from 'react-router-dom';
   import styles from '../../styles/pages/homepageL.module.css';
   import { Card, cardsData } from '../molecules/Card';
+import HamsterWheel from '../../components/atoms/HamsterWheel';
 
   const HomePageLog = () => {
     const navigate = useNavigate();
@@ -54,8 +55,8 @@
             />
            ))}
           </section>
-          <div className={styles.dashboardLinkContainer}>
-        <Link to="/dashboard" className={styles.dashboardLink}>Go to Dashboard</Link>
+          <div className="hamsterWheelContainer">
+           <HamsterWheel/>
       </div>
       </div>
       </>

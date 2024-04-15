@@ -75,17 +75,19 @@ Each script in the `package.json` serves a specific purpose in the development a
     docker compose up -d
     ```
 
-5. **To reset the database, execute the command:**
-    ```bash
-    npx prisma migrate reset
-    ```
-
-6. **Populate the database:**
+5. **Populate the database:**
     ```bash
     npm run seed
     ```
 
-7. **Run for development:**
+6. **Run for development:**
     ```bash
     npm run dev
+    ```
+
+## Additional Commands
+
+- **Reset the database (Optional):** Use this command if you need to reset your database to its initial state. This will erase all existing data, so use it cautiously.
+    ```bash
+    npx prisma migrate reset
     ```
