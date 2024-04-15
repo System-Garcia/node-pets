@@ -14,4 +14,20 @@ export const post = async (path, data, config = {}) => {
     }
   };
 
+  export const get = async (path) => {
+    try {
+      const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await axiosInstance.get(path, config);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+
 export default axiosInstance;
