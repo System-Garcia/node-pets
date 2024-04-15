@@ -1,6 +1,6 @@
-import "../../styles/pages/mainMenu.css"
-import SearchInput from '../molecules/searchInput';
-import React from 'react';
+import "../../styles/pages/mainMenu.module.css"
+import SearchInput from '../atoms/SearchInput/SearchInput';
+import { Link } from "react-router-dom";
 
 
 const MainMenu = () => {
@@ -8,6 +8,7 @@ const MainMenu = () => {
   return (
     <>
     <SearchInput/>
+  <Link to="/dashboard">Go to Dashboard</Link>
     </>
   );
 }

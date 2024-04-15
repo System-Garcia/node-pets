@@ -1,60 +1,71 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useForm } from '../../hooks/useForm';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-
-  const handleChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const { formValue, changeFormValue } = useForm({ email: '' });
+  const { email } = formValue;
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/forgot-password', { email });
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/forgot-password`, { email });
       console.log(response.data);
-      toast.success("Email Sent")
-    } catch (error){
-      toast.error('Error email sent.');
-      console.log(error)
+      toast.success("Email Sent, reset your password and then just log in", {
+        onClose: () => navigate('/login'),
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast.error('Error sending email.');
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    }
-
-  
+  };
 
   return (
     <>
       <ToastContainer />
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="rounded-lg px-8 py-6 max-w-md w-full">
-          <h1 className="text-2xl font-bold text-center mb-6">Forgot Password</h1>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <h2 className="text-xl mb-3">Email</h2>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-md mx-auto bg-white">
+          <div className="py-12 px-6 text-center">
+            <h1 className="text-xl font-bold mb-4">Forgot Password</h1>
+            <p className="text-sm text-gray-600 mb-8">
+              Water is life. Water is a basic human need. In various times of life, humans need water.
+            </p>
+            <form onSubmit={handleSubmit} className="space-y-6">
               <input 
                 type="email" 
                 name="email" 
-                placeholder="Enter your email" 
+                placeholder="Email" 
                 value={email}
-                onChange={handleChange} 
+                onChange={changeFormValue}
                 required 
-                className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                className="block w-full px-4 py-3 text-sm rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
               />
+              <button 
+                type="submit" 
+                className="block w-full bg-blue-500 text-white rounded-md py-2 text-sm font-medium hover:bg-blue-600 focus:outline-none"
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Next'}
+              </button>
+            </form>
+            <div className="mt-8">
+              <p className="text-sm text-center text-gray-600">
+                Have an account? <a href="/login" className="text-blue-500 hover:underline">Log in</a>
+              </p>
             </div>
-            <button 
-              type="submit" 
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Send Email
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </>
   );
-};
-  
-
+}
 
 export default ForgotPassword;

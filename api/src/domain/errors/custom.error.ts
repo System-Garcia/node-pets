@@ -29,4 +29,8 @@ export class CustomError extends Error {
         return new CustomError(500, message);
     }
 
+    static conflict(message: string) {
+        return new CustomError(409, message);
+    }
+
 }
