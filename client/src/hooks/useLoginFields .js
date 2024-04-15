@@ -14,6 +14,7 @@ export const useFormInput = () => {
   };
 
   const handleKeyUp = (event) => {
+    console.log('Caps Lock state:', event.getModifierState("CapsLock"));
     setIsCapsLockOn(event.getModifierState("CapsLock"));
   };
 

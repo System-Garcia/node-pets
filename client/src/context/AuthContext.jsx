@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Login failed. No token received.');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      toast.error(error.message || 'Registration failed.');
     }
   };
 

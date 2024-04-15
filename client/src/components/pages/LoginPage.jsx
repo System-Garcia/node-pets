@@ -20,7 +20,8 @@ const LoginPage = () => {
   } = useFormInput();
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@(gmail\.com|uthermosillo\.edu\.mx|example\.com)$/;
+  
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -36,13 +37,11 @@ const LoginPage = () => {
     try {
       const success = await login(email, password);
       if (success) {
-        toast.success("Login successful!");
-        navigate("/main-menu");
+        setTimeout(() => navigate("/main-menu"), 0);
       } else {
         toast.error("Invalid login credentials");
       }
     } catch (error) {
-      toast.error(error.message || "Login failed");
     }
   };
 

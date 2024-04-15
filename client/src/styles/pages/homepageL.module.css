@@ -127,6 +127,7 @@ header {
   margin: 0 auto;
   padding: 0 15px;
   position: relative;
+  padding-top: 90px; 
 }
 
 
@@ -167,7 +168,7 @@ header {
 
 .imageContainer {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 95%;
     transform: translate(-50%, -50%);
   width: 37.5rem;
@@ -218,3 +219,4 @@ header {
   width: 112.5rem;
   height: 27.5rem;
 }
+
