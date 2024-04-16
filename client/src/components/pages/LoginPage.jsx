@@ -1,53 +1,52 @@
-import { useContext, useEffect } from "react";
-import { useFormInput } from "../../hooks/useLoginFields ";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import styles from "../../styles/pages/loginPage.module.css";
-import logo from "/amuleto.png";
-import corgi from "/img/corgi.png";
-import { FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useContext, useEffect } from 'react';
+import { useFormInput } from '../../hooks/useLoginFields ';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/context/AuthContext';
+import styles from '../../styles/pages/loginPage.module.css';
+import logo from '/amuleto.png';
+import corgi from '/img/corgi.png';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
-  const {
-    email,
-    password,
-    handleEmailChange,
-    handlePasswordChange,
-    isCapsLockOn,
-  } = useFormInput();
+  
+  const { email, password, handleEmailChange, handlePasswordChange, isCapsLockOn } = useFormInput();
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const emailRegex = /^[a-zA-Z0-9._-]+@(gmail\.com|uthermosillo\.edu\.mx|example\.com)$/;
-  
 
   const handleLogin = async (event) => {
+
     event.preventDefault();
+
     if (!emailRegex.test(email)) {
-      toast.error("Email is not valid");
+      toast.error('Email is not valid');
       return;
     }
     if (password.length < 6) {
-      toast.error("Password too short");
+      toast.error('Password too short');
       return;
     }
 
     try {
-      const success = await login(email, password);
-      if (success) {
-        setTimeout(() => navigate("/main-menu"), 0);
-      } else {
-        toast.error("Invalid login credentials");
-      }
+      const { success, error, status } = await login(email, password);
+
+      if (success) return setTimeout(() => navigate('/main-menu'), 0);
+      
+      toast.error(error, {
+        autoClose: 5000
+      });
+
     } catch (error) {
+      toast.error('An error occurred. Please try again later.');
     }
   };
 
   useEffect(() => {
     if (isCapsLockOn) {
-      toast.info("Caps Lock is on.");
+      toast.info('Caps Lock is on.');
     }
   }, [isCapsLockOn]);
 
@@ -65,23 +64,13 @@ const LoginPage = () => {
             <label htmlFor="email">Email Address</label>
             <div className={styles.inputIconContainer}>
               <FaEnvelope className={styles.inputIcon} />
-              <input
-                id="email"
-                type="email"
-                placeholder="john.doe@gmail.com"
-                value={email}
-                onChange={handleEmailChange}
-                required
-              />
+              <input id="email" type="email" placeholder="john.doe@gmail.com" value={email} onChange={handleEmailChange} required />
             </div>
           </div>
           <div className={styles.inputGroup}>
             <div>
               <label htmlFor="password">Password</label>
-              <Link
-                to="/auth/forgot-password"
-                className={styles.forgotPassword}
-              >
+              <Link to="/auth/forgot-password" className={styles.forgotPassword}>
                 Forgot Password
               </Link>
             </div>
@@ -120,4 +109,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
