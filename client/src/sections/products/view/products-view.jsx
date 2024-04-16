@@ -3,8 +3,8 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { get } from '../../../helpers/axiosHelper';
-import { AuthContext } from '../../../context/AuthContext';
+import { http } from '../../../helpers/httpHelper';
+import { AuthContext } from '../../../auth/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -26,6 +26,7 @@ export default function PetsView() {
       fetchPets();
     }
   }, [auth, navigate]);
+
   const fetchPets = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -34,7 +35,7 @@ export default function PetsView() {
         navigate('/login');
         return;
       }
-      const response = await get('/pets', {
+      const response = await http.get('/pets', {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Response:', response);
