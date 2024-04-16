@@ -14,7 +14,7 @@ export default function ShopProductCard({ pet }) {
     <Box
       component="img"
       alt={pet.name}
-      src={pet.img} // Cambiado de pet.cover a pet.img
+      src={pet.img} 
       sx={{
         top: 0,
         width: 1,

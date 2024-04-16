@@ -1,5 +1,4 @@
 import { BcryptAdapter } from "../../src/config/bcrypt.adapter";
-import { awsConfig } from '../../src/config/awsConfig';
 
 export const seedData = {
   users: [
@@ -559,7 +558,7 @@ export const seedData = {
       speciesId: 2,
       color: "Black",
       missingAt: new Date("2023-01-01T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img: "https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Charlie",
@@ -567,7 +566,7 @@ export const seedData = {
       speciesId: 3,
       color: "White",
       missingAt: new Date("2023-01-02T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Daisy",
@@ -575,7 +574,7 @@ export const seedData = {
       speciesId: 4,
       color: "Brown",
       missingAt: new Date("2023-01-03T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Max",
@@ -583,7 +582,7 @@ export const seedData = {
       speciesId: 5,
       color: "Golden",
       missingAt: new Date("2023-01-04T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Bella",
@@ -591,7 +590,7 @@ export const seedData = {
       speciesId: 2,
       color: "Black and White",
       missingAt: new Date("2023-01-05T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Lucy",
@@ -599,7 +598,7 @@ export const seedData = {
       speciesId: 3,
       color: "Grey",
       missingAt: new Date("2023-01-06T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Molly",
@@ -607,7 +606,7 @@ export const seedData = {
       speciesId: 4,
       color: "Spotted",
       missingAt: new Date("2023-01-07T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Bailey",
@@ -615,7 +614,7 @@ export const seedData = {
       speciesId: 5,
       color: "Brown",
       missingAt: new Date("2023-01-08T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Stella",
@@ -623,7 +622,7 @@ export const seedData = {
       speciesId: 2,
       color: "Cream",
       missingAt: new Date("2023-01-09T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Lola",
@@ -631,7 +630,7 @@ export const seedData = {
       speciesId: 3,
       color: "Tan",
       missingAt: new Date("2023-01-10T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Zoe",
@@ -639,7 +638,7 @@ export const seedData = {
       speciesId: 4,
       color: "Silver",
       missingAt: new Date("2023-01-11T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Ruby",
@@ -647,7 +646,7 @@ export const seedData = {
       speciesId: 5,
       color: "Red",
       missingAt: new Date("2023-01-12T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Penny",
@@ -655,7 +654,7 @@ export const seedData = {
       speciesId: 2,
       color: "Brindle",
       missingAt: new Date("2023-01-13T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Rosie",
@@ -663,7 +662,7 @@ export const seedData = {
       speciesId: 3,
       color: "Pink",
       missingAt: new Date("2023-01-14T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Maggie",
@@ -671,7 +670,7 @@ export const seedData = {
       speciesId: 4,
       color: "Green",
       missingAt: new Date("2023-01-15T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Luna",
@@ -679,7 +678,7 @@ export const seedData = {
       speciesId: 2,
       color: "White",
       missingAt: new Date("2023-02-01T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Oscar",
@@ -687,7 +686,7 @@ export const seedData = {
       speciesId: 3,
       color: "Black",
       missingAt: new Date("2023-02-02T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Bella",
@@ -695,7 +694,7 @@ export const seedData = {
       speciesId: 2,
       color: "Brown",
       missingAt: new Date("2023-02-03T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Max",
@@ -703,7 +702,7 @@ export const seedData = {
       speciesId: 4,
       color: "Grey",
       missingAt: new Date("2023-02-04T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Shadow",
@@ -711,7 +710,7 @@ export const seedData = {
       speciesId: 2,
       color: "Black",
       missingAt: new Date("2023-02-05T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Milo",
@@ -719,7 +718,7 @@ export const seedData = {
       speciesId: 3,
       color: "White",
       missingAt: new Date("2023-02-06T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Charlie",
@@ -727,7 +726,7 @@ export const seedData = {
       speciesId: 4,
       color: "Brown",
       missingAt: new Date("2023-02-07T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Bailey",
@@ -735,7 +734,7 @@ export const seedData = {
       speciesId: 2,
       color: "Cream",
       missingAt: new Date("2023-02-08T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Oliver",
@@ -743,7 +742,7 @@ export const seedData = {
       speciesId: 3,
       color: "Golden",
       missingAt: new Date("2023-02-09T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Toby",
@@ -751,7 +750,7 @@ export const seedData = {
       speciesId: 4,
       color: "Spotted",
       missingAt: new Date("2023-02-10T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Stella",
@@ -759,7 +758,7 @@ export const seedData = {
       speciesId: 2,
       color: "Striped",
       missingAt: new Date("2023-02-11T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Coco",
@@ -767,7 +766,7 @@ export const seedData = {
       speciesId: 3,
       color: "Tan",
       missingAt: new Date("2023-02-12T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Ruby",
@@ -775,7 +774,7 @@ export const seedData = {
       speciesId: 4,
       color: "Red",
       missingAt: new Date("2023-02-13T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Willow",
@@ -783,7 +782,7 @@ export const seedData = {
       speciesId: 2,
       color: "Silver",
       missingAt: new Date("2023-02-14T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
     {
       name: "Daisy",
@@ -791,7 +790,7 @@ export const seedData = {
       speciesId: 3,
       color: "White and Black",
       missingAt: new Date("2023-02-15T00:00:00.000Z"),
-      img: awsConfig.fixedImageUrl,
+      img:"https://n-missing-pets.s3.us-west-1.amazonaws.com/1712866094162_pet.jpg",
     },
   ],
   locations: [
