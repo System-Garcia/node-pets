@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { authReducer } from './authReducer';
 import { AuthContext } from './AuthContext';
 import { http } from '../../helpers';
+import { types } from '../types/types';
 
 const init = () => {
   const token = localStorage.getItem('token');
