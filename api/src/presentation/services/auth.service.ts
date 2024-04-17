@@ -120,5 +120,17 @@ export class AuthService {
 
         return true;
     }
+
+    async checkSession(userId: number){
+
+        const user = await this.userRepository.findById(userId);
+
+        const userReponse = UserResponseDto.create(user);
+        const token = await new JwtGeneraton(this.jwtSeed).generateToken({ id: user.id }) as string | null;
+
+        if(!token) throw CustomError.internalServer('Error generating token');
+
+        return { user: userReponse, token };
+    }
 }
 

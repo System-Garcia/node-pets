@@ -60,11 +60,14 @@ export class AuthRoutes {
             responseOnLimit: 'The file size exceeds the allowed limit.',
         });
 
+        const authMiddleware = new AuthMiddleware(userDatasource);
+
         router.post('/login', authController.loginUser);
         router.post('/register', [ fileUploadMiddleware, existsUserMiddleware, FileUploadMiddleware.containFiles ], authController.registerUser);
         router.get('/validate-email/:token', authController.validateEmail);
         router.post('/forgot-password', authController.forgotPassword);
         router.post('/reset-password', authController.resetPassword);
+        router.post('/check-session', [authMiddleware.validateJWT] , authController.checkSession);
 
         return router;
     }
