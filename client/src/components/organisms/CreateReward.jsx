@@ -9,6 +9,7 @@ const CreateRewardComponent = () => {
   const { token } = useContext( AuthContext );
 
   const [rewardData, setRewardData] = useState({
+   
     name: '',
     description: '',
     amount: '',
@@ -27,12 +28,12 @@ const CreateRewardComponent = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const token = localStorage.getItem('token');
         const { data } = await http.get('/pets/my-pets', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPets(data.pets);
       } catch (error) {
+        console.log(error)
         toast.error(`Error fetching pets: ${error.response.data.message}`);
       }
     };
@@ -57,12 +58,17 @@ const CreateRewardComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(rewardData)
     try {
-      const response = await http.post('/api/rewards', { reward: rewardData });
+      const response = await http.post('/rewards', { reward: rewardData },{
+            headers: { Authorization: `Bearer ${token}` }
+          });
+      
       if (response.status === 200) {
         toast.success('Reward created successfully');
       }
     } catch (error) {
+        console.log(error)
       toast.error(`Error creating reward: ${error.message}`);
     }
   };
