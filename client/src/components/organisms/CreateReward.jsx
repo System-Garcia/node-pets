@@ -9,11 +9,12 @@ const CreateRewardComponent = () => {
   const { token } = useContext( AuthContext );
 
   const [rewardData, setRewardData] = useState({
-   
+   reward:{
     name: '',
     description: '',
     amount: '',
     petId: '',
+},
     location: {
       address: '',
       city: '',
@@ -46,10 +47,11 @@ const CreateRewardComponent = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name in rewardData.location) {
+    if (name in rewardData.location ) {
       setRewardData({
         ...rewardData,
-        location: { ...rewardData.location, [name]: value }
+        location: { ...rewardData.location, [name]: value },
+        reward: { ...rewardData.reward, [name]: value }
       });
     } else {
       setRewardData({ ...rewardData, [name]: value });
