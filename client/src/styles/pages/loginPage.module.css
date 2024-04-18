@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFC857;
+  background-image: linear-gradient(to right, #68c1eb, #a6ddf7, #ffff91, #f8e14d);
   padding: 1rem 0;
   overflow: hidden;
 }
@@ -20,6 +20,7 @@
   justify-content: center;
   background-color: #f5f5f5;
   border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 @media (width >= 767px) {
@@ -202,4 +203,3 @@
 .loginImage {
   width: 50%;
 }
-

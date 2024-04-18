@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useReducer, useState, useEffect  } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { authReducer } from './authReducer';
 import { AuthContext } from './AuthContext';
@@ -8,6 +8,7 @@ import { types } from '../types/types';
 const init = () => {
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
+  
 
   return {
     logged: !!token,
@@ -23,7 +24,6 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const { data } = await http.post('/auth/login', { email, password });
-      
       if (data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -55,6 +55,31 @@ export const AuthProvider = ({ children }) => {
       type: types.logout
     });
   };
+
+  const checkSession = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const response = await http.post('/auth/check-session', {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (response.status === 200) {
+        dispatch({
+          type: types.login,
+          payload: { user: response.data.user, token }
+        });
+      }
+    } catch (error) {
+      logout();
+    }
+  };
+
+  useEffect(() => {
+    checkSession();
+  }, []);
+
 
   return (
     <AuthContext.Provider
