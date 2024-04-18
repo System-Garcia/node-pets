@@ -1,5 +1,6 @@
 import { JwtGeneraton } from "../../config/jwt.adapter";
 import { CreateUser, CreateUserDto, CustomError, EmailService, LoginUser, LoginUserDto, UserRepository, UserResponseDto } from "../../domain";
+import fs from 'fs';
 
 export class AuthService {
 
@@ -20,6 +21,8 @@ export class AuthService {
         const token = await new JwtGeneraton(this.jwtSeed).generateToken({ id: user.id }) as string | null;
 
         if(!token) throw CustomError.internalServer('Error generating token');
+
+        this.adminLoginLogs(user);
 
         return { user, token };
     }
@@ -131,6 +134,12 @@ export class AuthService {
         if(!token) throw CustomError.internalServer('Error generating token');
 
         return { user: userReponse, token };
+    }
+
+    adminLoginLogs(user: UserResponseDto){
+        if (user.permissions.some( permission => permission.name === 'Admin')) {
+            fs.appendFileSync('admin-logs.txt', `Admin ${user.email} logged in at ${new Date().toISOString()}\n`);
+        }
     }
 }
 
