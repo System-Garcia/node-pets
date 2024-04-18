@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -9,33 +9,77 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-import { users } from '../../../_mock/user';
-
+import { http } from '../../../helpers/httpHelper';
+import { AuthContext } from '../../../auth/context/AuthContext';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
-
-import TableNoData from '../table-no-data';
+;import TableNoData from '../table-no-data';
 import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
-// ----------------------------------------------------------------------
-
 export default function UserPage() {
+  const [users, setUsers] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('asc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
   const [filterName, setFilterName] = useState('');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [editingUser, setEditingUser] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const { logged, token } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!logged) {
+      console.error("User must log in.");
+      navigate('/login');
+      return;
+    }
+  
+    const fetchUsers = async () => {
+      try {
+        const response = await http.get(`/users?page=${page + 1}&limit=${rowsPerPage}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        console.log(response)
+        
+        if (response.data) {
+          setUsers(response.data.users);
+          setTotalUsers(response.data.total);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        if (error.response && error.response.status === 401) {
+          navigate('/login');
+        }
+      }
+    };
+  
+    fetchUsers();
+  }, [page, rowsPerPage, logged, token, navigate]);
+
+  const handleEditUser = (user) => {
+    console.log('Editing user:', user);
+  };
+
+  const handleDeleteUser = async (user) => {
+    if (window.confirm(`Are you sure you want to delete ${user.name}?`)) {
+      try {
+        await http.delete(`/users/${user.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUsers(users.filter((u) => u.id !== user.id));
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
+    }
+  };
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -47,18 +91,19 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = users.map((user) => user.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, userId) => {
+    const selectedIndex = selected.indexOf(userId);
     let newSelected = [];
+    
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, userId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -69,6 +114,7 @@ export default function UserPage() {
         selected.slice(selectedIndex + 1)
       );
     }
+  
     setSelected(newSelected);
   };
 
@@ -92,6 +138,20 @@ export default function UserPage() {
     filterName,
   });
 
+  const handleSaveEdit = (updatedUser) => {
+    console.log('Saving', updatedUser);
+    setIsEditModalOpen(false);
+  };
+  
+  const handleCloseModal = () => {
+    setIsEditModalOpen(false);
+  };
+  const handleEditClick = (user) => {
+    setEditingUser(user);
+    setIsEditModalOpen(true);
+  };
+  
+
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
@@ -99,7 +159,7 @@ export default function UserPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        <Button onClick={handleEditClick} variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
         </Button>
       </Stack>
@@ -123,37 +183,41 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
+                  { id: 'email', label: 'Email' },
                   { id: 'role', label: 'Role' },
                   { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
               />
-              <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <UserTableRow
-                      key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
-                      selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event) => handleClick(event, row.name)}
+             <TableBody>
+              {dataFiltered
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((user) => (
+                  <UserTableRow
+                    key={user.id}
+                    user={user}
+                    name={`${user.firstName} ${user.lastName}`}
+                    role={user.permissions.some(permission => permission.id === 1) ? 'Admin' : 'User'}
+                    status={user.emailValidated ? 'active' : 'banned'}
+                    company={user.email}
+                    avatarUrl={user.img}
+                    isVerified={user.emailValidated}
+                    selected={selected.includes(user.id)}
+                    onEdit={() => handleEditClick(user)}
+                    onDelete={() => handleDeleteUser(user)}
+                    handleClick={(event) => handleClick(event, user.id)}
                     />
-                  ))}
+                ))}
 
-                <TableEmptyRows
-                  height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
-                />
+  <TableEmptyRows
+    height={77}
+    emptyRows={emptyRows(page, rowsPerPage, users.length)}
+  />
 
-                {notFound && <TableNoData query={filterName} />}
-              </TableBody>
+  {notFound && <TableNoData query={filterName} />}
+</TableBody>
+
             </Table>
           </TableContainer>
         </Scrollbar>
@@ -168,6 +232,15 @@ export default function UserPage() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+
+      {isEditModalOpen && (
+      <EditUserModal
+        user={editingUser}
+        open={isEditModalOpen}
+        onSave={handleSaveEdit}
+        onClose={() => setIsEditModalOpen(false)}
+      />
+    )}
     </Container>
   );
-}
+} 
