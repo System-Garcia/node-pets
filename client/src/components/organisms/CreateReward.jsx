@@ -5,8 +5,9 @@ import { toast } from 'react-toastify';
 import styles from "../../styles/pages/createReward.module.css"
 
 const CreateRewardComponent = () => {
-    const { authState } = useContext(AuthContext);
-    const token = authState.token;
+
+  const { token } = useContext( AuthContext );
+
   const [rewardData, setRewardData] = useState({
     name: '',
     description: '',
