@@ -1,21 +1,24 @@
-import styles from "../../styles/pages/mainMenu.module.css"
-import SearchInput from '../atoms/SearchInput/SearchInput';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../auth/context/AuthContext";
-import React, { useContext } from 'react';
+import SearchInput from '../atoms/SearchInput/SearchInput';
+import styles from "../../styles/pages/mainMenu.module.css";
 
 const MainMenu = () => {
   const { logout } = useContext(AuthContext);
 
   return (
     <>
-      <nav>
-        <h1>Welcome to</h1>
-        <img src="../../public/amuleto.png" className={styles.NavImg}></img>
+      <nav className={styles.nav}>
+        <h1 className={styles.heading}>Welcome to</h1>
+        <img src="../../public/amuleto.png" className={styles.NavImg} alt="Amuleto" />
       </nav>
-      <SearchInput />
-      <Link to="/dashboard">Go to Dashboard</Link>
+      <div className={styles.searchContainer}>
+        <SearchInput />
+      </div>
+      <Link to="/dashboard" className={styles.link}>Go to Dashboard</Link>
       <button onClick={logout} className={styles.logoutButton}>Logout</button>
+      <Link to="/create-reward" className={styles.link}>Create Reward for Pet</Link>
     </>
   );
 }

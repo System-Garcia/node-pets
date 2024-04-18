@@ -14,6 +14,7 @@ import Dashboard from './components/pages/DashboardPage';
 import LoaderIn from './components/animations/Loaders';
 import ProtectedRoute from './router/ProtectedRoute';
 import GeneralProtectedRoute from './router/GeneralProtectedRoute';
+import CreateRewardComponent from './components/organisms/CreateReward';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/signup" element={<CreateA />} />
           <Route path="/auth/forgot-password" element={<ForgotPassword />} />
           <Route element={<GeneralProtectedRoute />}>
+          <Route path="/create-reward" element={<CreateRewardComponent />} />
             <Route path="/main-menu" element={<MainMenu />} />
             <Route element={<ProtectedRoute isAdminOnly={true} />}>
               <Route path="/dashboard/*" element={<Dashboard />} />
