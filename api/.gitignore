@@ -11,3 +11,5 @@ build/
 dist/
 
 /mysql/
+
+admin-logs.txt
