@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../auth/context/AuthContext';
 import { http } from '../../helpers';
 import { toast } from 'react-toastify';
 import styles from "../../styles/pages/createReward.module.css"
 
 const CreateRewardComponent = () => {
-  const { user } = useContext(AuthContext);
+    const { authState } = useContext(AuthContext);
+    const token = authState.token;
   const [rewardData, setRewardData] = useState({
     name: '',
     description: '',
@@ -19,6 +20,27 @@ const CreateRewardComponent = () => {
       longitude: '',
     },
   });
+
+  const [pets, setPets] = useState([]);
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const { data } = await http.get('/pets/my-pets', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setPets(data.pets);
+      } catch (error) {
+        toast.error(`Error fetching pets: ${error.response.data.message}`);
+      }
+    };
+  
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetchPets();
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,8 +84,19 @@ const CreateRewardComponent = () => {
         </label>
         <label className={styles.rewardLabel}>
           Pet ID
-          <select name="petId" onChange={handleInputChange} className={styles.rewardSelect}>
-          </select>
+          <select 
+        name="petId" 
+        onChange={handleInputChange} 
+        className={styles.rewardSelect}
+        value={rewardData.petId}
+      >
+        <option value="">Select Pet</option>
+        {pets.map(pet => (
+          <option key={pet.id} value={pet.id}>
+            {pet.name}
+          </option>
+        ))}
+      </select>
         </label>
         <label className={styles.rewardLabel}>
           Address
