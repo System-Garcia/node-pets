@@ -36,9 +36,13 @@ export class CreateRewardDto {
     
             if (!petId) return ['Missing pet id'];
             if (isNaN(petId)) return ['Pet id must be a valid number'];
+
+            petId = parseInt(petId);
     
             if (!locationId) return ['Missing location id'];
             if (isNaN(locationId)) return ['Location id must be a valid number'];
+
+            locationId = parseFloat(locationId);
     
             return [
                 undefined,
