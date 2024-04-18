@@ -68,9 +68,11 @@ export default function UserTableRow({
         PaperProps={{ sx: { width: 140 } }}
       >
         <MenuItem onClick={() => { onEdit(user); handleCloseMenu(); }}>
-          <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
+  <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
+  Edit
+</MenuItem>
+
+
         <MenuItem onClick={() => { onDelete(user); handleCloseMenu(); }} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete

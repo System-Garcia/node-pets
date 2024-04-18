@@ -19,6 +19,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import {UserForm, UpdateUserForm} from '../CreateUserForm';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
@@ -31,7 +32,10 @@ export default function UserPage() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [editingUser, setEditingUser] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
+  const [isNewUserModalOpen, setIsNewUserModalOpen] = useState(false);
+  const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  
   const { logged, token } = useContext(AuthContext);
   const navigate = useNavigate();
   
@@ -68,6 +72,8 @@ export default function UserPage() {
     console.log('Editing user:', user);
   };
 
+  
+
   const handleDeleteUser = async (user) => {
     if (window.confirm(`Are you sure you want to delete ${user.name}?`)) {
       try {
@@ -79,6 +85,10 @@ export default function UserPage() {
         console.error('Error deleting user:', error);
       }
     }
+  };
+
+  const handleNewUserClick = () => {
+    setIsNewUserModalOpen(true);
   };
 
   const handleSort = (event, id) => {
@@ -147,9 +157,32 @@ export default function UserPage() {
     setIsEditModalOpen(false);
   };
   const handleEditClick = (user) => {
-    setEditingUser(user);
-    setIsEditModalOpen(true);
+    console.log("Editing user:", user);
+    setSelectedUser(user);
+    setIsUpdateUserModalOpen(true);
   };
+  
+
+  const handleCloseUpdateModal = () => {
+    setIsUpdateUserModalOpen(false);
+    setSelectedUser(null);
+  };
+  
+  
+  const handleSaveUpdatedUser = async (updatedUserData) => {
+    const data = new FormData();
+  
+    try {
+      const response = await http.put(`/users/${selectedUser.id}`, data, {
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
+      });
+      setIsUpdateUserModalOpen(false);
+      setSelectedUser(null);
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  };
+  
   
 
   const notFound = !dataFiltered.length && !!filterName;
@@ -159,9 +192,9 @@ export default function UserPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
 
-        <Button onClick={handleEditClick} variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
-        </Button>
+        <Button onClick={handleNewUserClick} variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+  New User
+</Button>
       </Stack>
 
       <Card>
@@ -204,7 +237,7 @@ export default function UserPage() {
                     avatarUrl={user.img}
                     isVerified={user.emailValidated}
                     selected={selected.includes(user.id)}
-                    onEdit={() => handleEditClick(user)}
+                    onEdit={handleEditClick}
                     onDelete={() => handleDeleteUser(user)}
                     handleClick={(event) => handleClick(event, user.id)}
                     />
@@ -241,6 +274,33 @@ export default function UserPage() {
         onClose={() => setIsEditModalOpen(false)}
       />
     )}
+    {isNewUserModalOpen && (
+  <UserForm
+    open={isNewUserModalOpen}
+    onClose={() => setIsNewUserModalOpen(false)}
+    onSave={(newUserData) => {
+      http.post('/users', newUserData, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        console.log('User created:', response.data);
+        setUsers([...users, response.data]);
+        setIsNewUserModalOpen(false);
+      })
+      .catch(error => {
+        console.error('Failed to create user:', error);
+      });
+    }}
+  />
+)}
+{isUpdateUserModalOpen && (
+  <UpdateUserForm
+    open={isUpdateUserModalOpen}
+    onClose={handleCloseUpdateModal}
+    onSave={handleSaveUpdatedUser}
+    selectedUser={selectedUser}
+  />
+)}
     </Container>
   );
 } 
