@@ -23,10 +23,12 @@ export class CreateRewardDto {
 
     static create(object: { [key: string]: any }): [string?, CreateRewardDto?] {
             
-            const { amount, description, petId, locationId } = object;
+            let { amount, description, petId, locationId } = object;
     
             if (!amount) return ['Missing amount'];
             if (isNaN(amount)) return ['amount must be a valid number'];
+
+            amount = parseFloat(amount);
     
             if (!description) return ['Missing description'];
             if (typeof description !== 'string') return ['Description must be a string'];
@@ -34,9 +36,13 @@ export class CreateRewardDto {
     
             if (!petId) return ['Missing pet id'];
             if (isNaN(petId)) return ['Pet id must be a valid number'];
+
+            petId = parseInt(petId);
     
             if (!locationId) return ['Missing location id'];
             if (isNaN(locationId)) return ['Location id must be a valid number'];
+
+            locationId = parseFloat(locationId);
     
             return [
                 undefined,

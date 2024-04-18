@@ -1,4 +1,75 @@
-.NavImg{
-    width: 20px;
-    height: 20px;
+
+.NavImg {
+    width: 150px;
+    height: auto;
+    margin: 20px;
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+nav {
+    text-align: center;
+    padding: 20px;
+    background-color: #3357f7;
+}
+
+h1 {
+    font-size: 48px;
+    color: #000000;
+}
+
+.SearchInput {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.SearchInput input {
+    padding: 10px;
+    border: 2px solid #5c855c;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+.SearchInput input:focus {
+    outline: none;
+    border-color: #ff6347;
+}
+
+.Link, .logoutButton {
+    display: block;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif; 
+    font-size: 20px;
+    color: #fff;
+    margin: 10px auto;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.Link {
+    border: 2px solid #4169e1;
+}
+
+.Link:hover, .logoutButton:hover {
+    background-color: #4169e1;
+    color: #fff;
+}
+
+.logoutButton {
+    background-color: #ff4500;
+    border: none;
+}
+
+.logoutButton:hover {
+    background-color: #ff6347;
 }

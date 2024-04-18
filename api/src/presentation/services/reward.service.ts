@@ -62,6 +62,9 @@ export class RewardServiceImpl implements RewardService {
 
     try {
       const { reward, location } = data;
+      
+      if(!reward) throw CustomError.badRequest('Missing reward data');
+      if(!location) throw CustomError.badRequest('Missing location')
 
       const [locationError, createLocationDto] =
         CreateLocationDto.create(location);
