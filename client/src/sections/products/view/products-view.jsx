@@ -89,16 +89,19 @@ export default function PetsView() {
       </Stack>
 
       <Grid container spacing={3}>
-        {
-          pets && pets.length > 0
-            ? pets.map((pet) => (
-                <Grid key={pet.id} xs={12} sm={6} md={3}>
-                  <PetCard pet={pet} />
-                </Grid>
-              ))
-            : <Typography>No pets data available</Typography>
-        }
+        {pets && pets.length > 0 ? (
+          pets.map((pet) => (
+            <Grid key={pet.id} item xs={12} sm={6} md={4} lg={3}>
+              <PetCard pet={pet} />
+            </Grid>
+          ))
+        ) : (
+          <Typography sx={{ textAlign: 'center', width: 1 }}>
+            No pets data available
+          </Typography>
+        )}
       </Grid>
+
 
       <PetCartWidget />
       

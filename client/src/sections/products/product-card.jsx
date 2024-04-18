@@ -1,82 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
-import Box from '@mui/material/Box';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
-import { fCurrency } from '../../utils/format-number';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Label from '../../components/label';
-import { ColorPreview } from '../../components/color-utils'; // Importa ColorPreview
+import { styled } from '@mui/material/styles';
+
+const StyledCard = styled(Card)({
+  position: 'relative',
+  maxWidth: 345,
+  margin: 'auto',
+});
+
+const InlineActionArea = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
 
 export default function ShopProductCard({ pet }) {
-  const renderImg = (
-    <Box
-      component="img"
-      alt={pet.name}
-      src={pet.img} 
-      sx={{
-        top: 0,
-        width: 1,
-        height: 1,
-        objectFit: 'cover',
-        position: 'absolute',
-      }}
-    />
-  );
-
-  const renderPrice = (
-    <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: 'text.disabled',
-          textDecoration: 'line-through',
-        }}
-      >
-        {pet.priceSale && fCurrency(pet.priceSale)}
-      </Typography>
-      &nbsp;
-      {fCurrency(pet.price)}
-    </Typography>
-  );
-
   return (
-    <Card>
-      <Box sx={{ pt: '100%', position: 'relative' }}>
-        {pet.status && (
-          <Label
-            variant="filled"
-            color={(pet.status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-            {pet.status}
-          </Label>
-        )}
-        {renderImg}
-      </Box>
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {pet.name}
-        </Link>
-
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {pet.colors && <ColorPreview colors={pet.colors} />}
-          {renderPrice}
-        </Stack>
-      </Stack>
-    </Card>
+    <StyledCard>
+      {pet.status && (
+        <Label
+          variant="filled"
+          color={(pet.status === 'sale' && 'error') || 'info'}
+          sx={{
+            zIndex: 9,
+            top: 16,
+            right: 16,
+            position: 'absolute',
+            textTransform: 'uppercase',
+          }}
+        >
+          {pet.status}
+        </Label>
+      )}
+      <CardMedia
+        component="img"
+        height="194"
+        image={pet.img}
+        alt={pet.name}
+      />
+      <CardContent>
+        <InlineActionArea>
+          <Typography variant="h6" component="span">
+            {pet.name}
+          </Typography>
+          <div>
+            <IconButton color="primary" aria-label="edit" size="large">
+              <EditIcon />
+            </IconButton>
+            <IconButton color="secondary" aria-label="delete" size="large">
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        </InlineActionArea>
+      </CardContent>
+    </StyledCard>
   );
 }
 
 ShopProductCard.propTypes = {
-  pet: PropTypes.object.isRequired, // Asegura que pet sea un objeto y que sea requerido
+  pet: PropTypes.object.isRequired,
 };
