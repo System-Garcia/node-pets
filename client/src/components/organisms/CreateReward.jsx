@@ -62,7 +62,7 @@ const CreateRewardComponent = () => {
     e.preventDefault();
     console.log(rewardData)
     try {
-      const response = await http.post('/rewards', { reward: rewardData },{
+      const response = await http.post('/rewards', { reward: rewardData.reward, location: rewardData.location  },{
             headers: { Authorization: `Bearer ${token}` }
           });
       
