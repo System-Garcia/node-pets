@@ -3,6 +3,12 @@ import { AuthContext } from '../../auth/context/AuthContext';
 import { http } from '../../helpers';
 import { toast } from 'react-toastify';
 import styles from '../../styles/pages/createReward.module.css';
+import { HiUser } from 'react-icons/hi';
+import { FaDirections } from 'react-icons/fa';
+import { MdDescription, MdOutlinePets } from 'react-icons/md';
+import { CiMoneyBill } from 'react-icons/ci';
+import { TbWorldLatitude } from 'react-icons/tb';
+import { set } from 'lodash';
 
 const CreateRewardComponent = () => {
   const { token } = useContext(AuthContext);
@@ -34,7 +40,6 @@ const CreateRewardComponent = () => {
         });
         setPets(data.pets);
       } catch (error) {
-        console.log(error);
         toast.error(`Error fetching pets: ${error.response.data.message}`);
       }
     };
@@ -47,24 +52,21 @@ const CreateRewardComponent = () => {
 
   const handleInputChangeLocation = (e) => {
     const { name, value } = e.target;
-      setRewardData({
-        ...rewardData,
-        location: { ...rewardData.location, [name]: value },
-      });
+    setRewardData({
+      ...rewardData,
+      location: { ...rewardData.location, [name]: value }
+    });
   };
   const handleInputChangeReward = (e) => {
     const { name, value } = e.target;
-      setRewardData({
-        ...rewardData,
-        reward: { ...rewardData.reward, [name]: value }
-      });
-    
+    setRewardData({
+      ...rewardData,
+      reward: { ...rewardData.reward, [name]: value }
+    });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(rewardData);
     try {
       const response = await http.post(
         '/rewards',
@@ -75,71 +77,185 @@ const CreateRewardComponent = () => {
       );
 
       if (response.status === 200) {
+        
         toast.success('Reward created successfully');
+        setRewardData({
+          reward: {
+            name: '',
+            description: '',
+            amount: '',
+            petId: ''
+          },
+          location: {
+            address: '',
+            city: '',
+            country: '',
+            description: '',
+            latitude: '',
+            longitude: ''
+          }
+        });
       }
     } catch (error) {
-      console.log(error);
-      toast.error(`Error creating reward: ${error.message}`);
+      toast.error(`Error creating reward: ${error.response.data.error}`);
     }
   };
 
-  
-
   return (
-    <div className={styles.rewardContainer}>
-      <h2 className={styles.rewardHeader}>Create Reward</h2>
-      <form onSubmit={handleSubmit} className={styles.rewardForm}>
-        <label className={styles.rewardLabel}>
-          Reward Name
-          <input type="text" name="name" placeholder="Reward Name" onChange={handleInputChangeReward} className={styles.rewardInput} />
-        </label>
-        <label className={styles.rewardLabel}>
-          Description
-          <textarea name="description" placeholder="Description" onChange={handleInputChangeReward} className={styles.rewardTextarea}></textarea>
-        </label>
-        <label className={styles.rewardLabel}>
-          Amount
-          <input type="number" name="amount" placeholder="Amount" onChange={handleInputChangeReward} className={styles.rewardInput} />
-        </label>
-        <label className={styles.rewardLabel}>
-          Pet ID
-          <select name="petId" onChange={handleInputChangeReward} className={styles.rewardSelect} value={rewardData.petId}>
-            <option value="">Select Pet</option>
-            {pets.map((pet) => (
-              <option key={pet.id} value={pet.id}>
-                {pet.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className={styles.rewardLabel}>
-          Address
-          <input type="text" name="address" placeholder="Address" onChange={handleInputChangeLocation} className={styles.rewardInput} />
-        </label>
-        <label className={styles.rewardLabel}>
-          City
-          <input type="text" name="city" placeholder="City" onChange={handleInputChangeLocation} className={styles.rewardInput} />
-        </label>
-        <label className={styles.rewardLabel}>
-          Country
-          <input type="text" name="country" placeholder="Country" onChange={handleInputChangeLocation} className={styles.rewardInput} />
-        </label>
-        <label className={styles.rewardLabel}>
-          Latitude
-          <input type="text" name="latitude" placeholder="Latitude" onChange={handleInputChangeLocation} className={styles.rewardInput} />
-        </label>
-        <label className={styles.rewardLabel}>
-          Description location
-          <textarea name="description" placeholder="Description" onChange={handleInputChangeLocation} className={styles.rewardTextarea}></textarea>
-        </label>
-        <label className={styles.rewardLabel}>
-          Longitude
-          <input type="text" name="longitude" placeholder="Longitude" onChange={handleInputChangeLocation} className={styles.rewardInput} />
-        </label>
-        <button type="submit" className={styles.rewardButton}>
-          Create Reward
-        </button>
-      </form>
+    <div className={styles.rewardPage}>
+      <div className={styles.rewardContainer}>
+        <h2 className={styles.rewardHeader}>Create Reward</h2>
+        <form onSubmit={handleSubmit} className={styles.rewardForm}>
+          <div className={styles.inputs}>
+            <div>
+              <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+                <HiUser className="ml-2 text-gray-400" />
+
+                <input
+                  type="text"
+                  name="name"
+                  value={rewardData.reward.name}
+                  placeholder="Reward Name"
+                  onChange={handleInputChangeReward}
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+                <CiMoneyBill className="ml-2 text-gray-400" />
+
+                <input
+                  type="number"
+                  name="amount"
+                  value={rewardData.reward.amount}
+                  placeholder="Amount"
+                  onChange={handleInputChangeReward}
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+                <MdDescription className="ml-2 text-gray-400" />
+
+                <textarea
+                  name="description"
+                  value={rewardData.reward.description}
+                  placeholder="Description reward"
+                  onChange={handleInputChangeReward}
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none resize-none"
+                ></textarea>
+              </div>
+
+             
+
+              <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+                <MdOutlinePets className="ml-2 text-gray-400" />
+
+                <select
+                  name="petId"
+                  onChange={handleInputChangeReward}
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                  value={rewardData.petId}
+                >
+                  <option value="">Select Pet</option>
+                  {pets.map((pet) => (
+                    <option key={pet.id} value={pet.id}>
+                      {pet.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+             
+            </div>
+
+            <div>
+            <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+              <FaDirections className="ml-2 text-gray-400" />
+
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                value={rewardData.location.address}
+                onChange={handleInputChangeLocation}
+                className="block w-full px-3 py-2 rounded-md focus:outline-none"
+              />
+            </div>
+
+            <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+              <FaDirections className="ml-2 text-gray-400" />
+
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                onChange={handleInputChangeLocation}
+                className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                value={rewardData.location.city}
+              />
+            </div>
+
+            <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+              <FaDirections className="ml-2 text-gray-400" />
+
+              <input
+                type="text"
+                name="country"
+                placeholder="Country"
+                onChange={handleInputChangeLocation}
+                className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                value={rewardData.location.country}
+              />
+            </div>
+
+            <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+              <TbWorldLatitude className="ml-2 text-gray-400" />
+
+              <input
+                type="text"
+                name="latitude"
+                placeholder="Latitude"
+                onChange={handleInputChangeLocation}
+                className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                value={rewardData.location.latitude}
+              />
+            </div>
+
+            <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+              <TbWorldLatitude className="ml-2 text-gray-400" />
+
+              <input
+                type="text"
+                name="longitude"
+                placeholder="Longitude"
+                onChange={handleInputChangeLocation}
+                className="block w-full px-3 py-2 rounded-md focus:outline-none"
+                value={rewardData.location.longitude}
+              />
+            </div>
+
+            <div className="flex items-center border border-gray-300 mb-4 focus:border-[#4B92FC] rounded-md">
+                <MdDescription className="ml-2 text-gray-400" />
+
+                <textarea
+                  name="description"
+                  placeholder="Description location"
+                  onChange={handleInputChangeLocation}
+                  className="block w-full px-3 py-2 rounded-md focus:outline-none resize-none"
+                  value={rewardData.location.description}
+                ></textarea>
+              </div>
+
+            </div>
+          </div>
+
+
+          <button type="submit" className={styles.rewardButton}>
+            Create Reward
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
