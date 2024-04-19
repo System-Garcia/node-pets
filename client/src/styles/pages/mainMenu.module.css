@@ -1,9 +1,12 @@
-
+html{
+  background-color: #fffdfd;
+}
 .NavImg {
     width: 150px;
     height: auto;
     margin: 20px;
     animation: spin 4s linear infinite;
+    padding: 10px;
 }
 
 @keyframes spin {
@@ -15,17 +18,49 @@
     }
 }
 
-nav {
-    text-align: center;
-    padding: 20px;
-    background-color: #3357f7;
-}
+.heading {
+    color: white;
+    margin: 0;
+    font-size: 2.5rem;
+  }
+
+.nav {
+    background-color: #4B91FB;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
 h1 {
     font-size: 48px;
     color: #000000;
 }
+.searchContainer {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .linksContainer {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+    height: 100px;
+  }
 
+  .linksH3{
+    display: flex;
+     justify-content: space-evenly;
+     align-items: center;
+      font-size: 34px;
+      color: #fff;
+      background-color: #000000;
+  }
+
+  
 .SearchInput {
     width: 80%;
     margin: 20px auto;
@@ -44,20 +79,24 @@ h1 {
     border-color: #ff6347;
 }
 
-.Link, .logoutButton {
+.link{
     display: block;
     text-decoration: none;
     font-family: 'Roboto', sans-serif; 
     font-size: 20px;
-    color: #fff;
+    height: 45px;
+    color: #f5f5f5;
     margin: 10px auto;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 20px;
     transition: all 0.3s ease;
+    border: 2px solid #4169e1;
+    background-color: #386beb;
+
 }
 
-.Link {
-    border: 2px solid #4169e1;
+.link:hover {
+  border: 2px solid #e14141;
 }
 
 .Link:hover, .logoutButton:hover {
@@ -65,11 +104,99 @@ h1 {
     color: #fff;
 }
 
+.buttonContainer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  padding: 10px;
+}
+
 .logoutButton {
-    background-color: #ff4500;
-    border: none;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif; 
+  font-size: 20px;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background-color: #ff4500;
+  border: none;
 }
 
 .logoutButton:hover {
     background-color: #ff6347;
 }
+
+.rewardsHeading {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 34px;
+  background-color: #F1DB12;
+}
+
+.rewardsContainer {
+  height: 10;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.rewardCard {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+    width: 345px;
+  }
+  
+  .rewardCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .rewardCard h3 {
+    color: #3357f7;
+    margin-bottom: 10px;
+  }
+  
+  .rewardCard p {
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .rewardCard small {
+    display: block;
+    margin-top: 15px;
+    color: #666;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #3357f7;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:hover {
+    background-color: #1a3f99;
+  }
+  
+  .pagination .current-page {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .petImage{
+    width: 250px;
+    height: 250px;
+  }

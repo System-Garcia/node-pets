@@ -15,6 +15,8 @@ import LoaderIn from './components/animations/Loaders';
 import ProtectedRoute from './router/ProtectedRoute';
 import GeneralProtectedRoute from './router/GeneralProtectedRoute';
 import CreateRewardComponent from './components/organisms/CreateReward';
+import CreatePet from './components/pages/CreatePet';
+import MyPetsPage from './components/pages/MyPetsPage';
 
 const App = () => {
   return (
@@ -27,6 +29,10 @@ const App = () => {
           <Route path="/auth/forgot-password" element={<ForgotPassword />} />
           <Route element={<GeneralProtectedRoute />}>
           <Route path="/create-reward" element={<CreateRewardComponent />} />
+          <Route path="/create-pet" element={<CreatePet />} />
+
+          <Route path="/my-pets" element={<MyPetsPage />} />
+          <Route path="/create-pet" element={<CreatePet />} />
             <Route path="/main-menu" element={<MainMenu />} />
             <Route element={<ProtectedRoute isAdminOnly={true} />}>
               <Route path="/dashboard/*" element={<Dashboard />} />
