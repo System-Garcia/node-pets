@@ -19,12 +19,12 @@ const navConfig = [
   },
   {
     title: 'species',
-    path: '/dashboard/products',
+    path: '/dashboard/pets',
     icon: icon('ic_specie'),
   },
   {
     title: 'Rewards',
-    path: '/dashboard/blog',
+    path: '/dashboard/rewards',
     icon: icon('ic_blog'),
   },
   {

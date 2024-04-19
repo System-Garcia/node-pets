@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { account } from '../../../_mock/account';
+import { AuthContext } from '../../../auth/context/';
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +33,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const {user} = useContext(AuthContext)
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -56,8 +58,8 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          src={user.img}
+          alt={`${user.firstName} ${user.lastName}`}
           sx={{
             width: 36,
             height: 36,
@@ -88,7 +90,7 @@ export default function AccountPopover() {
             {account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user.email}
           </Typography>
         </Box>
 

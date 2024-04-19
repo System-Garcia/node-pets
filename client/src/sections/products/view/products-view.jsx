@@ -3,8 +3,9 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { get } from '../../../helpers/axiosHelper';
-import { AuthContext } from '../../../context/AuthContext';
+import Button from '@mui/material/Button';
+import { http } from '../../../helpers/httpHelper';
+import { AuthContext } from '../../../auth/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,18 +15,23 @@ import PetFilters  from '../product-filters';
 import PetCartWidget from '../product-cart-widget';
 
 export default function PetsView() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [openFilter, setOpenFilter] = useState(false);
   const [pets, setPets] = useState([]);
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth) {
+    const token = localStorage.getItem('token');
+    if (!auth && !token) {
       navigate('/login');
     } else {
       fetchPets();
     }
   }, [auth, navigate]);
+  
+
   const fetchPets = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -34,12 +40,14 @@ export default function PetsView() {
         navigate('/login');
         return;
       }
-      const response = await get('/pets', {
+      const response = await http.get('/pets', {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Response:', response);
+      response.data.pets.forEach(pet => console.log(pet.img));
 
-      setPets(response.data);
+      setPets(response.data.pets);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         console.error("Error: Unauthorized");
@@ -50,9 +58,11 @@ export default function PetsView() {
     }
   };
   
-
   const handleOpenFilter = () => setOpenFilter(true);
   const handleCloseFilter = () => setOpenFilter(false);
+
+  const goToNextPage = () => setCurrentPage(currentPage + 1);
+  const goToPrevPage = () => setCurrentPage(currentPage - 1);
 
   return (
     <Container>
@@ -79,18 +89,26 @@ export default function PetsView() {
       </Stack>
 
       <Grid container spacing={3}>
-        {
-          pets.length > 0
-            ? pets.map((pet) => (
-                <Grid key={pet.id} xs={12} sm={6} md={3}>
-                  <PetCard pet={pet} />
-                </Grid>
-              ))
-            : <Typography>No pets data available</Typography>
-        }
+        {pets && pets.length > 0 ? (
+          pets.map((pet) => (
+            <Grid key={pet.id} item xs={12} sm={6} md={4} lg={3}>
+              <PetCard pet={pet} />
+            </Grid>
+          ))
+        ) : (
+          <Typography sx={{ textAlign: 'center', width: 1 }}>
+            No pets data available
+          </Typography>
+        )}
       </Grid>
 
+
       <PetCartWidget />
+      
+      <Stack direction="row" spacing={1}>
+        <Button onClick={goToPrevPage} disabled={currentPage === 1}>Previous</Button>
+        <Button onClick={goToNextPage} disabled={currentPage === totalPages}>Next</Button>
+      </Stack>
     </Container>
   );
 }

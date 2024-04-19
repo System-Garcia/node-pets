@@ -88,6 +88,17 @@ export class AuthController {
             .catch( error => handleError(error, res));
     }
 
+    checkSession = (req: Request, res: Response) => {
+        
+        const user = req.body.user;
+
+        if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+        this.authService.checkSession(user.id)
+            .then( ({ user, token }) => res.json({ user, token }))
+            .catch( error => handleError(error, res));
+    }
+
     /**
      * Performs a preliminary validation of user input before creating a user.
      * This method serves as an initial check to quickly catch missing or obviously invalid fields

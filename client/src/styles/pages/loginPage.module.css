@@ -1,38 +1,51 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body, html {
-  font-family: 'Open Sans', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.loginPage {
   width: 100%;
   min-height: 100vh;
-  overflow: auto;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, #68c1eb, #a6ddf7, #ffff91, #f8e14d);
+  padding: 1rem 0;
   overflow: hidden;
-
 }
 
 .loginContainer {
   width: 90%;
   max-width: 400px;
-  padding: 1.5rem;
+  padding: 0.8rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+@media (width >= 767px) {
+  .loginContainer {
+    flex-direction: row;
+    padding: 3rem;
+  }
+}
+
+.loginHeader {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loginHeader h1 {
+  font-size: 2.5rem;
+  color: #000;
+  font-weight: 900;
+  margin: 0;
 }
 
 .loginLogo {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  margin-bottom: 1rem;
+  width: 5rem;
 }
 
 .loginLogo img {
@@ -41,12 +54,7 @@ body, html {
   margin-right: 1rem;
 }
 
-.loginLogo h1 {
-  font-size: 2.5rem;
-  color: #000;
-  font-weight: 900;
-  margin: 0;
-}
+
 
 .loginForm h2 {
   font-size: 1.75rem;
@@ -58,12 +66,12 @@ body, html {
 .loginForm p {
   font-size: 1rem;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .inputGroup {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.1rem;
 }
 
 .inputGroup label {
@@ -125,15 +133,11 @@ body, html {
 }
 
 .forgotPassword {
-  position: absolute;
-  right: 0;
-  top: 0;
   color: #4B92FC;
   font-size: 0.9rem;
   text-decoration: none;
   padding-right: 1rem;
   cursor: pointer;
-  margin-top: 0.5rem;
 }
 
 .keepSigned {
@@ -196,39 +200,6 @@ body, html {
   transition: color 0.2s;
 }
 
-.loginFooter img {
-  max-width: 100%;
-  display: block;
-  margin: 1rem auto 0;
+.loginImage {
+  width: 50%;
 }
-
-@media (max-width: 767px) {
-  .loginContainer {
-    padding: 3rem;
-    width: 100%;
-    height: auto;
-
-  }
-
-  .loginLogo h1 {
-    font-size: 2rem;
-  }
-
-  .inputGroup input {
-    padding: 0.8rem 1rem 0.8rem 2.5rem;
-  }
-
-  .actions .continueButton {
-    padding: 0.8rem;
-  }
-
-  .loginLogo img{
-    width: 6rem;
-    height: auto;
-    }
-    .loginFooter img {
-      width: 10rem;
-      height: auto;
-      }
-}
-

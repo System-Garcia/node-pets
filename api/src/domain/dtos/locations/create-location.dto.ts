@@ -27,7 +27,7 @@ export class CreateLocationDto {
     }
 
     static create(object: { [key: string]: any }): [string?, CreateLocationDto?] {
-        const { address, city, country, latitude, longitude, description } = object;
+        let { address, city, country, latitude, longitude, description } = object;
 
         if (!address) return ["Missing address"];
         if (typeof address !== "string") return ["Address must be a string"];
@@ -48,8 +48,13 @@ export class CreateLocationDto {
         if (!latitude) return ["Missing latitude"];
         if (isNaN(latitude)) return ["Latitude must be a valid number"];
 
+        latitude = parseFloat(latitude);
+
         if (!longitude) return ["Missing longitude"];
         if (isNaN(longitude)) return ["Longitude must be a valid number"];
+
+        longitude = parseFloat(longitude);
+
 
         if (!description) return ["Missing description"];
         if (typeof description !== "string") return ["Description must be a string"];

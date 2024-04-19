@@ -14,7 +14,7 @@ import {
   HiCalendar,
 } from "react-icons/hi";
 import { useForm } from "../../hooks/useForm";
-import { post } from "../../helpers/axiosHelper";
+import { http } from "../../helpers/httpHelper";
 
 const CreateA = () => {
   const { formValue, changeFormValue } = useForm({
@@ -57,7 +57,7 @@ const CreateA = () => {
     });
 
     try {
-      await axios.post(
+      await http.post(
         `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
         dataToSend
       );

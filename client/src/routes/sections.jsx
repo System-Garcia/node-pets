@@ -20,9 +20,8 @@ export default function Router() {
       children: [
         { index: true, element: <IndexPage /> },
         { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
-        // Más rutas...
+        { path: 'pets', element: <ProductsPage /> },
+        { path: 'rewards', element: <BlogPage /> },
       ],
     },
     { path: 'login', element: <LoginPage /> },

@@ -1,0 +1,77 @@
+.rewardPage {
+  background-image: linear-gradient(to right, #68c1eb, #a6ddf7, #ffff91, #f8e14d);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.rewardContainer {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  
+  .rewardHeader {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .rewardForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  @media (min-width: 767px) {
+    .inputs {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+  
+  .rewardLabel {
+    margin-bottom: 10px;
+  }
+  
+  .rewardInput,
+  .rewardTextarea,
+  .rewardSelect {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .rewardTextarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .rewardButton {
+    background-color: #4B92FC;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .rewardButton:hover {
+    background-color: #3b82f6;
+  }
